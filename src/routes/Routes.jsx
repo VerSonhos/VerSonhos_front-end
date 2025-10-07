@@ -11,17 +11,17 @@ import Register from '../pages/Register/Register'
 const router = createBrowserRouter([
     { path: "/", element: <Home />, },
 
-    { path: "/about", element: <About />, },
+    { path: "/sobre", element: <About />, },
 
-    { path: "/contact", element: <Contact />, },
+    { path: "/contato", element: <Contact />, },
 
-    { path: "/visit", element: <Visit />, },
+    { path: "/visita", element: <Visit />, },
 
-    { path: "/donate", element: <Donate />, },
+    { path: "/doacao", element: <Donate />, },
 
     { path: "/login", element: <Login />, },
 
-    { path: "/register", element: <Register />, },
+    { path: "/cadastro", element: <Register />, },
 ]);
 
 export default function  Routes() {
