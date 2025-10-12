@@ -63,7 +63,7 @@ module.exports = {
           400: "#8BCDCCB3",
           500: "#8BCDCCE6",
         },
-        Ninth: {
+        ninth: {
           deafult: "#3B3B3B",
           100: "#3B3B3B1A",
           200: "#3B3B3B4D",
@@ -71,13 +71,29 @@ module.exports = {
           400: "#3B3B3BB3",
           500: "#3B3B3BE6",
         },
-        Tenth: {
+        tenth: {
           deafult: "#F6F9F9",
           100: "#F6F9F91A",
           200: "#F6F9F94D",
           300: "#F6F9F980",
           400: "#F6F9F9B3",
           500: "#F6F9F9E6",
+        },
+        eleventh: {
+          deafult: "#EB8AB4",
+          100: "#EB8AB41A",
+          200: "#EB8AB44D",
+          300: "#EB8AB480",
+          400: "#EB8AB4B3",
+          500: "#EB8AB4E6",
+        },
+        twelfth: {
+          deafult: "#7DE8AD",
+          100: "#7DE8AD1A",
+          200: "#7DE8AD4D",
+          300: "#7DE8AD80",
+          400: "#7DE8ADB3",
+          500: "#7DE8ADE6",
         },
       },
       fontFamily: {
