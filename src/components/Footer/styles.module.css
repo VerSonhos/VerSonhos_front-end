@@ -1,0 +1,14 @@
+.effectLink::after {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 3px;
+    background-color: var(--color-tertiary);
+    transition: var(--default-transition-duration);
+    margin-top: 1px;
+}
+
+.effectLink:hover::after {
+    width: 60px;
+    transition: var(--default-transition-duration);
+}

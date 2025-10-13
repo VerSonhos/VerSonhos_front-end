@@ -17,7 +17,7 @@ const router = createBrowserRouter([
 
     { path: "/visita", element: <Visit />, },
 
-    { path: "/doacao", element: <Donate />, },
+    { path: "/doar", element: <Donate />, },
 
     { path: "/login", element: <Login />, },
 

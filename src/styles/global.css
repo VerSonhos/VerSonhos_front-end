@@ -1,2 +1,147 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@75..125,300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
+
+@theme {
+  /* ================================================================
+    COR 'primary' (White com Transparências)
+    ================================================================
+  */
+  --color-primary: #FFFFFF;        /* DEFAULT */
+  --color-primary-100: #FFFFFF1A;
+  --color-primary-200: #FFFFFF4D;
+  --color-primary-300: #FFFFFF80;
+  --color-primary-400: #FFFFFFB3;
+  --color-primary-500: #FFFFFFE6;
+
+  /* ================================================================
+    COR 'secundary' (Black com Transparências)
+    ================================================================
+  */
+  --color-secundary: #000000;      /* DEFAULT */
+  --color-secundary-100: #0000001A;
+  --color-secundary-200: #0000004D;
+  --color-secundary-300: #00000080;
+  --color-secundary-400: #000000B3;
+  --color-secundary-500: #000000E6;
+  
+  /* ================================================================
+    COR 'tertiary' (Azul #3184EF com Transparências)
+    ================================================================
+  */
+  --color-tertiary: #3184EF;       /* DEFAULT */
+  --color-tertiary-100: #3184EF1A;
+  --color-tertiary-200: #3184EF4D;
+  --color-tertiary-300: #3184EF80;
+  --color-tertiary-400: #3184EFB3;
+  --color-tertiary-500: #3184EFE6;
+
+  /* ================================================================
+    COR 'quaternary' (Azul #327FE1 com Transparências)
+    ================================================================
+  */
+  --color-quaternary: #327FE1;     /* DEFAULT */
+  --color-quaternary-100: #327FE11A;
+  --color-quaternary-200: #327FE14D;
+  --color-quaternary-300: #327FE180;
+  --color-quaternary-400: #327FE1B3;
+  --color-quaternary-500: #327FE1E6;
+
+  /* ================================================================
+    COR 'quintenary' (Azul Escuro #03184F com Transparências)
+    ================================================================
+  */
+  --color-quintenary: #03184F;     /* DEFAULT */
+  --color-quintenary-100: #03184F1A;
+  --color-quintenary-200: #03184F4D;
+  --color-quintenary-300: #03184F80;
+  --color-quintenary-400: #03184FB3;
+  --color-quintenary-500: #03184FE6;
+
+  /* ================================================================
+    COR 'sixth' (Ciano/Verde #4AB5B4 com Transparências)
+    ================================================================
+  */
+  --color-sixth: #4AB5B4;          /* DEFAULT */
+  --color-sixth-100: #4AB5B41A;
+  --color-sixth-200: #4AB5B44D;
+  --color-sixth-300: #4AB5B480;
+  --color-sixth-400: #4AB5B4B3;
+  --color-sixth-500: #4AB5B4E6;
+
+  /* ================================================================
+    COR 'seventh' (Ciano Claro #8BCDCC com Transparências)
+    ================================================================
+  */
+  --color-seventh: #8BCDCC;        /* DEFAULT */
+  --color-seventh-100: #8BCDCC1A;
+  --color-seventh-200: #8BCDCC4D;
+  --color-seventh-300: #8BCDCC80;
+  --color-seventh-400: #8BCDCCB3;
+  --color-seventh-500: #8BCDCCE6;
+
+  /* ================================================================
+    COR 'ninth' (Cinza Escuro #3B3B3B com Transparências)
+    ================================================================
+  */
+  --color-ninth: #3B3B3B;          /* DEFAULT */
+  --color-ninth-100: #3B3B3B1A;
+  --color-ninth-200: #3B3B3B4D;
+  --color-ninth-300: #3B3B3B80;
+  --color-ninth-400: #3B3B3BB3;
+  --color-ninth-500: #3B3B3BE6;
+
+  /* ================================================================
+    COR 'tenth' (Quase Branco #F6F9F9 com Transparências)
+    ================================================================
+  */
+  --color-tenth: #F6F9F9;          /* DEFAULT */
+  --color-tenth-100: #F6F9F91A;
+  --color-tenth-200: #F6F9F94D;
+  --color-tenth-300: #F6F9F980;
+  --color-tenth-400: #F6F9F9B3;
+  --color-tenth-500: #F6F9F9E6;
+
+  /* ================================================================
+    COR 'eleventh' (Rosa #EB8AB4 com Transparências)
+    ================================================================
+  */
+  --color-eleventh: #EB8AB4;        /* DEFAULT */
+  --color-eleventh-100: #EB8AB41A;
+  --color-eleventh-200: #EB8AB44D;
+  --color-eleventh-300: #EB8AB480;
+  --color-eleventh-400: #EB8AB4B3;
+  --color-eleventh-500: #EB8AB4E6;
+
+  /* ================================================================
+    COR 'twelfth' (Verde Claro #7DE8AD com Transparências)
+    ================================================================
+  */
+  --color-twelfth: #7DE8AD;        /* DEFAULT */
+  --color-twelfth-100: #7DE8AD1A;
+  --color-twelfth-200: #7DE8AD4D;
+  --color-twelfth-300: #7DE8AD80;
+  --color-twelfth-400: #7DE8ADB3;
+  --color-twelfth-500: #7DE8ADE6;
+
+  /* ================================================================
+    COR 'thirteenth' (Verde Claro #000F35 com Transparências)
+    ================================================================
+  */
+  --color-thirteenth: #000F35;        /* DEFAULT */
+  --color-thirteenth-100: #000F351A;
+  --color-thirteenth-200: #000F354D;
+  --color-thirteenth-300: #000F3580;
+  --color-thirteenth-400: #000F35B3;
+  --color-thirteenth-500: #000F35E6;
+
+  /* ================================================================
+    FONT FAMILIES (Famílias de Fontes)
+    ================================================================
+  */
+  
+  /* Adiciona a classe 'font-fredoka' */
+  --font-fredoka: 'fredoka', sans-serif;
+  
+  /* Adiciona a classe 'font-inter' */
+  --font-inter: 'inter', sans-serif;
+}
