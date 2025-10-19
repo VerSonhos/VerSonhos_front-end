@@ -26,7 +26,7 @@ export default function Header() {
     }, []);
 
     return (
-        <header className={`transition-all ease-in-out z-50 px-8 bg-primary shadow-[0px_0px_10px] shadow-black/35 font-inter flex justify-between items-center h-[65px] fixed
+        <header className={`transition-all ease-in-out z-50 px-8 bg-white-custom shadow-[0px_0px_10px] shadow-black/35 font-inter flex justify-between items-center h-[65px] fixed
         ${isScrolled
             ? 'w-full top-0 right-0 rounded-none' 
             : 'w-[90%] top-5 right-[5%] rounded-full'
@@ -62,11 +62,11 @@ export default function Header() {
 
             {/* Links btns */}
             <section className='hidden md:flex justify-evenly w-[25%]'>
-                <Link className='flex justify-center items-center gap-1 py-1 w-[40%] shadow-md text-eleventh border-3 border-eleventh rounded-full hover:bg-eleventh-500 hover:text-primary active:bg-eleventh-300 active:border-eleventh-100 active:text-primary transition ease-in-out' to={'/doar'}> 
+                <Link className='flex justify-center items-center gap-1 py-1 w-[40%] shadow-md text-eleventh border-3 border-eleventh rounded-full hover:bg-eleventh-500 hover:text-white-custom active:bg-eleventh-300 active:border-eleventh-100 active:text-white-custom transition ease-in-out' to={'/doar'}> 
                     <MdFavorite className='text-xl'/> Doar
                 </Link>
 
-                <Link className='flex justify-center items-center gap-2 py-1 w-[50%] shadow-md text-primary bg-tertiary rounded-full hover:bg-tertiary-500 transition ease-in-out' to={'/login'}> 
+                <Link className='flex justify-center items-center gap-2 py-1 w-[50%] shadow-md text-white-custom bg-tertiary rounded-full hover:bg-tertiary-500 transition ease-in-out' to={'/login'}> 
                     <FaUser /> Login
                 </Link>
             </section>
@@ -74,11 +74,11 @@ export default function Header() {
             {/* Btns responsivo */}
             <section className='md:hidden flex items-center justify-end w-[70%] gap-2 sm:gap-0'>
                 <div className='flex justify-evenly w-[80%]'>
-                    <Link className='flex justify-center items-center gap-1 py-1 w-[100%] sm:w-[40%] shadow-md text-eleventh border-3 border-eleventh rounded-full hover:bg-eleventh-500 hover:text-primary active:bg-eleventh-300 active:border-eleventh-100 active:text-primary transition ease-in-out' to={'/doar'}> 
+                    <Link className='flex justify-center items-center gap-1 py-1 w-[100%] sm:w-[40%] shadow-md text-eleventh border-3 border-eleventh rounded-full hover:bg-eleventh-500 hover:text-white-custom active:bg-eleventh-300 active:border-eleventh-100 active:text-white-custom transition ease-in-out' to={'/doar'}> 
                         <MdFavorite className='text-xl'/> Doar
                     </Link>
 
-                    <Link className='hidden sm:flex justify-center items-center gap-2 py-1 w-[50%] shadow-md text-primary bg-tertiary rounded-full hover:bg-tertiary-500 transition ease-in-out' to={'/login'}> 
+                    <Link className='hidden sm:flex justify-center items-center gap-2 py-1 w-[50%] shadow-md text-white-custom bg-tertiary rounded-full hover:bg-tertiary-500 transition ease-in-out' to={'/login'}> 
                         <FaUser /> Login
                     </Link>
                 </div>
@@ -94,7 +94,7 @@ export default function Header() {
             {/* Barra nav responsivo */}
             <section 
                 className={`
-                    block md:hidden bg-primary shadow-xl/30 z-60 fixed h-screen top-0 right-0 w-[75vw] backdrop-blur-md
+                    block md:hidden bg-white-custom shadow-xl/30 z-60 fixed h-screen top-0 right-0 w-[75vw] backdrop-blur-md
                     transform transition-transform duration-500 ease-in-out
                     ${isMenuOpen ? 'translate-x-0' : 'translate-x-[100%]'} 
                 `}
@@ -102,14 +102,14 @@ export default function Header() {
                 <div className='w-full flex justify-between items-center px-5 py-1 mb-5 bg-tertiary'>
                     <div className='w-[35%]'>
                         <IoClose 
-                            className='text-5xl text-primary cursor-pointer transition-transform hover:scale-110' 
+                            className='text-5xl text-white-custom cursor-pointer transition-transform hover:scale-110' 
                             onClick={() => setIsMenuOpen(false)} 
                         />
                     </div>      
 
                     <div className='w-[60%]'>
                         <Link 
-                            className='flex sm:hidden justify-center items-center gap-2 py-1 w-[100%] shadow-mdshadow-md text-primary border-3 border-primary rounded-full hover:bg-primary hover:text-tertiary
+                            className='flex sm:hidden justify-center items-center gap-2 py-1 w-[100%] shadow-mdshadow-md text-white-custom border-3 border-white-custom rounded-full hover:bg-white-custom hover:text-tertiary
                             transition ease-in-out' 
                             onClick={() => setIsMenuOpen(false)}
                             to={'/login'}
