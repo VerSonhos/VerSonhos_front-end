@@ -135,6 +135,14 @@
   --color-thirteenth-500: #000F35E6;
 
   /* ================================================================
+     NOVAS DEFINIÇÕES: SHADOWS (Sombra Customizada)
+     ================================================================
+  */
+  --shadow-custom-sm: 0px 0px 10px rgba(0, 0, 0, 0.4); 
+  --shadow-custom-md: 0px 0px 10px var(--color-secundary);
+  --shadow-inner-contrast: inset 0px -30px 80px var(--color-secundary-500);
+
+  /* ================================================================
     FONT FAMILIES (Famílias de Fontes)
     ================================================================
   */

@@ -26,7 +26,7 @@ export default function Header() {
     }, []);
 
     return (
-        <header className={`transition-all ease-in-out z-50 px-8 bg-primary shadow-[0px_0px_10px] shadow-black/35 font-inter flex justify-between items-center h-[65px] fixed
+        <header className={`transition-all ease-in-out z-50 px-8 bg-primary shadow-custom-md shadow-black/35 font-inter flex justify-between items-center h-[65px] fixed
         ${isScrolled
             ? 'w-full top-0 right-0 rounded-none' 
             : 'w-[90%] top-5 right-[5%] rounded-full'
