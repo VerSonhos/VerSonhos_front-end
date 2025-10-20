@@ -34,20 +34,20 @@ export default function SideForm() {
 
                     <form className='w-full flex flex-col justify-center items-center gap-5 mb-5'>
                         <div className='w-full flex flex-col items-start justify-center gap-2'>
-                            <label htmlFor="emailLogin" className='text-black-custom-500 font-semibold'>E-mail:</label>
+                            <label htmlFor="emailLoginAdmin" className='text-black-custom-500 font-semibold'>E-mail:</label>
                             
                             <div className='w-full flex relative'>
                                 <IoIosMail className='text-xl text-black-custom-400 absolute left-2 top-2.5'/>
-                                <input type="email" placeholder='seu@email.com' name="emailLogin" id="emailLogin" className='bg-gray-100 border-gray-300 border-2 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4' />
+                                <input type="email" placeholder='seu@email.com' name="emailLoginAdmin" id="emailLoginAdmin" className='bg-gray-100 border-gray-300 border-2 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4' />
                             </div>
                         </div>
 
                         <div className='w-full flex flex-col items-start justify-center gap-2'>
-                            <label htmlFor="passwordLogin" className='text-black-custom-500 font-semibold'>Senha:</label>
+                            <label htmlFor="passwordLoginAdmin" className='text-black-custom-500 font-semibold'>Senha:</label>
                             
                             <div className="w-full flex relative">
                                 <RiLockPasswordFill className='text-xl text-black-custom-400 absolute left-2 top-2.5'/>
-                                <input type={showPassword ? "text" : "password"} placeholder='*********' name="passwordLogin" id="passwordLogin" className='bg-gray-100 border-gray-300 border-2 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4' />
+                                <input type={showPassword ? "text" : "password"} placeholder='*********' name="passwordLoginAdmin" id="passwordLoginAdmin" className='bg-gray-100 border-gray-300 border-2 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4' />
                                 
                                 <button 
                                     type="button"
@@ -64,11 +64,6 @@ export default function SideForm() {
                             </div>
                         </div>
 
-                        <p className='text-black-custom-500'>
-                            Esqueceu sua senha? 
-                            <Link to={'/esqueceuSenha'} className='text-tertiary hover:text-tertiary-400 transition ease-in-out italic'> Recuperar aqui!</Link>
-                        </p>
-
                         <button type='button' className='bg-tertiary hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
                             Entrar
                         </button>
@@ -79,14 +74,14 @@ export default function SideForm() {
                             <div className="flex-grow border-t border-black-custom-400"></div>
                             
                             <p className="mx-4 whitespace-nowrap">
-                                Criar uma conta
+                                Esqueceu sua senha?
                             </p>
                             
                             <div className="flex-grow border-t border-black-custom-400"></div>
                         </div>
 
                         <p>
-                            Não tem uma conta? <Link to={'/cadastro'} className='text-center text-tertiary hover:text-tertiary-400 transition ease-in-out italic'>Criar conta</Link>
+                            Entre em contato com administrador!
                         </p>
                     </div>
                 </section>

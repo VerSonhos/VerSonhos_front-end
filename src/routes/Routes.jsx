@@ -6,7 +6,10 @@ import Visit from '../pages/Visit/Visit'
 import Contact from '../pages/Contact/Contact'
 import Donate from '../pages/Donate/Donate'
 import Login from '../pages/Login/Login'
+import LoginAdmin from '../pages/LoginAdmin/AdminLogin'
 import Register from '../pages/Register/Register'
+import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
+import ChangePassword from '../pages/ChangePassword/ChangePassword'
 
 const router = createBrowserRouter([
     { path: "/", element: <Home />, },
@@ -22,6 +25,12 @@ const router = createBrowserRouter([
     { path: "/login", element: <Login />, },
 
     { path: "/cadastro", element: <Register />, },
+    
+    { path: "/loginAdmin", element: <LoginAdmin />, },
+
+    { path: "/esqueceuSenha", element: <ForgotPassword />, },
+
+    { path: "/senhaNova", element: <ChangePassword />, },
 ]);
 
 export default function  Routes() {
