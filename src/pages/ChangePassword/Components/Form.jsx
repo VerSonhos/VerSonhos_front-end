@@ -21,7 +21,7 @@ export default function Form() {
 
     return (
         <>
-            <section className='w-full h-screen flex flex-col items-baseline bg-gradient-to-t from-quintenary  to-tertiary'>
+            <section className='w-full min-h-screen flex flex-col items-baseline bg-gradient-to-t from-quintenary  to-tertiary'>
                 <Link to={'/'} className='flex justify-center items-center gap-2 font-inter font-bold text-lg mt-5 ms-5 text-white-custom text-shadow'>
                     <span className='text-black-custom text-xl bg-white-custom rounded-full'>
                         <IoIosArrowBack />

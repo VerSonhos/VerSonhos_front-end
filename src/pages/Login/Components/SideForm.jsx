@@ -15,7 +15,7 @@ export default function SideForm() {
 
     return (
         <>
-            <section className='w-full lg:w-[50%] h-screen flex flex-col items-baseline'>
+            <section className='w-full lg:w-[50%] min-h-screen flex flex-col items-baseline'>
                 <Link to={'/'} className='flex justify-center items-center gap-2 font-inter font-bold text-lg mt-5 ms-5'>
                     <span className='text-white-custom text-xl bg-black-custom rounded-full'>
                         <IoIosArrowBack />

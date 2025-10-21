@@ -7,9 +7,11 @@ export default function AdminLogin() {
     return (
         <>
             <AuthLayout>
-                <SideForm />
+                <section className='w-full min-h-screen flex'>
+                    <SideForm />
 
-                <SideImage />
+                    <SideImage />
+                </section>
             </AuthLayout>
         </>
     )

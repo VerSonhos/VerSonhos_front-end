@@ -5,7 +5,7 @@ export default function SideImage() {
     return (
         <>
             <section 
-                className="w-[50%] hidden lg:flex justify-center items-end bg-cover bg-no-repeat bg-center h-[100vh] shadow-inner-contrast" 
+                className="w-[50%] hidden lg:flex justify-center items-end bg-cover bg-no-repeat bg-center min-h-screen shadow-inner-contrast" 
                 style={{ backgroundImage: `url(${ImageBg})` }}
             >
                 <div className='w-full text-white-custom mb-20 text-shadow-lg'>
