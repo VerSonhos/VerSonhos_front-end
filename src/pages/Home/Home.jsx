@@ -5,6 +5,9 @@ import card1 from "../../assets/images/card1.png"
 import card2 from "../../assets/images/card2.png"
 import card3 from "../../assets/images/card3.png"
 import doacaoImg from "../../assets/images/doacaoImg-home.png";
+import onda from "../../assets/images/onda-home.png"
+import quartoInternacao from "../../assets/images/quartos-internacao-home.png"
+import salaEspera from "../../assets/images/salas-espera.png"
 
 export default function Home() {
   return (
@@ -46,7 +49,7 @@ export default function Home() {
               alt="img1"
               className="w-full h-56 object-cover"
             />
-            <div className="bg-[#03184F] p-6 text-center">
+            <div className="bg-[#EB8AB4]  p-6 text-center">
               <h3 className="text-xl font-semibold mb-3 text-[#FFF] font-fredoka">
                 A Experiência de Imersão e Evasão
               </h3>
@@ -65,7 +68,7 @@ export default function Home() {
               alt="img2"
               className="w-full h-56 object-cover"
             />
-            <div className="bg-[#03184F] p-6 text-center ">
+            <div className="bg-[#7EB1F3] p-6 text-center ">
               <h3 className="text-xl font-semibold mb-3 text-[#FFF] font-fredoka">
                 Promovendo a Alegria e Esperança
               </h3>
@@ -83,7 +86,7 @@ export default function Home() {
               alt="img3"
               className="w-full h-56 object-cover"
             />
-            <div className="bg-[#03184F] p-6 text-center flex-1">
+            <div className="bg-[#7DE8AD] p-6 text-center flex-1">
               <h3 className="text-xl font-semibold mb-3 text-[#FFF] font-fredoka">
                 De Cuidado ao Cuidado Humanizado
               </h3>
@@ -96,6 +99,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+        {/* imagem de onda encima do banner de doação */}
+        <div className="relative z-10 -mt-10 flex justify-center">
+          <img
+            src={onda}
+            alt="imagem topo da seção de doação"
+            className="w-full max-w-10xl object-contain"
+          />
+        </div>
 
       {/* seção: banner de doação */}
       <section className="relative bg-[#145A94] text-white py-16 overflow-hidden">
@@ -125,12 +137,15 @@ export default function Home() {
         </div>
       </section>
 
-       {/* seção: onde levamos alegria */}
-       <section className="py-16 bg-white text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#03184F] mb-10 font-fredoka">
-          Onde levamos <span className="text-[#3184EF]">alegria</span>
-        </h2>
-       </section>
+      {/* seção: onde levamos alegria */}
+    <section className="py-20 bg-white text-center">
+      <h2 className="text-3xl md:text-4xl font-bold text-[#03184F] mb-4 font-fredoka">
+        Onde levamos <span className="text-[#3184EF]">alegria</span>
+      </h2>
+      <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto mb-12">
+       Transformando quartos de hospitais em portais de esperança, aventura e cor.
+      </p>
+    </section>
     </MainLayout>
   );
 }
