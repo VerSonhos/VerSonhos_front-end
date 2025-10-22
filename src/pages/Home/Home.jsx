@@ -50,7 +50,7 @@ export default function Home() {
             Transformando a jornada de pequenos <br /> heróis com VR
           </p>
           <motion.button
-            className="mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105"
+            className="mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
             whileHover={{ scale: 1.05 }}
           >
             Conheça-nos
