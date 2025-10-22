@@ -282,7 +282,7 @@ export default function Home() {
                 {i === 0 ? "Hospitais e Cidades" : i === 1 ? "Nossos Heróis" : "Horas de Magia"}
               </h3>
               <p className="text-[#03184F] text-2xl font-bold">
-                {i === 0 ? "12+" : i === 1 ? "10+" : "4h"}
+                {i === 0 ? "12+" : i === 1 ? "10+" : "1h"}
               </p>
               <p className="text-sm text-[#03184F]">
                 {i === 0
