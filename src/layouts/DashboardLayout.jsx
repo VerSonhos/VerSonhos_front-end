@@ -6,7 +6,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <main className="flex min-h-screen">
       <Sidebar />
-      <section className="flex-grow p-6 bg-gray-100">
+      <section className="flex-grow p-6 ms-20 bg-gray-100">
         {children}
       </section>
       <VLibras forceOnload={true} />

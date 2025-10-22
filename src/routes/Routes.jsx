@@ -10,6 +10,7 @@ import LoginAdmin from '../pages/LoginAdmin/AdminLogin'
 import Register from '../pages/Register/Register'
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
+import HomeUser from '../pages/HomeUser/HomeUser'
 
 const router = createBrowserRouter([
     { path: "/", element: <Home />, },
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
     { path: "/esqueceuSenha", element: <ForgotPassword />, },
 
     { path: "/senhaNova", element: <ChangePassword />, },
+
+    { path: "/painelUsuario", element: <HomeUser />, },
 ]);
 
 export default function  Routes() {
