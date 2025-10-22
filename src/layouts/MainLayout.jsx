@@ -1,6 +1,7 @@
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
+import VLibras from '@djpfs/react-vlibras';
 
 const MainLayout = ({ children }) => {
   return (
@@ -10,6 +11,7 @@ const MainLayout = ({ children }) => {
         {children}
       </section>
       <Footer />
+      <VLibras forceOnload={true} />
       <AccessibilityWidget />
     </main>
   );
