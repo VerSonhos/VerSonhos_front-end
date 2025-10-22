@@ -27,7 +27,7 @@ export default function OdsSection() {
   return (
     <section className="bg-gradient-to-r from-[#03184F] to-blue-800 text-white py-16 relative overflow-hidden">
       <div className="container mx-auto px-6 text-center">
-        <h3 className="text-5xl font-semibold mb-12">
+        <h3 className="text-5xl font-semibold mb-12 font-fredoka">
           ODS que fazem parte da{" "}
           <span className="text-blue-400 font-bold">VerSonhos</span>
         </h3>
