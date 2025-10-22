@@ -5,7 +5,6 @@ import card1 from "../../assets/images/card1.png";
 import card2 from "../../assets/images/card2.png";
 import card3 from "../../assets/images/card3.png";
 import doacaoImg from "../../assets/images/doacaoImg-home.png";
-import onda from "../../assets/images/onda-home.png";
 import quartoInternacao from "../../assets/images/quartos-internacao-home.png";
 import salaEspera from "../../assets/images/salas-espera.png";
 import impactoFundo from "../../assets/images/Seção-impacto.png";
@@ -113,45 +112,24 @@ export default function Home() {
       </motion.section>
 
       {/* seção: banner de doação */}
-      {/* onda encima do banner de doação */}
-      <motion.div
-        className="custom-shape-divider-top"
-        initial={{ y: -10 }}
-        animate={{ y: 0 }}
-        transition={{ yoyo: Infinity, duration: 3, ease: "easeInOut" }}
-        style={{ transform: "rotate(180deg)" }} 
-      >
-      <svg
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-      <path
-            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-            className="shape-fill"
-            style={{ fill: "#145A94" }} 
-          />
-        </svg>
-      </motion.div>
-
       <motion.section
-        className="relative bg-[#145A94] text-white py-16 overflow-hidden"
+        className="relative bg-[#145A94] text-white py-20 md:py-28 overflow-hidden min-h-[447px]"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 gap-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 px-6 relative z-20">
+          {/* Texto centralizado */}
           <motion.div
-            className="flex-1 text-center"
+            className="flex-1 flex flex-col justify-center items-center text-center"
             custom={0}
             variants={fadeUp}
           >
             <h2 className="text-3xl md:text-4xl font-bold font-fredoka mb-4">
               Junte-se à nossa rede de carinho!
             </h2>
-            <p className="text-white/90 text-base md:text-lg mb-6 max-w-md mx-auto leading-relaxed">
-              Compartilhe sua historia, ajude-nos a transformar a jornada de mais crianças em aventuras cheia de alegria.
+            <p className="text-white/90 text-base md:text-lg mb-6 max-w-md leading-relaxed">
+              Compartilhe sua história e ajude-nos a transformar a jornada de mais crianças em aventuras cheias de alegria.
             </p>
             <motion.button
               className={styles.doacaoButton}
@@ -160,20 +138,35 @@ export default function Home() {
               Faça uma doação!
             </motion.button>
           </motion.div>
+        </div>
 
-          <motion.div
-            className="flex-1 flex justify-center relative"
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 1 }}
+        <motion.div
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <img
+            src={doacaoImg}
+            alt="Imagem no banner de doação"
+            className="h-auto max-w-[500px] object-contain"
+          />
+        </motion.div>
+
+        {/* onda branca acima do banner */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+          <svg
+            data-name="Layer 1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            className="relative block w-full h-[100px]"
           >
-            {/*imagem dentro do banner */}
-            <img
-              src={doacaoImg}
-              alt="imagem no banner de doação"
-              className="absolute top-0 right-0 h-full object-cover max-w-none"
+            <path
+              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+              fill="#FFFFFF"
             />
-          </motion.div>
+          </svg>
         </div>
       </motion.section>
 
