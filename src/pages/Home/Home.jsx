@@ -311,7 +311,7 @@ export default function Home() {
           Heróis que nos<span className="text-[#3184EF]"> apoiam</span>
         </motion.h2>
 
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8 px-6">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-20 px-6">
           <motion.img
             src={proa}
             alt="Herói 1"
