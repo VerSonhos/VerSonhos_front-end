@@ -1,5 +1,6 @@
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
+import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 
 const MainLayout = ({ children }) => {
   return (
@@ -9,6 +10,7 @@ const MainLayout = ({ children }) => {
         {children}
       </section>
       <Footer />
+      <AccessibilityWidget />
     </main>
   );
 };

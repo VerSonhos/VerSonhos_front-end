@@ -1,4 +1,5 @@
 // import Sidebar from '../components/Sidebar';
+import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 
 const DashboardLayout = ({ children }) => {
   return (
@@ -7,6 +8,7 @@ const DashboardLayout = ({ children }) => {
       <section className="flex-grow p-6 bg-gray-100">
         {children}
       </section>
+      <AccessibilityWidget />
     </main>
   );
 };
