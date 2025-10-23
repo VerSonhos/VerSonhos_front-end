@@ -8,7 +8,7 @@ import doacaoImg from "../../assets/images/doacaoImg-home.png";
 import quartoInternacao from "../../assets/images/quartos-internacao-home.png";
 import salaEspera from "../../assets/images/salas-espera.png";
 import impactoFundo from "../../assets/images/Seção-impacto.png";
-import Icon1 from "../../assets/icons/Icon1-impacto.png";
+import Icon1 from "../../assets/icons/icon1-impacto.png";
 import Icon2 from "../../assets/icons/icon2-impacto.png";
 import Icon3 from "../../assets/icons/icon3-impacto.png";
 import proa from "../../assets/icons/logo-proa.png";
