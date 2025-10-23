@@ -66,7 +66,7 @@ export default function Home() {
         viewport={{ once: true }}
       >
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-[#03184F] mb-10 font-fredoka"
+          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
           custom={0}
           variants={fadeUp}
         >
@@ -125,7 +125,7 @@ export default function Home() {
             custom={0}
             variants={fadeUp}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-fredoka mb-4">
+            <h2 className="text-3xl md:text-5xl font-bold font-fredoka mb-4">
               Junte-se à nossa rede de carinho!
             </h2>
             <p className="text-white/90 text-base md:text-lg mb-6 max-w-md leading-relaxed">
@@ -178,7 +178,7 @@ export default function Home() {
         viewport={{ once: true }}
       >
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-[#03184F] mb-4 font-fredoka"
+          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-4 font-fredoka"
           custom={0}
           variants={fadeUp}
         >
@@ -258,7 +258,7 @@ export default function Home() {
         viewport={{ once: true }}
       >
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-[#03184F] mb-10 font-fredoka"
+          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
           custom={0}
           variants={fadeUp}
         >
@@ -304,7 +304,7 @@ export default function Home() {
         viewport={{ once: true }}
       >
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-[#03184F] mb-10 font-fredoka"
+          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
           custom={0}
           variants={fadeUp}
         >

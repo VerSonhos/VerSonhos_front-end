@@ -59,7 +59,7 @@ export default function Donate() {
 
         <div className="relative z-10">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold mb-10 font-fredoka"
+            className="text-3xl md:text-5xl font-bold mb-10 font-fredoka"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
