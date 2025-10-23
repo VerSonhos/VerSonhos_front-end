@@ -1,6 +1,6 @@
 import AuthLayout from '../../layouts/AuthLayout'
-import SideForm from './Components/sideForm'
-import SideImage from './Components/sideImage'
+import SideForm from './Components/SideForm'
+import SideImage from './Components/SideImage'
 import styles from './styles.module.css'
 
 export default function Login() {
