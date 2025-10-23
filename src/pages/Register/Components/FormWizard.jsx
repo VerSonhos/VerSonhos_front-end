@@ -6,7 +6,7 @@ import styles from '../styles.module.css'
 export default function FormWizard() {
     return (
         <>
-            <section className='w-full lg:w-[50%] h-full flex flex-col items-baseline min-h-screen '>
+            <section className='w-full lg:w-[50%] h-full flex flex-col py-10 items-baseline min-h-screen '>
                 <section className='shadow-custom-sm w-[65%] m-auto px-10 py-5 rounded-lg'>
                     <img src={LogoForm} alt="Logotipo VerSonhos" className='w-[65%] mx-auto mb-7' />
 
