@@ -1,6 +1,6 @@
 import MainLayout from "../../layouts/MainLayout";
 import styles from "./styles.module.css";
-import fundoHero from "../../assets/images/fundoHero.png"; 
+import fundoHero from "../../assets/videos/fundoHero.mp4"; 
 import card1 from "../../assets/images/card1.png";
 import card2 from "../../assets/images/card2.png";
 import card3 from "../../assets/images/card3.png";
@@ -16,6 +16,15 @@ import senac from "../../assets/icons/logo-senac.png";
 import { motion } from "framer-motion";
 
 export default function Home() {
+  const fadeDeafult = {
+    hidden: { opacity: 0},
+    visible: (custom = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: custom * 0.2, duration: 0.8 },
+    }),
+  };
+
   const fadeUp = {
     hidden: { opacity: 0, y: 50 },
     visible: (custom = 0) => ({
@@ -28,12 +37,21 @@ export default function Home() {
   return (
     <MainLayout>
       <motion.section
-        className="relative w-full h-[90vh] flex items-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${fundoHero})` }}
+        className="relative w-full h-[100vh] flex items-center bg-cover bg-center"
         initial="hidden"
         animate="visible"
-        variants={fadeUp}
+        variants={fadeDeafult}
       >
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src={fundoHero} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-black/20"></div>
         <motion.div
           className="relative z-10 text-white max-w-xl pl-10 md:pl-24"

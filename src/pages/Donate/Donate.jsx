@@ -1,6 +1,6 @@
 import MainLayout from "../../layouts/MainLayout";
 import { motion } from "framer-motion";
-import fundoDonate from "../../assets/images/fundoDonate.png";
+import fundoDonate from "../../assets/videos/fundoDonate.mp4";
 import fundoLinhas from "../../assets/images/fundo-linhas.png";
 import qrcode from "../../assets/images/QrCode.png";
 import logoCard from "../../assets/images/logo-donate.png";
@@ -11,9 +11,18 @@ export default function Donate() {
     <MainLayout>
       {/* Seção principal */}
       <section
-        className="relative w-full h-[90vh] flex items-center bg-cover bg-center overflow-hidden"
-        style={{ backgroundImage: `url(${fundoDonate})` }}
+        className="relative w-full h-[100vh] flex items-center bg-cover bg-center overflow-hidden"
       >
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src={fundoDonate} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-black/20"></div>
 
         <motion.div

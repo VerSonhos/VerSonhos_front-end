@@ -1,15 +1,24 @@
-import ImgBackground from '../../../assets/images/background_visit.png'
+import ImgBackground from '../../../assets/videos/background_visit.mp4'
 import { motion } from "framer-motion";
 
 export default function HeroSectionVisit(){
     return(
         <>
         <motion.section
-                className="relative w-full h-[90vh] flex items-center bg-cover bg-center"
-                style={{ backgroundImage: `url(${ImgBackground})` }}
+                className="relative w-full h-[100vh] flex items-center bg-cover bg-center"
                 initial="hidden"
                 animate="visible"
               >
+                <video
+                  className="absolute inset-0 w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                >
+                  <source src={ImgBackground} type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-black/20"></div>
                 <motion.div
                   className="relative z-10 text-white max-w-xl pl-10 md:pl-24"
