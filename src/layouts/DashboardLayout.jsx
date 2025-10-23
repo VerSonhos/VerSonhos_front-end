@@ -1,4 +1,4 @@
-import Sidebar from '../components/Sidebar/SideBar';
+import Sidebar from '../components/SideBar/SideBar';
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 import VLibras from '@djpfs/react-vlibras';
 
