@@ -56,7 +56,7 @@ export default function Contact() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-4 font-fredoka">FAQ</h2>
+            <h2 className="text-3xl font-semibold mb-4 font-fredoka">FAQ</h2>
 
             <details open className="mb-3 border-b border-gray-200 pb-2">
               <summary className="cursor-pointer font-medium text-gray-800 font-fredoka">
@@ -112,7 +112,7 @@ export default function Contact() {
             ></textarea>
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg py-2 transition font-fredoka"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg py-2 transition font-fredoka cursor-pointer"
             >
               Enviar
             </button>
