@@ -35,9 +35,9 @@ export default function HeaderAdmin() {
                         <div className='iconSideBar flex justify-center items-center'>
                             <FaHome className='text-2xl' />
                         </div>
-                        <span className="links-name">Home</span>
+                        <span className="links-name">Início</span>
                     </Link>
-                    <span className="tooltip">Home</span>
+                    <span className="tooltip">Início</span>
                 </li>
 
                 <li>

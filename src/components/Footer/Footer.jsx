@@ -24,7 +24,7 @@ export default function Footer() {
                     <h2 className='font-fredoka font-semibold text-2xl mb-2 border-b-2 border-white-custom-400 pb-1'>Institucional</h2>
 
                     <ul className='flex flex-col gap-2.5'>
-                        <li><Link className={styles.effectLink} to={'/'}>Home</Link></li>
+                        <li><Link className={styles.effectLink} to={'/'}>Início</Link></li>
                         <li><Link className={styles.effectLink} to={'/sobre'}>Sobre nós</Link></li>
                         <li><Link className={styles.effectLink} to={'/visita'}>Visita</Link></li>
                     </ul>

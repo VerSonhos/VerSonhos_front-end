@@ -43,7 +43,7 @@ export default function Header() {
             <nav className='hidden md:block w-[50%]'>
                 <ul className='flex flex-row justify-evenly text-xl'>
                     <li>
-                        <Link className={styles.effectLink} to={'/'}>Home</Link>
+                        <Link className={styles.effectLink} to={'/'}>Início</Link>
                     </li>
                     
                     <li>
@@ -122,7 +122,7 @@ export default function Header() {
                 <nav className='w-full px-10'>
                     <ul className='w-full flex flex-col items-center gap-10 text-xl'>
                         <li>
-                            <Link className={styles.effectLink} onClick={() => setIsMenuOpen(false)} to={'/'}>Home</Link>
+                            <Link className={styles.effectLink} onClick={() => setIsMenuOpen(false)} to={'/'}>Início</Link>
                         </li>
                         
                         <li>
