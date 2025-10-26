@@ -48,18 +48,15 @@ export default function HomeUser() {
             Faça um agendamento
           </button>
         </div>
-
-<div className="mb-8 text-center sm:text-left">
-  <h2 className={styles.welcomeTitle}>
-    Que bom ter você aqui, <span>Lucas</span>
-  </h2>
-  <p className={styles.welcomeDesc}>
-    Que tal espalhar mais alegria hoje? Veja suas próximas visitas e
-    inspire novos sorrisos.
-  </p>
-</div>
-
-
+        <div className="mb-8 text-center sm:text-left">
+          <h2 className={styles.welcomeTitle}>
+            Que bom ter você aqui, <span>Lucas</span>
+          </h2>
+          <p className={styles.welcomeDesc}>
+            Que tal espalhar mais alegria hoje? Veja suas próximas visitas e
+            inspire novos sorrisos.
+          </p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {cards.map((card, i) => (
             <div
