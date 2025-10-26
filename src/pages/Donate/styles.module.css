@@ -1,0 +1,139 @@
+.donateCard {
+  background-color: #F2F7FF;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  width: 90%;
+  max-width: 550px;
+  margin: 0 auto;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.donateCardHeader {
+  background-color: #03184F;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.donateLogo {
+  height: 2rem;
+  transition: height 0.3s ease;
+}
+
+.donateCardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1rem;
+}
+
+.donateText {
+  color: #03184F;
+  text-align: center;
+}
+
+.donateText h3 {
+  color: #3184EF;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.donateText p {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+/* QR code */
+.donateQR {
+  width: 11rem;
+  height: 11rem;
+}
+
+/* Telas médias */
+@media (min-width: 768px) {
+  .donateCard {
+    max-width: 600px;
+  }
+
+  .donateText h3 {
+    font-size: 1.25rem;
+  }
+
+  .donateText p {
+    font-size: 1rem;
+  }
+
+  .donateLogo {
+    height: 2.5rem;
+  }
+
+  .donateQR {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
+/* Telas grandes */
+@media (min-width: 1024px) {
+  .donateCard {
+    max-width: 750px;
+  }
+
+  .donateCardContent {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .donateText {
+    text-align: left;
+    max-width: 60%;
+  }
+
+  .donateText h3 {
+    font-size: 1.5rem;
+  }
+
+  .donateText p {
+    font-size: 1.125rem;
+  }
+
+  .donateLogo {
+    height: 3rem;
+  }
+
+  .donateQR {
+    width: 14rem;
+    height: 14rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .donateCard {
+    max-width: 900px;
+  }
+
+  .donateText h3 {
+    font-size: 1.75rem;
+  }
+
+  .donateText p {
+    font-size: 1.25rem;
+  }
+
+  .donateLogo {
+    height: 4rem;
+  }
+
+  .donateQR {
+    width: 16rem;
+    height: 16rem;
+  }
+}

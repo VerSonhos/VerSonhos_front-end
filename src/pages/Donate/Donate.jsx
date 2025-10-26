@@ -1,5 +1,6 @@
 import MainLayout from "../../layouts/MainLayout";
 import { motion } from "framer-motion";
+import styles from "./styles.module.css";
 import fundoDonate from "../../assets/videos/fundoDonate.mp4";
 import fundoLinhas from "../../assets/images/fundo-linhas.png";
 import qrcode from "../../assets/images/QrCode.png";
@@ -10,7 +11,7 @@ export default function Donate() {
         <>
     <MainLayout>
       {/* Seção principal */}
-      <section
+      <section id="doacao"
         className="relative w-full h-[100vh] flex items-center bg-cover bg-center overflow-hidden"
       >
         <video
@@ -78,62 +79,49 @@ export default function Donate() {
             <span className="text-[#03184F]">e receba nossa gratidão!</span>
           </motion.h2>
 
+         <motion.div
+        className={styles.donateCard}
+        initial={{ scale: 0.9, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ type: "spring", stiffness: 100, damping: 12, delay: 0.3 }}
+      >
+        <div className={styles.donateCardHeader}>
+          <motion.img
+            src={logoCard}
+            alt="Logo VerSonhos"
+            className={styles.donateLogo}
+            initial={{ rotate: -10, opacity: 0 }}
+            whileInView={{ rotate: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          />
+        </div>
+
+        <div className={styles.donateCardContent}>
+          <div className={styles.donateText}>
+            <h3>Doações em depósito ou pix:</h3>
+            <p>
+              Banco Bradesco<br />
+              AG: 0000<br />
+              C/C: 00000-0<br />
+              VerSonhos<br />
+              CNPJ: 00.000.000/0000-00<br />
+              Pix:<br />
+              Escolha a opção “digitar agência e conta” e utilize os dados acima.<br />
+              A sua doação será concluída sem custo.
+            </p>
+          </div>
+
           <motion.div
-            className="bg-[#F2F7FF] rounded-2xl shadow-lg w-[90%] md:w-[550px] mx-auto"
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              type: "spring",
-              stiffness: 100,
-              damping: 12,
-              delay: 0.3,
-            }}
+            className={styles.donateQR}
+            initial={{ scale: 0, rotate: 90, opacity: 0 }}
+            whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+            transition={{ delay: 0.6, type: "spring", stiffness: 120 }}
           >
-            <div className="bg-[#03184F] rounded-t-2xl flex justify-center items-center py-4">
-              <motion.img
-                src={logoCard}
-                alt="Logo VerSonhos"
-                className="h-8"
-                initial={{ rotate: -10, opacity: 0 }}
-                whileInView={{ rotate: 0, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-              />
-            </div>
-
-            <div className="flex justify-between items-center p-6">
-              <div className="text-left text-[#03184F] text-sm leading-relaxed">
-                <h3 className="text-[#3184EF] font-semibold mb-2">
-                  Doações em depósito ou pix:
-                </h3>
-                <p>
-                  Banco Bradesco<br />
-                  AG: 0000<br />
-                  C/C: 00000-0<br />
-                  VerSonhos<br />
-                  CNPJ: 00.000.000/0000-00<br />
-                  Pix:<br />
-                  Escolha a opção “digitar agência e conta” e utilize os dados
-                  acima.<br />
-                  A sua doação será concluída sem custo.
-                </p>
-              </div>
-
-              {/* QR code */}
-              <motion.div
-                className="ml-4 p-[2px]"
-                initial={{ scale: 0, rotate: 90, opacity: 0 }}
-                whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
-                transition={{
-                  delay: 0.6,
-                  type: "spring",
-                  stiffness: 120,
-                }}
-              >
-                <img src={qrcode} alt="QR Code" className="w-44 h-34" />
-              </motion.div>
-            </div>
+            <img src={qrcode} alt="QR Code" className="w-full h-full" />
           </motion.div>
+        </div>
+      </motion.div>
         </div>
       </section>
     </MainLayout>
