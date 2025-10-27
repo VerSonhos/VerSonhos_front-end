@@ -14,6 +14,8 @@ import Icon3 from "../../assets/icons/icon3-impacto.png";
 import proa from "../../assets/icons/logo-proa.png";
 import senac from "../../assets/icons/logo-senac.png";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
 
 export default function Home() {
   const fadeDeafult = {
@@ -60,19 +62,29 @@ export default function Home() {
           animate="visible"
           variants={fadeUp}
         >
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight font-fredoka">
-            <span className="text-[#EB8AB4]">Sonhos</span> virtuais,
-            <br /> Alegria real
+        <motion.div
+          className="relative z-10 text-white max-w-xl pl-10 md:pl-24"
+          custom={1}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+        >
+          <h1 className="text-5xl font-bold mb-4 font-fredoka leading-tight">
+            <span className="whitespace-nowrap text-[#EB8AB4]">Sonhos</span> virtuais,
+            <span className="block mt-2">Alegria real</span>
           </h1>
-          <p className="mt-4 text-lg md:text-xl">
-            Transformando a jornada de pequenos <br /> heróis com VR
+
+          <p className="max-w-2xl font-inter text-2xl leading-relaxed">
+            Transformando a jornada de pequenos heróis com VR
           </p>
-          <motion.button
-            className="mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
-            whileHover={{ scale: 1.05 }}
+
+          <Link
+            to="/sobre" 
+            className={`${styles.heroButton} font-fredoka mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer inline-block`}
           >
             Conheça-nos
-          </motion.button>
+          </Link>
+        </motion.div>
         </motion.div>
       </motion.section>
 
@@ -131,62 +143,72 @@ export default function Home() {
 
       {/* seção: banner de doação */}
       <motion.section
-        className="relative bg-[#145A94] text-white py-20 md:py-28 overflow-hidden min-h-[447px]"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 px-6 relative z-20">
-          {/* Texto centralizado */}
-          <motion.div
-            className="flex-1 flex flex-col justify-center items-center text-center"
-            custom={0}
-            variants={fadeUp}
-          >
-            <h2 className="text-3xl md:text-5xl font-bold font-fredoka mb-4">
-              Junte-se à nossa rede de carinho!
-            </h2>
-            <p className="text-white/90 text-base md:text-lg mb-6 max-w-md leading-relaxed">
-              Compartilhe sua história e ajude-nos a transformar a jornada de mais crianças em aventuras cheias de alegria.
-            </p>
+      className="relative bg-[#145A94] text-white py-20 md:py-28 overflow-hidden min-h-[447px]"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 px-6 relative z-20">
+        {/* Texto centralizado com contraste */}
+        <motion.div
+          className="flex-1 flex flex-col justify-center items-center text-center
+                    bg-black/40 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none"
+          custom={0}
+          variants={fadeUp}
+        >
+        <h2 className="text-3xl md:text-5xl font-bold font-fredoka mb-6 text-center">
+          <span className="block md:hidden">Junte-se à nossa rede de carinho!</span>
+          <span className="hidden md:block">
+            <span>Junte-se à nossa</span>
+            <br />
+            <span>rede de carinho!</span>
+          </span>
+        </h2>
+          <p className="text-white/90 text-base md:text-lg mb-10 max-w-md leading-relaxed">
+            Compartilhe sua história e ajude-nos a transformar a jornada de mais crianças em aventuras cheias de alegria.
+          </p>
+          <Link to="/doar">
             <motion.button
               className={styles.doacaoButton}
               whileHover={{ scale: 1.05 }}
             >
               Faça uma doação!
             </motion.button>
-          </motion.div>
-        </div>
-
-        <motion.div
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <img
-            src={doacaoImg}
-            alt="Imagem no banner de doação"
-            className="h-auto max-w-[500px] object-contain"
-          />
+          </Link>
         </motion.div>
+      </div>
 
-        {/* onda branca acima do banner */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
-          <svg
-            data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-            className="relative block w-full h-[100px]"
-          >
-            <path
-              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-              fill="#FFFFFF"
-            />
-          </svg>
-        </div>
-      </motion.section>
+      {/* Imagem */}
+      <motion.div
+        className="absolute right-0 top-[60%] transform -translate-y-1/2 z-10"
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <img
+          src={doacaoImg}
+          alt="Imagem no banner de doação"
+          className="h-auto max-w-[500px] object-contain"
+        />
+      </motion.div>
+
+      {/* Onda branca em cima do banner */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          className="relative block w-full h-[100px]"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      </div>
+    </motion.section>
+
 
       {/* seção: onde levamos alegria */}
       <motion.section

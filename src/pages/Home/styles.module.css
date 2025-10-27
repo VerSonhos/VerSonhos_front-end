@@ -35,8 +35,6 @@
     line-height: 0;
 }
 
-
-
 /*seção: onde levamos alegria*/
 
 .cardContainer {
@@ -134,6 +132,64 @@
     padding: 1.5rem;
   }
 }
+
+@media (max-width: 767px) {
+  .cardRow,
+  .cardRowReverse {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;   
+    width: 100%;
+    gap: 2rem; 
+  }
+
+  .cardItem {
+    width: 90%; 
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .cardItem {
+    width: 400px;      
+    gap: 1rem;
+  }
+
+  .cardImage {
+    height: 280px;      
+  }
+
+  .cardText {
+    height: 280px;      
+    padding: 2rem;      
+    font-size: 1.2rem; 
+  }
+
+  .cardText h3 {
+    font-size: 1.5rem;  
+  }
+}
+
+@media (min-width: 1920px) {
+  .cardItem {
+    width: 500px;
+  }
+
+  .cardImage {
+    height: 350px;
+  }
+
+  .cardText {
+    height: 350px;
+    padding: 2.5rem;
+    font-size: 1.2rem;
+  }
+
+  .cardText h3 {
+    font-size: 1.8rem;
+  }
+}
+
 
 /*seção impacto do VerSonhos*/
 
