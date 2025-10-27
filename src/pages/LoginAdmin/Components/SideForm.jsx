@@ -24,8 +24,8 @@ export default function SideForm() {
                     Voltar ao ínicio
                 </Link>
 
-                <section className='shadow-custom-sm w-[65%] m-auto px-10 py-5 my-10 rounded-lg'>
-                    <img src={LogoForm} alt="Logotipo VerSonhos" className='w-[65%] mx-auto mb-7' />
+                <section className='shadow-custom-smw-[90%] md:w-[65%] m-auto px-10 py-5 my-10 rounded-lg'>
+                    <img src={LogoForm} alt="Logotipo VerSonhos" className='w-[80%] md:w-[65%] mx-auto mb-7' />
 
                     <div className='text-center font-inter mb-7'>
                         <h2 className='font-bold text-2xl mb-2'>Bem-vindo</h2>
