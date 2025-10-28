@@ -63,7 +63,7 @@ export default function Home() {
           variants={fadeUp}
         >
         <motion.div
-          className="relative z-10 text-white max-w-xl pl-10 md:pl-24"
+          className="relative z-10 text-white max-w-xl pl-4 md:pl-4"
           custom={1}
           initial="hidden"
           animate="visible"
