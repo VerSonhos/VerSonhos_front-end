@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { IoIosMail, IoIosPaper } from "react-icons/io";
 import { IoDocumentText } from "react-icons/io5";
@@ -64,7 +65,11 @@ export default function StepWizard() {
                         </div>
                     </div>
 
-                    <button type='button' className='bg-tertiary hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
+                    <Link to={'/painelUsuario'} className='bg-tertiary text-center hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
+                        Próximo
+                    </Link>
+
+                    <button type='button' className='bg-tertiary hidden hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
                         Próximo
                     </button>
                 </section>
