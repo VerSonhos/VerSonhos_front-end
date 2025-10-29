@@ -1,6 +1,7 @@
 import Sidebar from '../components/SideBar/SideBar';
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 import VLibras from '@djpfs/react-vlibras';
+import Chatbot from "../components/Chatbot/Chatbot";
 
 const DashboardLayout = ({ children }) => {
   return (
@@ -11,6 +12,7 @@ const DashboardLayout = ({ children }) => {
       </section>
       <VLibras forceOnload={true} />
       <AccessibilityWidget />
+      <Chatbot />
     </main>
   );
 };
