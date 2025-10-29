@@ -42,19 +42,19 @@ export default function Footer() {
                 <section className='w-3xs my-10 md:my-0'>
                     <ul className='flex flex-row justify-center gap-5'>
                         <li className='flex justify-center items-center w-15 h-15 rounded-2xl bg-white-custom shadow-lg hover:scale-110 hover:shadow-red-500 transition ease-in-out '>
-                            <a href="mailto:email@versonhos.com.br" target="_blank" className='w-full h-full flex flex-row justify-center items-center'>
+                            <a href="mailto:contatoversonhos@gmail.com" target="_blank" className='w-full h-full flex flex-row justify-center items-center'>
                                 <SiGmail className='text-red-500 text-5xl' />
                             </a>
                         </li>
                         
                         <li className='flex justify-center items-center w-15 h-15 rounded-2xl bg-white-custom shadow-lg hover:scale-110 hover:shadow-blue-800 transition ease-in-out '>
-                            <a href="https://www.linkedin.com/" target="_blank" className='w-full h-full flex flex-row justify-center items-center'>
+                            <a href="https://www.linkedin.com/company/versonhos/posts/?feedView=all" target="_blank" className='w-full h-full flex flex-row justify-center items-center'>
                                 <FaLinkedin className='text-blue-800 text-5xl' />
                             </a>
                         </li>
 
                         <li className='flex justify-center items-center w-15 h-15 rounded-2xl bg-white-custom shadow-lg hover:scale-110 hover:shadow-pink-600 transition ease-in-out '>
-                            <a href="https://www.instagram.com/" target="_blank" className='w-full h-full flex flex-row justify-center items-center'>
+                            <a href="https://www.instagram.com/versonhos.oficial/" target="_blank" className='w-full h-full flex flex-row justify-center items-center'>
                                 <FaInstagram className='text-pink-600 text-5xl' />
                             </a>
                         </li>
