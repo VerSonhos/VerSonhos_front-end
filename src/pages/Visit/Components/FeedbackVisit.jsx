@@ -97,16 +97,16 @@ export default function TestimonialsSection() {
           </CarouselContent>
 
           <CarouselPrevious 
-            className="absolute left-0 top-1/2 -translate-y-1/2 
-                       w-10 h-10 border-blue-400 bg-white text-blue-600 
-                       hover:bg-blue-50 hover:text-blue-700 shadow-md transition-all
-                       md:left-[-1rem] lg:left-[-2rem] z-20" 
+            className="absolute top-1/2 -translate-y-1/2 
+             w-9 h-9 sm:w-10 sm:h-10 border-blue-400 bg-white text-blue-600 
+             hover:bg-blue-50 hover:text-blue-700 shadow-md transition-all 
+             left-2 sm:left-0 md:left-[-2rem] lg:left-[-3.5rem] z-20"
           />
           <CarouselNext 
-            className="absolute right-0 top-1/2 -translate-y-1/2 
-                       w-10 h-10 border-blue-400 bg-white text-blue-600 
-                       hover:bg-blue-50 hover:text-blue-700 shadow-md transition-all
-                       md:right-[-1rem] lg:right-[-2rem] z-20"
+            className="absolute top-1/2 -translate-y-1/2 
+             w-9 h-9 sm:w-10 sm:h-10 border-blue-400 bg-white text-blue-600 
+             hover:bg-blue-50 hover:text-blue-700 shadow-md transition-all 
+             right-2 sm:right-0 md:right-[-2rem] lg:right-[-3.5rem] z-20"
           />
         </Carousel>
       </div>
