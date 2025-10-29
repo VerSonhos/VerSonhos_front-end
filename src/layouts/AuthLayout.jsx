@@ -1,5 +1,6 @@
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 import VLibras from '@djpfs/react-vlibras';
+import Chatbot from "../components/Chatbot/Chatbot";
 
 const AuthLayout = ({ children }) => {
   return (
@@ -7,6 +8,7 @@ const AuthLayout = ({ children }) => {
       {children}
       <VLibras forceOnload={true} />
       <AccessibilityWidget />
+      <Chatbot />
     </main>
   );
 };

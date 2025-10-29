@@ -15,8 +15,6 @@ import proa from "../../assets/icons/logo-proa.png";
 import senac from "../../assets/icons/logo-senac.png";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import Chatbot from "../../pages/Chatbot/Chatbot";
-
 
 export default function Home() {
   const fadeDeafult = {
@@ -377,7 +375,6 @@ export default function Home() {
           />
         </div>
       </motion.section>
-      <Chatbot />
     </MainLayout>
   );
 }

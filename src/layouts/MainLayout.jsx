@@ -2,6 +2,7 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 import VLibras from '@djpfs/react-vlibras';
+import Chatbot from "../components/Chatbot/Chatbot";
 
 const MainLayout = ({ children }) => {
   return (
@@ -13,6 +14,7 @@ const MainLayout = ({ children }) => {
       <Footer />
       <VLibras forceOnload={true} />
       <AccessibilityWidget />
+      <Chatbot />
     </main>
   );
 };
