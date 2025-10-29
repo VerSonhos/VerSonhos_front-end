@@ -2,7 +2,7 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 import VLibras from '@djpfs/react-vlibras';
-import Chatbot from "../components/Chatbot/Chatbot";
+import Chatbot from "../components/ChatBot/ChatBot";
 
 const MainLayout = ({ children }) => {
   return (

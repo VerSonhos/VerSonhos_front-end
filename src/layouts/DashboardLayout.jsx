@@ -1,7 +1,7 @@
 import Sidebar from '../components/SideBar/SideBar';
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 import VLibras from '@djpfs/react-vlibras';
-import Chatbot from "../components/Chatbot/Chatbot";
+import Chatbot from "../components/ChatBot/ChatBot";
 
 const DashboardLayout = ({ children }) => {
   return (
