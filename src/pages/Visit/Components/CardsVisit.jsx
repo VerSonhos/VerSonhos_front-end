@@ -4,7 +4,7 @@ import IconVisita from '../../../assets/images/icon_visita.png';
 
 const MvvCard = ({ item }) => (
     <div
-      className="bg-white text-gray-800 rounded-2xl shadow-lg p-6 h-110 flex flex-col items-center justify-start hover:scale-105 transition-transform duration-300 border-tertiary border-3">
+      className="bg-white text-gray-800 rounded-2xl shadow-lg p-6 h-115 flex flex-col items-center justify-start hover:scale-105 transition-transform duration-300 border-tertiary border-3">
       <div className="w-64 h-64 mb-4 flex items-center justify-center">
         <img
           src={item.img}
