@@ -11,7 +11,7 @@ import impactoFundo from "../../assets/images/Seção-impacto.png";
 import Icon1 from "../../assets/icons/icon1-impacto.png";
 import Icon2 from "../../assets/icons/icon2-impacto.png";
 import Icon3 from "../../assets/icons/icon3-impacto.png";
-import proa from "../../assets/icons/logo-proa.png";
+import proa from "../../assets/icons/logo-proa.svg";
 import senac from "../../assets/icons/logo-senac.png";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -355,7 +355,7 @@ export default function Home() {
           <motion.img
             src={proa}
             alt="Herói 1"
-            className="w-30 h-auto"
+            className="w-50 h-auto"
             custom={1}
             variants={fadeUp}
             initial="hidden"
