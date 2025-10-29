@@ -5,28 +5,56 @@
   z-index: 9999;
 }
 
+/*imagem atras do chatbot*/
+.chatBackground {
+  position: fixed;
+  bottom: 370px; 
+  right: 0;
+  width: 200px; 
+  opacity: 0.8;
+  z-index: 9998; 
+  pointer-events: none;
+}
+
+/* Ícone fixo na mesma posição e com efeito */
 .chatbotIcon {
-  width: 80px;
-  height: 80px; 
+  width: 70px;
+  height: 70px;
   cursor: pointer;
   border-radius: 50%;
   object-fit: cover;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.chatbotIcon:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 18px rgba(49, 132, 239, 0.6);
+}
+
+/* Janela do chat */
 .chatWindow {
   width: 320px;
-  height: 450px;
+  height: 310px;
   background: white;
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 30px; 
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  z-index: 9999;
 }
 
+/* Cabeçalho */
 .chatHeader {
-  background: #3184EF;
+  background: #3184ef;
   color: white;
   padding: 10px;
   display: flex;
@@ -34,6 +62,7 @@
   align-items: center;
 }
 
+/* Corpo */
 .chatBody {
   flex: 1;
   padding: 10px;
@@ -45,7 +74,7 @@
 
 .userMessage {
   align-self: flex-end;
-  background: #EB8AB4;
+  background: #eb8ab4;
   color: white;
   padding: 6px 10px;
   border-radius: 8px;
@@ -54,12 +83,13 @@
 
 .botMessage {
   align-self: flex-start;
-  background: #F0F0F0;
+  background: #f0f0f0;
   padding: 6px 10px;
   border-radius: 8px;
   max-width: 80%;
 }
 
+/* Input */
 .chatInput {
   display: flex;
   border-top: 1px solid #ccc;
@@ -73,7 +103,7 @@
 }
 
 .chatInput button {
-  background: #3184EF;
+  background: #3184ef;
   color: white;
   border: none;
   padding: 0 12px;

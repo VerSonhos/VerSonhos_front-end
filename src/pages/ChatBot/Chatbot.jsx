@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import chatbotIcon from "../../assets/icons/chatbot.png";
+import chatBg from "../../assets/images/will-chat.png"; 
 import styles from "./chatbot.module.css";
 
 export default function Chatbot() {
@@ -8,15 +9,21 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
+  useEffect(() => {
+    setMessages([]);
+    setInput("");
+  }, []);
+
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = { role: "user", content: input };
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
+    //api gemini
     try {
-      const response = await fetch("/api/gemini", {
+      const response = await fetch("/api/gemini", {//colocar endpoint
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...messages, userMessage] }),
@@ -29,22 +36,25 @@ export default function Chatbot() {
     }
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    setMessages([]);
-    setInput("");
-  };
-
-  const handleToggle = () => {
-    if (open) {
-      handleClose();
-    } else {
-      setOpen(true);
-    }
-  };
+  const handleToggle = () => setOpen(!open);
+  const handleClose = () => setOpen(false);
 
   return (
     <div className={styles.chatbotContainer}>
+      <AnimatePresence>
+        {open && (
+          <motion.img
+            src={chatBg}
+            alt="Fundo do chat"
+            className={styles.chatBackground}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.4 }}
+          />
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {open && (
           <motion.div
@@ -55,9 +65,10 @@ export default function Chatbot() {
             transition={{ duration: 0.3 }}
           >
             <div className={styles.chatHeader}>
-              <h4>Chatbot</h4>
+              <h4>Will</h4>
               <button onClick={handleClose}>×</button>
             </div>
+
             <div className={styles.chatBody}>
               {messages.map((msg, i) => (
                 <div
@@ -72,6 +83,7 @@ export default function Chatbot() {
                 </div>
               ))}
             </div>
+
             <div className={styles.chatInput}>
               <input
                 type="text"
@@ -86,11 +98,13 @@ export default function Chatbot() {
         )}
       </AnimatePresence>
 
-      <img
+      <motion.img
         src={chatbotIcon}
         alt="Chatbot"
         className={styles.chatbotIcon}
         onClick={handleToggle}
+        whileHover={{ scale: 1.1 }} 
+        transition={{ type: "spring", stiffness: 300 }}
       />
     </div>
   );
