@@ -39,10 +39,13 @@ export default function OdsSection() {
                 <img
                   src={o.img}
                   alt={o.title}
-                  className="w-full h-full object-contain"
+                  className={`w-full h-full object-contain ${
+                    o.id === 10
+                      ? "drop-shadow-[0_8px_10px_rgba(0,0,0,0.6)]"
+                      : ""
+                  }`}
                 />
               </div>
-
             </div>
           ))}
         </div>
