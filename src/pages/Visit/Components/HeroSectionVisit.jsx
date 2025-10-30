@@ -33,7 +33,7 @@ export default function HeroSectionVisit(){
                     Cada visita é um portal para a alegria e a esperança
                   </p>
                   <motion.button
-                    className="mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105 font-inter"
+                    className="mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105 font-fredoka"
                     whileHover={{ scale: 1.05 }}
                   >
                     Agendar visita
