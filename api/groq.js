@@ -22,9 +22,16 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || "Desculpe, não consegui responder agora.";
+    console.log("Resposta da Groq:", data);
 
+    if (data.error) {
+      console.error("Erro Groq:", data.error);
+      return res.status(500).json({ reply: "Erro ao processar resposta da IA 😢" });
+    }
+
+    const reply = data.choices?.[0]?.message?.content || "Desculpe, não consegui responder agora.";
     return res.status(200).json({ reply });
+
   } catch (error) {
     console.error("Erro na API Groq:", error);
     return res.status(500).json({ reply: "Erro na comunicação com a IA 😢" });
