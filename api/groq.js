@@ -16,11 +16,31 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "llama-3.1-8b-instant",
-        messages: messages.map((m) => ({
-          role: m.role === "bot" ? "assistant" : "user",
-          content: m.content,
-        })),
+        messages: [
+          {
+            role: "system",
+            content: `
+      Você é o Will, o mascote e assistente virtual do projeto VerSonhos 💙.
+      Fale sempre de forma acolhedora, otimista e inspiradora.
+      Explique apenas assuntos relacionados ao site VerSonhos, como:
+      - Realidade virtual e experiências imersivas;
+      - Missão de levar alegria e aprendizado a crianças hospitalizadas;
+      - Como participar ou entrar em contato;
+      - Parcerias e impacto social
+
+      Se o usuário fizer perguntas fora desses temas,
+      responda de forma gentil redirecionando a conversa, por exemplo:
+      "Posso te contar mais sobre as experiências em VR que o VerSonhos oferece?".
+      Não forneça informações técnicas ou pessoais.
+            `,
+          },
+          ...messages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        ],
       }),
+
     });
 
     const data = await response.json();
