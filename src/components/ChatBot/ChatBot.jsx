@@ -8,55 +8,43 @@ export default function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-
-  useEffect(() => {
-    console.log("Chave carregada:", import.meta.env.VITE_GROQ_API_KEY);
-  }, []);
 
   useEffect(() => {
     setMessages([]);
     setInput("");
   }, []);
 
-const sendMessage = async () => {
-  if (!input.trim()) return;
+  const sendMessage = async () => {
+    if (!input.trim()) return;
 
-  const userMessage = { role: "user", content: input };
-  setMessages((prev) => [...prev, userMessage]);
-  setInput("");
+    const userMessage = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
 
-  try {
-    const response = await fetch("/api/groq", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        messages: [...messages, userMessage],
-      }),
-    });
+    try {
+      const response = await fetch("/api/groq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: [...messages, userMessage] }),
+      });
+
+      const data = await response.json();
+      console.log("🧠 Resposta da rota /api/groq:", data);
 
 
-    const data = await response.json();
-    console.log("Resposta da rota /api/groq:", data);
-    if (data.error) {
-      console.error("Erro da Groq:", data.error);
-      throw new Error(data.error.message);
+      const botMessage = {
+        role: "bot",
+        content: data.reply || "Desculpe, não consegui responder agora.",
+      };
+
+      setMessages((prev) => [...prev, botMessage]);
+
+    } catch (err) {
+      console.error("Erro ao enviar mensagem:", err);
+      const botMessage = { role: "bot", content: "Erro na comunicação com a IA 😢" };
+      setMessages((prev) => [...prev, botMessage]);
     }
-
-    const botMessage = {
-      role: "bot",
-      content: data.choices?.[0]?.message?.content || "Desculpe, não consegui responder agora.",
-    };
-
-    setMessages((prev) => [...prev, botMessage]);
-  } catch (err) {
-    console.error("Erro ao enviar mensagem:", err);
-    const botMessage = { role: "bot", content: "Erro na comunicação com a IA 😢" };
-    setMessages((prev) => [...prev, botMessage]);
-  }
-};
-
-
+  };
 
   const handleToggle = () => setOpen(!open);
   const handleClose = () => setOpen(false);
@@ -125,7 +113,7 @@ const sendMessage = async () => {
         alt="Chatbot"
         className={styles.chatbotIcon}
         onClick={handleToggle}
-        whileHover={{ scale: 1.1 }} 
+        whileHover={{ scale: 1.1 }}
         transition={{ type: "spring", stiffness: 300 }}
       />
     </div>

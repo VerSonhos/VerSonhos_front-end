@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     if (data.error) {
       console.error("Erro Groq:", data.error);
       return res.status(500).json({
-        reply: "Erro ao processar resposta da IA 😢",
+        reply: "Erro ao processar resposta da IA",
         debug: data.error,
       });
     }
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error("Erro na API Groq:", error);
     return res.status(500).json({
-      reply: "Erro na comunicação com a IA 😢",
+      reply: "Erro na comunicação com a IA",
       debug: error.message,
     });
   }
