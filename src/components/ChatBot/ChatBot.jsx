@@ -29,28 +29,12 @@ const sendMessage = async () => {
   try {
     const response = await fetch("/api/groq", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
-        messages: [
-          // prompt inicial opcional (personalidade do Will)
-          {
-            role: "system",
-            content:
-              "Você é o Will, um assistente simpático e otimista que faz parte do projeto VerSonhos. Fale de forma acolhedora e simples, sempre tentando ajudar as pessoas com empatia.",
-          },
-          // histórico da conversa, mas com papéis válidos
-          ...messages.map((m) => ({
-            role: m.role === "bot" ? "assistant" : "user",
-            content: m.content,
-          })),
-          userMessage,
-        ],
+        messages: [...messages, userMessage],
       }),
     });
+
 
     const data = await response.json();
 
