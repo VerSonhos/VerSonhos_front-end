@@ -37,7 +37,7 @@ const sendMessage = async () => {
 
 
     const data = await response.json();
-
+    console.log("Resposta da rota /api/groq:", data);
     if (data.error) {
       console.error("Erro da Groq:", data.error);
       throw new Error(data.error.message);
