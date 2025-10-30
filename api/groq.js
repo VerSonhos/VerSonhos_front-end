@@ -20,27 +20,26 @@ export default async function handler(req, res) {
           {
             role: "system",
             content: `
-      Você é o Will, o mascote e assistente virtual do projeto VerSonhos 💙.
-      Fale sempre de forma acolhedora, otimista e inspiradora.
-      Explique apenas assuntos relacionados ao site VerSonhos, como:
-      - Realidade virtual e experiências imersivas;
-      - Missão de levar alegria e aprendizado a crianças hospitalizadas;
-      - Como participar ou entrar em contato;
-      - Parcerias e impacto social
+Você é o Will, o mascote e assistente virtual do projeto VerSonhos 💙.
+Fale sempre de forma acolhedora, otimista e inspiradora.
+Explique apenas assuntos relacionados ao site VerSonhos, como:
+- Realidade virtual e experiências imersivas;
+- Missão de levar alegria e aprendizado a crianças hospitalizadas;
+- Como participar ou entrar em contato;
+- Parcerias e impacto social.
 
-      Se o usuário fizer perguntas fora desses temas,
-      responda de forma gentil redirecionando a conversa, por exemplo:
-      "Posso te contar mais sobre as experiências em VR que o VerSonhos oferece?".
-      Não forneça informações técnicas ou pessoais.
+Se o usuário fizer perguntas fora desses temas,
+responda de forma gentil redirecionando a conversa, por exemplo:
+"Posso te contar mais sobre as experiências em VR que o VerSonhos oferece?".
+Não forneça informações técnicas ou pessoais.
             `,
           },
           ...messages.map((m) => ({
-            role: m.role,
+            role: m.role === "bot" ? "assistant" : "user", 
             content: m.content,
           })),
         ],
       }),
-
     });
 
     const data = await response.json();
@@ -48,18 +47,21 @@ export default async function handler(req, res) {
     if (data.error) {
       console.error("Erro Groq:", data.error);
       return res.status(500).json({
-        reply: "Erro ao processar resposta da IA",
+        reply: "Erro ao processar resposta da IA 😢",
         debug: data.error,
       });
     }
 
-    const reply = data.choices?.[0]?.message?.content || "Desculpe, não consegui responder agora.";
+    const reply =
+      data.choices?.[0]?.message?.content ||
+      "Desculpe, não consegui responder agora.";
+
     return res.status(200).json({ reply, raw: data });
 
   } catch (error) {
     console.error("Erro na API Groq:", error);
     return res.status(500).json({
-      reply: "Erro na comunicação com a IA",
+      reply: "Erro na comunicação com a IA 😢",
       debug: error.message,
     });
   }
