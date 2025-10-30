@@ -102,7 +102,7 @@ export default function Donate() {
             <h3>Doações em depósito ou pix:</h3>
             <p>
               Nome: Heitor Lopes Sales<br />
-              323 - Mercado Pago<br />
+              Banco: 323 - Mercado Pago<br />
               Agência: 0001<br />
               Conta Corrente: 70999644-56<br />
               VerSonhos<br />
