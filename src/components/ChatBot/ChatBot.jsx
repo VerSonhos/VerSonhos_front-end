@@ -8,33 +8,71 @@ export default function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+
+  useEffect(() => {
+    console.log("Chave carregada:", import.meta.env.VITE_GROQ_API_KEY);
+  }, []);
 
   useEffect(() => {
     setMessages([]);
     setInput("");
   }, []);
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+const sendMessage = async () => {
+  if (!input.trim()) return;
 
-    const userMessage = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+  const userMessage = { role: "user", content: input };
+  setMessages((prev) => [...prev, userMessage]);
+  setInput("");
 
-    //api gemini
-    try {
-      const response = await fetch("/api/gemini", {//colocar endpoint
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [...messages, userMessage] }),
-      });
-      const data = await response.json();
-      const botMessage = { role: "bot", content: data.reply };
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (err) {
-      console.error(err);
+  try {
+    const response = await fetch("/api/groq", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "llama-3.1-8b-instant",
+        messages: [
+          // prompt inicial opcional (personalidade do Will)
+          {
+            role: "system",
+            content:
+              "Você é o Will, um assistente simpático e otimista que faz parte do projeto VerSonhos. Fale de forma acolhedora e simples, sempre tentando ajudar as pessoas com empatia.",
+          },
+          // histórico da conversa, mas com papéis válidos
+          ...messages.map((m) => ({
+            role: m.role === "bot" ? "assistant" : "user",
+            content: m.content,
+          })),
+          userMessage,
+        ],
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      console.error("Erro da Groq:", data.error);
+      throw new Error(data.error.message);
     }
-  };
+
+    const botMessage = {
+      role: "bot",
+      content: data.choices?.[0]?.message?.content || "Desculpe, não consegui responder agora.",
+    };
+
+    setMessages((prev) => [...prev, botMessage]);
+  } catch (err) {
+    console.error("Erro ao enviar mensagem:", err);
+    const botMessage = { role: "bot", content: "Erro na comunicação com a IA 😢" };
+    setMessages((prev) => [...prev, botMessage]);
+  }
+};
+
+
 
   const handleToggle = () => setOpen(!open);
   const handleClose = () => setOpen(false);
