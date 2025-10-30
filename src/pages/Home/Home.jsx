@@ -7,7 +7,7 @@ import card3 from "../../assets/images/card3.png";
 import doacaoImg from "../../assets/images/doacaoImg-home.png";
 import quartoInternacao from "../../assets/images/quartos-internacao-home.png";
 import salaEspera from "../../assets/images/salas-espera.png";
-import impactoFundo from "../../assets/images/Seção-impacto.png";
+import impactoFundo from "../../assets/images/Secao-impacto.png";
 import Icon1 from "../../assets/icons/icon1-impacto.png";
 import Icon2 from "../../assets/icons/icon2-impacto.png";
 import Icon3 from "../../assets/icons/icon3-impacto.png";
@@ -350,11 +350,11 @@ export default function Home() {
           Heróis que nos<span className="text-[#3184EF]"> apoiam</span>
         </motion.h2>
 
-        <div className="flex flex-col md:flex-row justify-center items-end gap-20 px-6">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-20 px-6">
           <motion.img
             src={proa}
             alt="Herói 1"
-            className="w-50 h-auto"
+            className="w-50 pt-15 h-auto"
             custom={1}
             variants={fadeUp}
             initial="hidden"
