@@ -4,8 +4,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const body = await req.text();
-    const { messages } = JSON.parse(body);
+    const { messages } = req.body;
 
     console.log("🔑 GROQ_API_KEY:", process.env.GROQ_API_KEY ? "Carregada" : "Não encontrada");
 
@@ -25,16 +24,23 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+
     if (data.error) {
       console.error("Erro Groq:", data.error);
-      return res.status(500).json({ reply: "Erro ao processar resposta da IA", debug: data.error });
+      return res.status(500).json({
+        reply: "Erro ao processar resposta da IA 😢",
+        debug: data.error,
+      });
     }
 
     const reply = data.choices?.[0]?.message?.content || "Desculpe, não consegui responder agora.";
-    return res.status(200).json({ reply });
+    return res.status(200).json({ reply, raw: data });
 
   } catch (error) {
     console.error("Erro na API Groq:", error);
-    return res.status(500).json({ reply: "Erro na comunicação com a IA", debug: error.message });
+    return res.status(500).json({
+      reply: "Erro na comunicação com a IA 😢",
+      debug: error.message,
+    });
   }
 }
