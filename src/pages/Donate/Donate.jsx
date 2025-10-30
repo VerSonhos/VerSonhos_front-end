@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 import fundoDonate from "../../assets/videos/fundoDonate.mp4";
 import fundoLinhas from "../../assets/images/fundo-linhas.png";
-import qrcode from "../../assets/images/QrCode.png";
+import qrcode from "../../assets/images/qr-code.svg";
 import logoCard from "../../assets/images/logo-donate.png";
 
 export default function Donate() {
@@ -101,12 +101,13 @@ export default function Donate() {
           <div className={styles.donateText}>
             <h3>Doações em depósito ou pix:</h3>
             <p>
-              Banco Bradesco<br />
-              AG: 0000<br />
-              C/C: 00000-0<br />
+              Nome: Heitor Lopes Sales<br />
+              323 - Mercado Pago<br />
+              Agência: 0001<br />
+              Conta Corrente: 70999644-56<br />
               VerSonhos<br />
-              CNPJ: 00.000.000/0000-00<br />
-              Pix:<br />
+              {/* CNPJ: 00.000.000/0000-00<br /> */}
+              Pix: contatoversonhos@gmail.com<br />
               Escolha a opção “digitar agência e conta” e utilize os dados acima.<br />
               A sua doação será concluída sem custo.
             </p>
