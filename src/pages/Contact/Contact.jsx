@@ -38,19 +38,19 @@ export default function Contact() {
             <div className="flex items-center gap-3">
               <img src={ImgTelefone} alt="Telefone" className="w-8 h-8" />
               <p className="text-gray-800 text-inter">
-                <strong>Telefone:</strong> 11 99999-0000
+                <strong>Telefone:</strong> 11 95520-8869
               </p>
             </div>
             <div className="flex items-center gap-3">
               <img src={ImgEmail} alt="E-mail" className="w-8 h-8" />
               <p className="text-gray-800 text-inter">
-                <strong>E-mail:</strong> contato@versonhos.com.br
+                <strong>E-mail:</strong> contatoversonhos@gmail.com
               </p>
             </div>
             <div className="flex items-center gap-3">
               <img src={ImgPing} alt="Endereço" className="w-8 h-8" />
               <p className="text-gray-800 text-inter">
-                <strong>Endereço:</strong> Rua XXXXXXXX
+                <strong>Endereço:</strong> R. Tito, 54 - Vila Romana, São Paulo - SP, 05051-000
               </p>
             </div>
           </div>
