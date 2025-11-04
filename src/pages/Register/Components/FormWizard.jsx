@@ -15,7 +15,7 @@ export default function FormWizard() {
                     Voltar
                 </Link>
 
-                <section className='shadow-custom-sm w-[90%] md:w-[65%] m-auto px-10 py-5 rounded-lg'>
+                <section className='shadow-custom-sm w-[90%] md:w-[85%] m-auto px-10 py-5 rounded-lg'>
                     <img src={LogoForm} alt="Logotipo VerSonhos" className='w-[80%] md:w-[65%] mx-auto mb-7' />
 
                     <div className='text-center font-inter mb-7'>

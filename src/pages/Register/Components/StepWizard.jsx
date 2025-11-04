@@ -99,14 +99,14 @@ export default function StepWizard() {
     return (
         <>
             <form className='w-full mb-5'>
-                <section className='flex justify-center items-center gap-8 px-5 mb-2'>
+                <section className='flex flex-wrap justify-center items-center gap-2 md:gap-8 mb-2'>
                     {[
                         { Icon: PiCityFill, label: "Empresa" },
                         { Icon: MdWork, label: "Representante" },
                         { Icon: FaLocationDot, label: "Localização" },
                         { Icon: HiInformationCircle, label: "Informações adicionais" },
                     ].map(({ Icon, label }, i) => (
-                        <div key={i} className="flex flex-col justify-between items-center">
+                        <div key={i} className="flex w-24 flex-col justify-between items-center">
                             <div
                                 className={`border-2 p-2 rounded-full ${
                                     i + 1 === step
