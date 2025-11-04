@@ -14,7 +14,6 @@ import { GoGoal } from "react-icons/go";
 import { MdWork } from "react-icons/md";
 import { PiCityFill } from "react-icons/pi";
 import { HiInformationCircle } from "react-icons/hi";
-import ModalLgpd from './ModalLgpd'
 
 export default function StepWizard() {
     const [step, setStep] = useState(1);
