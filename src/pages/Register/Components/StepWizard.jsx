@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IoIosMail, IoIosPaper } from "react-icons/io";
 import { IoDocumentText } from "react-icons/io5";
 import { TbPencilStar, TbNumber } from "react-icons/tb";
@@ -14,9 +14,21 @@ import { GoGoal } from "react-icons/go";
 import { MdWork } from "react-icons/md";
 import { PiCityFill } from "react-icons/pi";
 import { HiInformationCircle } from "react-icons/hi";
+import ModalRegister from './ModalRegister';
+import { getCidadesSP } from '../../../../api/ibgeCidades';
 
 export default function StepWizard() {
     const [step, setStep] = useState(1);
+    const [cidades, setCidades] = useState([]);
+
+    useEffect(() => {
+        const carregarCidades = async () => {
+            const lista = await getCidadesSP();
+            setCidades(lista);
+        };
+        carregarCidades();
+    }, []);
+
     const [formData, setFormData] = useState({
         razaoSocial: '',
         nomeFantasia: '',
@@ -38,6 +50,7 @@ export default function StepWizard() {
         passwordRegister: '',
         passwordRegisterConfirm: '',
         objetivoRegister: '',
+        termosLgpd: '',
     });
     
     const [errors, setErrors] = useState({});
@@ -79,6 +92,7 @@ export default function StepWizard() {
             if (!formData.passwordRegister.trim()) newErrors.passwordRegister = 'Campo obrigatório';
             if (!formData.passwordRegisterConfirm.trim()) newErrors.passwordRegisterConfirm = 'Campo obrigatório';
             if (!formData.objetivoRegister.trim()) newErrors.objetivoRegister = 'Campo obrigatório';
+            if (!formData.termosLgpd) newErrors.termosLgpd = 'Campo obrigatório';
         }
 
         setErrors(newErrors);
@@ -279,12 +293,10 @@ export default function StepWizard() {
                                     onChange={handleChange}
                                     className={`bg-gray-100 border-2 ${errors['cidadeRegister'] ? 'border-red-500' : 'border-gray-300 focus:border-tertiary'} outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4 appearance-none cursor-pointer`} 
                                     >
-                                    <option value="" disabled selected>Informe a cidade</option>
-                                    <option value="sao-paulo">São Paulo</option>
-                                    <option value="rio-de-janeiro">Rio de Janeiro</option>
-                                    <option value="belo-horizonte">Belo Horizonte</option>
-                                    <option value="curitiba">Curitiba</option>
-                                    <option value="porto-alegre">Porto Alegre</option>
+                                    <option value="" disabled>Informe a cidade</option>
+                                    {cidades.map((cidade) => (
+                                        <option key={cidade} value={cidade}>{cidade}</option>
+                                    ))}
                                 </select>
 
                                 <svg
@@ -382,7 +394,7 @@ export default function StepWizard() {
                                 </button>
                             </div>
 
-                            {errors['cepRegistpasswordRegisterConfirmer'] && <p className='text-red-500 text-sm'>{errors['passwordRegisterConfirm']}</p>}
+                            {errors['passwordRegisterConfirm'] && <p className='text-red-500 text-sm'>{errors['passwordRegisterConfirm']}</p>}
                         </div>
 
                         <div className='w-full flex flex-col items-start justify-center gap-2'>
@@ -399,7 +411,7 @@ export default function StepWizard() {
                                     onChange={handleChange}
                                     className={`bg-gray-100 border-2 ${errors['objetivoRegister'] ? 'border-red-500' : 'border-gray-300 focus:border-tertiary'} outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4 appearance-none cursor-pointer`}
                                     >
-                                    <option value="" disabled selected>tipo: parceria ou contratante</option>
+                                    <option value="" disabled>tipo: parceria ou contratante</option>
                                     <option value="parceria">Parceria</option>
                                     <option value="contratante">Contratante</option>
                                 </select>
@@ -421,15 +433,11 @@ export default function StepWizard() {
 
                         {/* Input Termos LGPD */}
                         <div className='w-full flex items-start justify-center gap-2'>
-                            <input type="checkbox" onChange={handleChange} id='termosLgpd' name='termosLgpd' className="mt-1 accent-blue-600"/>
+                            <input type="checkbox" onChange={(e) => {setFormData({ ...formData, termosLgpd: e.target.checked }); setErrors({ ...errors, termosLgpd: '' });}} checked={formData.termosLgpd} id='termosLgpd' name='termosLgpd' className="mt-1 accent-blue-600"/>
                             
-                            <label htmlFor='termosLgpd'>                            
+                            <label htmlFor='termosLgpd' className="flex items-center flex-wrap gap-2 select-none">                            
                                 <p className={`${errors['termosLgpd'] ? 'text-red-500' : ''}`}> 
-                                    Li e concordo com os
-                                    <span className="text-blue-600 underline cursor-pointer" >
-                                        Termos de Consentimento e Tratamento de Dados
-                                    </span> 
-                                    conforme a LGPD.
+                                    Li e concordo com os <ModalRegister className="contents" /> conforme a LGPD.
                                 </p>
                             </label>
                         </div>
