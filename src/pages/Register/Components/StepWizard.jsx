@@ -15,6 +15,7 @@ import { MdWork } from "react-icons/md";
 import { PiCityFill } from "react-icons/pi";
 import { HiInformationCircle } from "react-icons/hi";
 import ModalRegister from './ModalRegister';
+import { applyMask } from "@/utils/masks";
 import { getCidadesSP } from '../../../../api/ibgeCidades';
 
 export default function StepWizard() {
@@ -61,8 +62,17 @@ export default function StepWizard() {
     const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-        setErrors({ ...errors, [e.target.name]: '' });
+        const { name, value } = e.target;
+        let maskedValue = value;
+
+        if (name === "cnpj") maskedValue = applyMask(value, "cnpj");
+        if (name === "numeroInscricao") maskedValue = applyMask(value, "inscricao");
+        if (name === "cpf") maskedValue = applyMask(value, "cpf");
+        if (name === "phoneRegister") maskedValue = applyMask(value, "phone");
+        if (name === "cepRegister") maskedValue = applyMask(value, "cep");
+
+        setFormData({ ...formData, [name]: maskedValue });
+        setErrors({ ...errors, [name]: "" });
     };
 
     const validateStep = () => {
@@ -237,7 +247,7 @@ export default function StepWizard() {
                             
                             <div className='w-full flex relative'>
                                 <IoIosMail className='text-xl text-black-custom-400 absolute left-2 top-2.5'/>
-                                <input type="text" onChange={handleChange} value={formData.emailRegister} placeholder='seu@email.com' name="emailRegister" id="emailRegister" className={`bg-gray-100 border-2 ${errors['emailRegister'] ? 'border-red-500' : 'border-gray-300 focus:border-tertiary'} outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4`} />
+                                <input type="email" onChange={handleChange} value={formData.emailRegister} placeholder='seu@email.com' name="emailRegister" id="emailRegister" className={`bg-gray-100 border-2 ${errors['emailRegister'] ? 'border-red-500' : 'border-gray-300 focus:border-tertiary'} outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4`} />
                             </div>
 
                             {errors['emailRegister'] && <p className='text-red-500 text-sm'>{errors['emailRegister']}</p>}
@@ -416,7 +426,6 @@ export default function StepWizard() {
                                     <option value="contratante">Contratante</option>
                                 </select>
 
-                                {/* Ícone da setinha do select */}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="w-4 h-4 text-black-custom-400 absolute right-3 top-3 pointer-events-none"
@@ -431,7 +440,6 @@ export default function StepWizard() {
                             {errors['objetivoRegister'] && <p className='text-red-500 text-sm'>{errors['objetivoRegister']}</p>}
                         </div>
 
-                        {/* Input Termos LGPD */}
                         <div className='w-full flex items-start justify-center gap-2'>
                             <input type="checkbox" onChange={(e) => {setFormData({ ...formData, termosLgpd: e.target.checked }); setErrors({ ...errors, termosLgpd: '' });}} checked={formData.termosLgpd} id='termosLgpd' name='termosLgpd' className="mt-1 accent-blue-600"/>
                             
