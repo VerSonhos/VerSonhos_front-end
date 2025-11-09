@@ -101,6 +101,15 @@ export default function StepWizard() {
         if (step === 4) {
             if (!formData.passwordRegister.trim()) newErrors.passwordRegister = 'Campo obrigatório';
             if (!formData.passwordRegisterConfirm.trim()) newErrors.passwordRegisterConfirm = 'Campo obrigatório';
+            if (
+                formData.passwordRegister.trim() &&
+                formData.passwordRegisterConfirm.trim() &&
+                formData.passwordRegister !== formData.passwordRegisterConfirm
+            ) 
+            {
+                newErrors.passwordRegister = 'As senhas não coincidem';
+                newErrors.passwordRegisterConfirm = 'As senhas não coincidem';
+            }
             if (!formData.objetivoRegister.trim()) newErrors.objetivoRegister = 'Campo obrigatório';
             if (!formData.termosLgpd) newErrors.termosLgpd = 'Campo obrigatório';
         }
@@ -118,7 +127,6 @@ export default function StepWizard() {
         setErrors({});
         setStep(step - 1);
     };
-
 
     return (
         <>
