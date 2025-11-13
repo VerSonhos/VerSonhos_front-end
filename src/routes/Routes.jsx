@@ -10,6 +10,7 @@ import Register from '../pages/Register/Register'
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
+import HomeUserAgendamento from '../pages/HomeUserAgendamento/HomeUserAgendamento'
 
 const router = createBrowserRouter([
     { path: "/", element: <Home />, },
@@ -33,6 +34,8 @@ const router = createBrowserRouter([
     { path: "/senhaNova", element: <ChangePassword />, },
 
     { path: "/painelUsuario", element: <HomeUser />, },
+
+    { path: "/painelUsuarioAgendamento", element: <HomeUserAgendamento />, },
 ]);
 
 export default function  Routes() {
