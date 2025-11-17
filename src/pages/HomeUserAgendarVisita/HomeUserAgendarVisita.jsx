@@ -52,7 +52,7 @@ function CPFInput() {
 }
 
 
-export default function HomeUserAgendamento() {
+export default function HomeUserAgendarVisita() {
   return (
     <DashboardLayout>
       <div className="p-8 max-w-6xl mx-auto">
