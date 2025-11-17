@@ -13,6 +13,7 @@ import Icon2 from "../../assets/icons/icon2-impacto.png";
 import Icon3 from "../../assets/icons/icon3-impacto.png";
 import proa from "../../assets/icons/logo-proa.png";
 import senac from "../../assets/icons/logo-senac.png";
+import GlassesExperience from "./components/GlassesExperience";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -140,9 +141,21 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/*seção: experiencia do oculos vr */}
+      <motion.section
+        className="py-16 bg-white"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeUp} >
+
+        <GlassesExperience />
+
+      </motion.section>
+
       {/* seção: banner de doação */}
       <motion.section
-      className="relative bg-[#145A94] text-white py-20 md:py-28 overflow-hidden min-h-[447px]"
+      className="relative bg-[#145A94] text-white py-16 md:py-28 overflow-hidden min-h-[447px]"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -186,7 +199,7 @@ export default function Home() {
       >
         <img
           src={doacaoImg}
-          alt="Imagem no banner de doação"
+          alt="Imagem no banner de doação com uma criança no fundo do mar usando o oculos VR"
           className="h-auto max-w-[500px] object-contain"
         />
       </motion.div>
@@ -244,7 +257,7 @@ export default function Home() {
             <motion.div className={styles.cardItem} custom={0} variants={fadeUp}>
               <img
                 src={quartoInternacao}
-                alt="Quarto de Internação"
+                alt="Imagem de Quarto de Internação"
                 className={`${styles.cardImage} ${styles.borderGreen}`}
               />
             </motion.div>
@@ -271,7 +284,7 @@ export default function Home() {
             <motion.div className={styles.cardItem} custom={2} variants={fadeUp}>
               <img
                 src={salaEspera}
-                alt="Sala de Espera"
+                alt="Imagem de Sala de Espera"
                 className={`${styles.cardImage} ${styles.borderPink}`}
               />
             </motion.div>
