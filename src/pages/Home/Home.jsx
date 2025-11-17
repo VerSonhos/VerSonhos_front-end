@@ -13,7 +13,6 @@ import Icon2 from "../../assets/icons/icon2-impacto.png";
 import Icon3 from "../../assets/icons/icon3-impacto.png";
 import proa from "../../assets/icons/logo-proa.png";
 import senac from "../../assets/icons/logo-senac.png";
-import OculosSection from "./components/OculosSection";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -139,33 +138,6 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
-      </motion.section>
-
-      {/* seção: experiência VR */}
-      <motion.section
-        className="py-20 bg-[#F7FBFF] flex flex-col items-center text-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.h2
-          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
-          custom={0}
-          variants={fadeUp}
-        >
-          Explore o óculos de <span className="text-[#3184EF]">Realidade Virtual</span>
-        </motion.h2>
-
-        <OculosSection />
-
-        <motion.p
-          className="text-gray-600 text-lg max-w-xl mt-10 leading-relaxed"
-          custom={1}
-          variants={fadeUp}
-        >
-          Gire, aproxime-se e veja o modelo real do nosso óculos VR.  
-          Uma prévia perfeita do que as crianças enxergam no mundo mágico do VerSonhos.
-        </motion.p>
       </motion.section>
 
       {/* seção: banner de doação */}
