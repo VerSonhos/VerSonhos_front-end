@@ -5,6 +5,7 @@ import iconcalendario from "../../assets/icons/icon-calendario.png";
 import iconcalendario2 from "../../assets/icons/icon-calendario2.png";
 import Configuracoes from "../../assets/icons/icon-configuracao.png";
 import livro from "../../assets/icons/icon-livro.png";
+import { Link } from "react-router-dom"
 
 export default function HomeUser() {
   const cards = [
@@ -13,6 +14,7 @@ export default function HomeUser() {
       title: "Realizar agendamento",
       desc: "Escolha o dia e o horário desejado.",
       button: "Agendar",
+      link: "/painelUsuarioAgendarVisita",
     },
     {
       img: iconcalendario2,
@@ -39,14 +41,18 @@ export default function HomeUser() {
       <div className="p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <h1 className="text-xl font-semibold">Início</h1>
-          <button className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center">
+          <Link
+            to="/painelUsuarioAgendarVisita"
+            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
+          >
             <img
               src={iconAgendamento}
               alt="Ícone de calendário"
               className="w-5 h-5"
             />
             Faça um agendamento
-          </button>
+          </Link>
+
         </div>
         <div className="mb-8 text-center sm:text-left">
           <h2 className={styles.welcomeTitle}>
@@ -78,9 +84,12 @@ export default function HomeUser() {
                     </h3>
                     <p className="text-gray-600 text-sm">{card.desc}</p>
                   </div>
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded-md transition w-full sm:w-fit mt-3 hover:scale-105 cursor-pointer">
-                    {card.button}
-                  </button>
+                    <Link
+                      to={card.link}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-md transition w-full sm:w-fit mt-3 hover:scale-105 cursor-pointer text-center"
+                    >
+                      {card.button}
+                    </Link>
                 </div>
               </div>
             </div>
