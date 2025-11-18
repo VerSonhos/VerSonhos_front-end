@@ -11,6 +11,7 @@ import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
 import HomeUserAgendarVisita from '../pages/HomeUserAgendarVisita/HomeUserAgendarVisita'
+import RequestsAdm from '@/pages/RequestsAdm/RequestsAdm'
 
 const router = createBrowserRouter([
     { path: "/", element: <Home />, },
@@ -36,6 +37,8 @@ const router = createBrowserRouter([
     { path: "/painelUsuario", element: <HomeUser />, },
 
     { path: "/painelUsuarioAgendarVisita", element: <HomeUserAgendarVisita />, },
+    
+    { path: "/painelAdminSolicitacao", element: <RequestsAdm />, },
 ]);
 
 export default function  Routes() {
