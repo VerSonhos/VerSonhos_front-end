@@ -11,6 +11,7 @@ import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
 import HomeUserAgendamento from '../pages/HomeUserAgendamento/HomeUserAgendamento'
+import HistoricoAgendamentoAdm from '../pages/HistoricoAgendamentoAdm/HistoricoAgendamentoAdm'
 
 const router = createBrowserRouter([
     { path: "/", element: <Home />, },
@@ -36,6 +37,8 @@ const router = createBrowserRouter([
     { path: "/painelUsuario", element: <HomeUser />, },
 
     { path: "/painelUsuarioAgendamento", element: <HomeUserAgendamento />, },
+
+    { path: "/historicoAgendamentoAdm", element: <HistoricoAgendamentoAdm/>, },
 ]);
 
 export default function  Routes() {
