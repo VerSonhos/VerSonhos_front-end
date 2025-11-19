@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import chatbotIcon from "../../assets/icons/chatbot.png";
-import chatBg from "../../assets/images/will-chat.png";
+import chatBg from "../../assets/images/will-chat.png"; 
 import styles from "./chatbot.module.css";
 
 export default function Chatbot() {
@@ -9,40 +9,42 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-const sendMessage = async () => {
-  if (!input.trim()) return;
+  useEffect(() => {
+    setMessages([]);
+    setInput("");
+  }, []);
 
-  const userMessage = { role: "user", content: input };
-  setMessages((p) => [...p, userMessage]);
-  setInput("");
+  const sendMessage = async () => {
+    if (!input.trim()) return;
 
-  const botMessage = { role: "bot", content: "" };
-  setMessages((p) => [...p, botMessage]);
+    const userMessage = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
 
-  const res = await fetch("/api/groq", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages: [...messages, userMessage] })
-  });
+    try {
+      const response = await fetch("/api/groq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: [...messages, userMessage] }),
+      });
 
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
+      const data = await response.json();
+      console.log("🧠 Resposta da rota /api/groq:", data);
 
-  while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
 
-    const chunk = decoder.decode(value);
-    botMessage.content += chunk;
+      const botMessage = {
+        role: "bot",
+        content: data.reply || "Desculpe, não consegui responder agora.",
+      };
 
-    setMessages((prev) => {
-      const updated = [...prev];
-      updated[updated.length - 1] = { ...botMessage };
-      return updated;
-    });
-  }
-};
+      setMessages((prev) => [...prev, botMessage]);
 
+    } catch (err) {
+      console.error("Erro ao enviar mensagem:", err);
+      const botMessage = { role: "bot", content: "Erro na comunicação com a IA 😢" };
+      setMessages((prev) => [...prev, botMessage]);
+    }
+  };
 
   const handleToggle = () => setOpen(!open);
   const handleClose = () => setOpen(false);
@@ -53,7 +55,7 @@ const sendMessage = async () => {
         {open && (
           <motion.img
             src={chatBg}
-            alt=""
+            alt="Fundo do chat"
             className={styles.chatBackground}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -108,7 +110,7 @@ const sendMessage = async () => {
 
       <motion.img
         src={chatbotIcon}
-        alt=""
+        alt="Chatbot"
         className={styles.chatbotIcon}
         onClick={handleToggle}
         whileHover={{ scale: 1.1 }}
