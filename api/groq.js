@@ -1,3 +1,31 @@
+import Groq from "groq-sdk";
+
+const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") return res.status(405).end();
+
+  const { messages } = req.body;
+
+  const stream = await client.chat.completions.create({
+    model: "llama3-8b-8192",
+    stream: true,
+    messages
+  });
+
+  res.writeHead(200, {
+    "Content-Type": "text/plain; charset=utf-8",
+    "Transfer-Encoding": "chunked"
+  });
+
+  for await (const chunk of stream) {
+    const text = chunk.choices?.[0]?.delta?.content || "";
+    if (text) res.write(text);
+  }
+
+  res.end();
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método não permitido" });
