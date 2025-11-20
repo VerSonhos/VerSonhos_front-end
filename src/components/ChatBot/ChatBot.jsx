@@ -4,6 +4,47 @@ import chatbotIcon from "../../assets/icons/chatbot.png";
 import chatBg from "../../assets/images/will-chat.png";
 import styles from "./chatbot.module.css";
 
+function formatText(raw) {
+  let text = raw.trim();
+  text = text.replace(/\s+/g, " ");
+  let paragraphs = text
+    .split(/(?<=\.)\s+/)
+    .map((p) => p.trim())
+    .filter((p) => p.length > 0);
+
+  let formatted = [];
+
+  for (let p of paragraphs) {
+    const lower = p.toLowerCase();
+
+    if (lower.includes("missão")) {
+      formatted.push("Missão:\n" + p);
+      continue;
+    }
+    if (lower.includes("visão")) {
+      formatted.push("Visão:\n" + p);
+      continue;
+    }
+    if (lower.includes("valores")) {
+      formatted.push("Valores:\n" + p);
+      continue;
+    }
+    if (lower.includes("o que fazemos")) {
+      formatted.push("O que fazemos:\n" + p);
+      continue;
+    }
+
+    if (p.length < 80) {
+      formatted.push("• " + p);
+      continue;
+    }
+
+    formatted.push(p);
+  }
+
+  return formatted.join("\n\n");
+}
+
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -29,7 +70,9 @@ export default function Chatbot() {
       });
 
       const data = await response.json();
-      const fullText = data.reply || "Desculpe, não consegui responder agora.";
+      const fullText = formatText(
+        data.reply || "Desculpe, não consegui responder agora."
+      );
 
       let botMessage = { role: "bot", content: "" };
       setMessages((prev) => [...prev, botMessage]);
@@ -49,10 +92,12 @@ export default function Chatbot() {
         if (index >= fullText.length) {
           clearInterval(interval);
         }
-      }, 20);
-
+      }, 15);
     } catch (err) {
-      const botMessage = { role: "bot", content: "Erro na comunicação com a IA 😢" };
+      const botMessage = {
+        role: "bot",
+        content: "Erro na comunicação com a IA 😢",
+      };
       setMessages((prev) => [...prev, botMessage]);
     }
   };
