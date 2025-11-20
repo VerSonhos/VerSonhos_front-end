@@ -40,7 +40,7 @@ ${instructions.faq}
         Authorization: `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: "llama3-groq-70b-8192",
+        model: "llama-3.2-11b-text-preview",
         messages: final
       })
     });
