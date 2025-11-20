@@ -51,8 +51,8 @@ export default function Chatbot() {
   const handleToggle = () => {
     setOpen(!open);
 
-    if (!open) {
-      document.body.style.overflow = "hidden";  
+    if (!open && window.innerWidth <= 768) {
+      document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
@@ -131,7 +131,7 @@ export default function Chatbot() {
   };
 
   return (
-    <div className={styles.chatbotContainer}>
+    <div className={`${styles.chatbotContainer} ${open ? styles.chatOpen : ""}`}>
       <AnimatePresence>
         {open && (
           <motion.img

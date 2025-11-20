@@ -48,13 +48,12 @@ A VerSonhos trabalha para transformar a experiência hospitalar das crianças po
 
 `;
 
-
 const ods3 = `
 A VerSonhos trabalha com o ODS 3 porque o nosso propósito é melhorar o bem-estar emocional das crianças durante a internação. A realidade virtual reduz a ansiedade, traz conforto e ajuda a transformar um momento difícil em uma experiência mais leve e acolhedora. Contribuímos para que o ambiente hospitalar seja mais humano e para que as crianças tenham acesso a ferramentas que ajudam na saúde mental e na força emocional.
 `;
 
 const ods10 = `
-Acreditamos que todas as crianças têm direito a momentos de alegria, independentemente de sua condição social, localização ou situação clínica. Por isso, trabalhamos para levar nossas experiências a pacientes de diferentes contextos, incluindo hospitais públicos e instituições com recursos limitados. A realidade virtual se torna uma forma de ampliar o acesso, reduzir barreiras e promover inclusão durante o tratamento.
+A VerSonhos atua diretamente no ODS 10 porque acreditamos que toda criança merece ter acesso a momentos de alegria e acolhimento, independentemente de sua condição social, localização ou realidade clínica. Nós levamos experiências de realidade virtual também a hospitais públicos e instituições com poucos recursos, reduzindo desigualdades e ampliando o acesso ao bem-estar emocional durante a internação.
 `;
 
 const ods18 = `
