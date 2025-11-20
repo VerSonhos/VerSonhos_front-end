@@ -70,8 +70,11 @@ export default function Chatbot() {
     }
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    document.body.style.overflow = ""; // destrava
+  };
 
-  const handleClose = () => setOpen(false);
 
   const sendMessage = async () => {
     if (!input.trim() || isTyping) return;
