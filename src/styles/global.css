@@ -278,26 +278,6 @@
 }
 
 
-[vw],
-[vw-access-button],
-.vw-plugin-wrapper,
-.vw-plugin-top-wrapper,
-.vw-access-button,
-.vw-bottom-wrapper,
-vibras {
-    all: unset !important;
+.vw-access-button {
+  z-index: 999999 !important;
 }
-
-[vw],
-[vw-access-button],
-.vw-plugin-wrapper,
-.vw-plugin-top-wrapper,
-.vw-access-button,
-.vw-bottom-wrapper {
-  position: fixed !important;
-  z-index: 999999999 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-}
-
