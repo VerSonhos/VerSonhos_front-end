@@ -1,14 +1,13 @@
 {
   "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x",
-      "memory": 512
+    "api/groq.js": {
+      "runtime": "nodejs18.x"
     }
   },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
     },
     {
       "source": "/(.*)",
