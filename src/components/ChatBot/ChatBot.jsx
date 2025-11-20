@@ -7,43 +7,58 @@ import styles from "./chatbot.module.css";
 function formatText(raw) {
   let text = raw.trim();
   text = text.replace(/\s+/g, " ");
-  let paragraphs = text
-    .split(/(?<=\.)\s+/)
-    .map((p) => p.trim())
-    .filter((p) => p.length > 0);
+
+  text = text
+    .replace(/ - /g, "\n- ")
+    .replace(/ – /g, "\n- ")
+    .replace(/;\s*/g, ";\n")
+    .replace(/\.\s*/g, ".\n")
+    .replace(/!\s*/g, "!\n")
+    .replace(/\?\s*/g, "?\n");
+
+  let lines = text
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0);
 
   let formatted = [];
 
-  for (let p of paragraphs) {
-    const lower = p.toLowerCase();
+  for (let line of lines) {
+    let lower = line.toLowerCase();
 
-    if (lower.includes("missão")) {
-      formatted.push("Missão:\n" + p);
+    if (lower.startsWith("missão")) {
+      formatted.push("Missão:");
       continue;
     }
-    if (lower.includes("visão")) {
-      formatted.push("Visão:\n" + p);
+    if (lower.startsWith("visão")) {
+      formatted.push("Visão:");
       continue;
     }
-    if (lower.includes("valores")) {
-      formatted.push("Valores:\n" + p);
+    if (lower.startsWith("valores")) {
+      formatted.push("Valores:");
       continue;
     }
-    if (lower.includes("o que fazemos")) {
-      formatted.push("O que fazemos:\n" + p);
-      continue;
-    }
-
-    if (p.length < 80) {
-      formatted.push("• " + p);
+    if (lower.startsWith("o que fazemos")) {
+      formatted.push("O que fazemos:");
       continue;
     }
 
-    formatted.push(p);
+    if (line.startsWith("-") || line.startsWith("•")) {
+      formatted.push("• " + line.replace(/^[-•]\s*/, ""));
+      continue;
+    }
+
+    if (line.length < 80) {
+      formatted.push("• " + line);
+      continue;
+    }
+
+    formatted.push(line);
   }
 
   return formatted.join("\n\n");
 }
+
 
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
