@@ -10,6 +10,7 @@ import Register from '../pages/Register/Register'
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
+import HistoricoAgendamentoAdm from '../pages/HistoricoAgendamentoAdm/HistoricoAgendamentoAdm'
 import HomeUserAgendarVisita from '../pages/HomeUserAgendarVisita/HomeUserAgendarVisita'
 import RequestsAdm from '@/pages/RequestsAdm/RequestsAdm'
 import HomeAdmin from '@/pages/HomeAdmin/HomeAdmin'
@@ -41,6 +42,8 @@ const router = createBrowserRouter([
 
     // Dashboard do usuário
     { path: "/painelUsuario", element: <HomeUser />, },
+
+    { path: "/historicoAgendamentoAdm", element: <HistoricoAgendamentoAdm/>, },
 
     { path: "/painelUsuarioAgendarVisita", element: <HomeUserAgendarVisita />, },
 
