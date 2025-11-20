@@ -4,20 +4,19 @@ function validarResposta(text) {
   let resposta = text;
 
   resposta = resposta
-    .replace(/ods\s*18(?!\s*como)/gi, "ODS 18 (uso interno da VerSonhos)")
+    .replace(/ods\s*18(?!\s*como)/gi, "ODS 18 (compromisso brasileiro de igualdade)")
     .replace(/ods\s*1[9-9]/gi, "ODS inexistente");
 
   const linksPermitidos = [
-    "versonhos.com.br",
     "instagram.com/versonhos.oficial",
     "linktr.ee/versonhos",
     "linktr.ee/equipeversonhos",
-    "docs.google.com/forms"
+    "docs.google.com/forms/d/e/1FAIpQLScBKEvOLMdb0LS9FfYCqz3dvjjbkEhpaJlgC1HexITijJF9sw/viewform"
   ];
 
   const linksEncontrados = resposta.match(/https?:\/\/[^\s]+/gi) || [];
   const temLinkProibido = linksEncontrados.some(link => {
-    return !linksPermitidos.some(permitido => link.includes(permitido));
+    return !linksPermitidos.some(ok => link.includes(ok));
   });
 
   if (temLinkProibido) {
@@ -25,8 +24,8 @@ function validarResposta(text) {
   }
 
   const proibidos = ["diagnóstico", "medicação", "tratamento médico", "prognóstico"];
-  for (const termo of proibidos) {
-    if (resposta.toLowerCase().includes(termo)) {
+  for (const t of proibidos) {
+    if (resposta.toLowerCase().includes(t)) {
       resposta = "Eu não posso comentar sobre questões médicas, mas posso explicar o trabalho da VerSonhos 💙.";
       break;
     }
@@ -37,6 +36,16 @@ function validarResposta(text) {
   }
 
   return resposta;
+}
+
+function comprimirTexto(texto) {
+  let t = texto;
+  t = t.replace(/\s{2,}/g, " ");
+  t = t.replace(/\n{3,}/g, "\n\n");
+  t = t.replace(/(VerSonhos)/gi, "VerSonhos");
+  t = t.replace(/(\.\s+){2,}/g, ". ");
+  t = t.replace(/(Nós\s+trabalhamos\s+com\s+)+/gi, "Nós trabalhamos com ");
+  return t.trim();
 }
 
 export default async function handler(req, res) {
@@ -95,8 +104,12 @@ export default async function handler(req, res) {
       return res.status(500).json({ reply: "Erro interno: " + data.error.message });
     }
 
+    const respostaBruta = data.choices?.[0]?.message?.content || "";
+    const respostaValidada = validarResposta(respostaBruta);
+    const respostaFinal = comprimirTexto(respostaValidada);
+
     return res.status(200).json({
-      reply: validarResposta(data.choices?.[0]?.message?.content || "")
+      reply: respostaFinal
     });
 
   } catch (e) {

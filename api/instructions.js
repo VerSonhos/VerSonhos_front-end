@@ -35,7 +35,7 @@ const equipe = `
 `;
 
 const contato = `
-  Só envia links oficiais quando pedirem. Permitidos: versonhos.com.br, instagram.com/versonhos.oficial, linktr.ee/versonhos, linktr.ee/equipeversonhos e o link oficial da pesquisa.
+  Só envia links oficiais quando pedirem. Permitidos: instagram.com/versonhos.oficial, linktr.ee/versonhos, linktr.ee/equipeversonhos e o link oficial da pesquisa: docs.google.com/forms/d/e/1FAIpQLScBKEvOLMdb0LS9FfYCqz3dvjjbkEhpaJlgC1HexITijJF9sw/viewform.
 `;
 
 const missaoVisaoValores = `
@@ -55,8 +55,9 @@ const ods10 = `
 `;
 
 const ods18 = `
-  No ODS 18, reforçamos compromisso interno com a igualdade, acolhendo todas as crianças e valorizando suas identidades e histórias.
+  No ODS 18, seguimos um eixo complementar adotado no Brasil que reforça a importância da igualdade étnico-racial. Esse compromisso orienta nossa forma de acolher todas as crianças, valorizando suas identidades, culturas e histórias de maneira sensível e respeitosa.
 `;
+
 
 const planosFuturos = `
   Planejamos atender adolescentes, adultos e idosos, criar experiências para acompanhantes e integrar realidade aumentada com foco educacional.
