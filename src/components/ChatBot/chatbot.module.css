@@ -5,18 +5,16 @@
   z-index: 9999999999;
 }
 
-/*imagem atras do chatbot*/
 .chatBackground {
   position: fixed;
-  bottom: 370px; 
+  bottom: 370px;
   right: 0;
-  width: 200px; 
+  width: 200px;
   opacity: 0.8;
-  z-index: 9999999999; 
+  z-index: 9999999999;
   pointer-events: none;
 }
 
-/* Ícone fixo na mesma posição e com efeito */
 .chatbotIcon {
   width: 70px;
   height: 70px;
@@ -35,7 +33,6 @@
   box-shadow: 0 0 18px rgba(49, 132, 239, 0.6);
 }
 
-/* Janela do chat */
 .chatWindow {
   width: 320px;
   height: 310px;
@@ -45,14 +42,13 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
   position: fixed;
   bottom: 100px;
   right: 20px;
   z-index: 9999999999;
 }
 
-/* Cabeçalho */
 .chatHeader {
   background: #3184ef;
   color: white;
@@ -62,7 +58,6 @@
   align-items: center;
 }
 
-/* Corpo */
 .chatBody {
   flex: 1;
   padding: 10px;
@@ -79,6 +74,7 @@
   padding: 6px 10px;
   border-radius: 8px;
   max-width: 80%;
+  white-space: pre-line;
 }
 
 .botMessage {
@@ -87,9 +83,9 @@
   padding: 6px 10px;
   border-radius: 8px;
   max-width: 80%;
+  white-space: pre-line;
 }
 
-/* Input */
 .chatInput {
   display: flex;
   border-top: 1px solid #ccc;
