@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import chatbotIcon from "../../assets/icons/chatbot.png";
 import chatBg from "../../assets/images/will-chat.png";
@@ -10,18 +10,21 @@ function formatText(raw) {
     .split(/(?<=[.!?])\s+/)
     .map((s) => s.trim())
     .filter((s) => s.length > 0);
+
   let paragraphs = [];
+  let current = "";
+
   for (let s of sentences) {
-    if (s.length > 90) {
-      paragraphs.push(s);
+    if ((current + " " + s).length > 250) {
+      paragraphs.push(current.trim());
+      current = s;
     } else {
-      if (paragraphs.length === 0) {
-        paragraphs.push(s);
-      } else {
-        paragraphs[paragraphs.length - 1] += " " + s;
-      }
+      current += " " + s;
     }
   }
+
+  if (current.trim()) paragraphs.push(current.trim());
+
   return paragraphs.join("\n\n");
 }
 
@@ -30,11 +33,31 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    setMessages([]);
-    setInput("");
-  }, []);
+  const scrollDown = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(scrollDown, [messages]);
+
+  const handleToggle = () => {
+    setOpen(!open);
+
+    if (!open && messages.length === 0) {
+      setTimeout(() => {
+        setMessages([
+          {
+            role: "bot",
+            content:
+              "Olá! Eu sou o Will 💙. Estou aqui para te ajudar a conhecer o VerSonhos e nosso trabalho com realidade virtual para crianças hospitalizadas. Como posso te ajudar hoje?"
+          }
+        ]);
+      }, 350);
+    }
+  };
+
+  const handleClose = () => setOpen(false);
 
   const sendMessage = async () => {
     if (!input.trim() || isTyping) return;
@@ -42,7 +65,6 @@ export default function Chatbot() {
     const userMessage = { role: "user", content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
-
     setIsTyping(true);
 
     try {
@@ -53,7 +75,9 @@ export default function Chatbot() {
       });
 
       const data = await response.json();
-      const fullText = formatText(data.reply || "Desculpe, não consegui responder agora.");
+      const fullText = formatText(
+        data.reply || "Desculpe, não consegui responder agora."
+      );
 
       let botMessage = { role: "bot", content: "" };
       setMessages((prev) => [...prev, botMessage]);
@@ -69,21 +93,22 @@ export default function Chatbot() {
           return updated;
         });
 
+        scrollDown();
+
         if (index >= fullText.length) {
           clearInterval(interval);
           setIsTyping(false);
         }
       }, 15);
-
     } catch (err) {
-      const botMessage = { role: "bot", content: "Erro na comunicação com a IA 😢" };
+      const botMessage = {
+        role: "bot",
+        content: "Erro na comunicação com a IA 😢"
+      };
       setMessages((prev) => [...prev, botMessage]);
       setIsTyping(false);
     }
   };
-
-  const handleToggle = () => setOpen(!open);
-  const handleClose = () => setOpen(false);
 
   return (
     <div className={styles.chatbotContainer}>
@@ -119,27 +144,35 @@ export default function Chatbot() {
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={msg.role === "user" ? styles.userMessage : styles.botMessage}
+                  className={
+                    msg.role === "user" ? styles.userMessage : styles.botMessage
+                  }
                 >
                   {msg.content}
                 </div>
               ))}
 
               {isTyping && (
-                <div className={styles.botMessage}>Digitando...</div>
+                <div className={styles.botMessage}>
+                  Digitando...
+                </div>
               )}
+
+              <div ref={messagesEndRef}></div>
             </div>
 
             <div className={styles.chatInput}>
               <input
                 type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={isTyping ? "Aguarde o Will terminar..." : "Digite sua mensagem..."}
-                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                 disabled={isTyping}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={
+                  isTyping ? "Aguarde o Will terminar..." : "Digite sua mensagem..."
+                }
+                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               />
-              <button onClick={sendMessage} disabled={isTyping}>
+              <button disabled={isTyping} onClick={sendMessage}>
                 Enviar
               </button>
             </div>
