@@ -12,8 +12,12 @@ import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
 import HomeUserAgendarVisita from '../pages/HomeUserAgendarVisita/HomeUserAgendarVisita'
 import RequestsAdm from '@/pages/RequestsAdm/RequestsAdm'
+import HomeAdmin from '@/pages/HomeAdmin/HomeAdmin'
+import SettingsAdmin from '@/pages/SettingsAdmin/settingsAdmin'
+import SettingsUser from '@/pages/SettingsUser/settingsUser'
 
 const router = createBrowserRouter([
+    // Páginas principais
     { path: "/", element: <Home />, },
 
     { path: "/sobre", element: <About />, },
@@ -24,6 +28,7 @@ const router = createBrowserRouter([
 
     { path: "/doar", element: <Donate />, },
 
+    // Páginas de autenticação
     { path: "/login", element: <Login />, },
 
     { path: "/cadastro", element: <Register />, },
@@ -34,11 +39,19 @@ const router = createBrowserRouter([
 
     { path: "/senhaNova", element: <ChangePassword />, },
 
+    // Dashboard do usuário
     { path: "/painelUsuario", element: <HomeUser />, },
 
     { path: "/painelUsuarioAgendarVisita", element: <HomeUserAgendarVisita />, },
+
+    { path: "/configuracoesUsuario", element: <SettingsUser />, },
     
+    // Dashboard do administrador
+    { path: "/painelAdmin", element: <HomeAdmin />, },
+
     { path: "/painelAdminSolicitacao", element: <RequestsAdm />, },
+    
+    { path: "/configuracoesAdmin", element: <SettingsAdmin />, },
 ]);
 
 export default function  Routes() {
