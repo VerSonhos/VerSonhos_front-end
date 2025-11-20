@@ -6,52 +6,29 @@ import styles from "./chatbot.module.css";
 
 function formatText(raw) {
   let text = raw.trim();
-  text = text.replace(/\s+/g, " ");
 
-  text = text
-    .replace(/ - /g, "\n- ")
-    .replace(/ – /g, "\n- ")
-    .replace(/;\s*/g, ";\n")
-    .replace(/!\s*/g, "!\n\n")
-    .replace(/\?\s*/g, "?\n\n");
+  let sentences = text
+    .split(/(?<=[.!?])\s+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
 
-  let lines = text
-    .split("\n")
-    .map((l) => l.trim())
-    .filter((l) => l.length > 0);
+  let paragraphs = [];
 
-  let formatted = [];
-
-  for (let line of lines) {
-    let lower = line.toLowerCase();
-
-    if (lower.startsWith("missão")) {
-      formatted.push("✨ Missão:\n");
-      continue;
+  for (let s of sentences) {
+    if (s.length > 90) {
+      paragraphs.push(s);
+    } else {
+      if (paragraphs.length === 0) {
+        paragraphs.push(s);
+      } else {
+        paragraphs[paragraphs.length - 1] += " " + s;
+      }
     }
-    if (lower.startsWith("visão")) {
-      formatted.push("🌈 Visão:\n");
-      continue;
-    }
-    if (lower.startsWith("valores")) {
-      formatted.push("💙 Valores:\n");
-      continue;
-    }
-    if (lower.startsWith("o que fazemos")) {
-      formatted.push("✨ O que fazemos:\n");
-      continue;
-    }
-
-    if (line.startsWith("-") || line.startsWith("•")) {
-      formatted.push("• " + line.replace(/^[-•]\s*/, ""));
-      continue;
-    }
-
-    formatted.push(line);
   }
 
-  return formatted.join("\n\n");
+  return paragraphs.join("\n\n");
 }
+
 
 
 
