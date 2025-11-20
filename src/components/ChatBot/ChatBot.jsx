@@ -4,18 +4,24 @@ import chatbotIcon from "../../assets/icons/chatbot.png";
 import chatBg from "../../assets/images/will-chat.png";
 import styles from "./chatbot.module.css";
 
+function sanitize(text) {
+  return text
+    .replace(/<[^>]*>/g, "")
+    .replace(/[{}`]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function formatText(raw) {
   let text = raw.trim();
-
   let sentences = text
     .split(/(?<=[.!?])\s+/)
     .map((s) => s.trim())
     .filter((s) => s.length > 0);
 
   let paragraphs = [];
-
   for (let s of sentences) {
-    if (s.length > 90) {
+    if (s.length > 110) {
       paragraphs.push(s);
     } else {
       if (paragraphs.length === 0) {
@@ -28,9 +34,6 @@ function formatText(raw) {
 
   return paragraphs.join("\n\n");
 }
-
-
-
 
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
@@ -45,7 +48,7 @@ export default function Chatbot() {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const userMessage = { role: "user", content: input };
+    const userMessage = { role: "user", content: sanitize(input) };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
@@ -67,7 +70,6 @@ export default function Chatbot() {
       let index = 0;
       const interval = setInterval(() => {
         index++;
-
         botMessage.content = fullText.slice(0, index);
 
         setMessages((prev) => {
@@ -89,7 +91,18 @@ export default function Chatbot() {
     }
   };
 
-  const handleToggle = () => setOpen(!open);
+  const handleToggle = () => {
+    if (!open && messages.length === 0) {
+      const start = {
+        role: "bot",
+        content:
+          "Olá 💙 Eu sou o Will, assistente virtual do VerSonhos. Estou aqui para te explicar nosso projeto de um jeito acolhedor e simples. Como posso te ajudar?",
+      };
+      setMessages([start]);
+    }
+    setOpen(!open);
+  };
+
   const handleClose = () => setOpen(false);
 
   return (
