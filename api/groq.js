@@ -13,6 +13,7 @@ ${instructions.identidadeWill}
 ${instructions.regrasProtecao}
 ${instructions.sobreVersonhos}
 ${instructions.oQueFazemos}
+${instructions.agendamento}
 ${instructions.equipe}
 ${instructions.contato}
 ${instructions.estiloFala}
@@ -22,6 +23,7 @@ ${instructions.home}
 ${instructions.versonhos}
 ${instructions.jogos}
 ${instructions.faq}
+
 `
     };
 
