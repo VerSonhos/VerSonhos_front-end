@@ -51,18 +51,25 @@ export default function Chatbot() {
   const handleToggle = () => {
     setOpen(!open);
 
+    if (!open) {
+      document.body.style.overflow = "hidden";  
+    } else {
+      document.body.style.overflow = "";
+    }
+
     if (!open && messages.length === 0) {
       setTimeout(() => {
         setMessages([
           {
             role: "bot",
             content:
-              "Olá! Eu sou o Will 💙. Estou aqui para te ajudar a conhecer o VerSonhos e nosso trabalho com realidade virtual para crianças hospitalizadas. Como posso te ajudar hoje?"
+              "Olá! Eu sou o Will 💙. Estou aqui para te ajudar a conhecer a VerSonhos."
           }
         ]);
       }, 350);
     }
   };
+
 
   const handleClose = () => setOpen(false);
 

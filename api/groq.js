@@ -9,22 +9,21 @@ export default async function handler(req, res) {
     const system = {
       role: "system",
       content: `
-${instructions.identidadeWill}
-${instructions.regrasProtecao}
-${instructions.sobreVersonhos}
-${instructions.oQueFazemos}
-${instructions.agendamento}
-${instructions.equipe}
-${instructions.contato}
-${instructions.estiloFala}
-${instructions.redirect}
-${instructions.base}
-${instructions.home}
-${instructions.versonhos}
-${instructions.jogos}
-${instructions.faq}
-
-`
+          ${instructions.identidadeWill}
+          ${instructions.regrasProtecao}
+          ${instructions.sobreVersonhos}
+          ${instructions.oQueFazemos}
+          ${instructions.agendamento}
+          ${instructions.equipe}
+          ${instructions.contato}
+          ${instructions.estiloFala}
+          ${instructions.redirect}
+          ${instructions.base}
+          ${instructions.home}
+          ${instructions.versonhos}
+          ${instructions.jogos}
+          ${instructions.faq}
+      `
     };
 
     const final = [
