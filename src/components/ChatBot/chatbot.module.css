@@ -5,6 +5,18 @@
   z-index: 9999999999;
 }
 
+.chatOpen {
+  pointer-events: auto;
+}
+
+.chatClosed {
+  pointer-events: none;
+}
+
+.chatClosed .chatbotIcon {
+  pointer-events: auto !important;
+}
+
 .chatBackground {
   position: fixed;
   bottom: 370px;
@@ -154,4 +166,3 @@
     font-size: 34px;
   }
 }
-

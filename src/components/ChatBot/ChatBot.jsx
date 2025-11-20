@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import chatbotIcon from "../../assets/icons/chatbot.png";
 import chatBg from "../../assets/images/will-chat.png";
@@ -24,7 +24,6 @@ function formatText(raw) {
   }
 
   if (current.trim()) paragraphs.push(current.trim());
-
   return paragraphs.join("\n\n");
 }
 
@@ -33,7 +32,6 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-
   const chatBodyRef = useRef(null);
 
   const scrollToBottom = (force = false) => {
@@ -74,7 +72,6 @@ export default function Chatbot() {
     setOpen(false);
     document.body.style.overflow = "";
   };
-
 
   const sendMessage = async () => {
     if (!input.trim() || isTyping) return;
@@ -131,7 +128,11 @@ export default function Chatbot() {
   };
 
   return (
-    <div className={`${styles.chatbotContainer} ${open ? styles.chatOpen : ""}`}>
+    <div
+      className={`${styles.chatbotContainer} ${
+        open ? styles.chatOpen : styles.chatClosed
+      }`}
+    >
       <AnimatePresence>
         {open && (
           <motion.img
