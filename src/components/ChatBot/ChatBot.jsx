@@ -12,9 +12,8 @@ function formatText(raw) {
     .replace(/ - /g, "\n- ")
     .replace(/ – /g, "\n- ")
     .replace(/;\s*/g, ";\n")
-    .replace(/\.\s*/g, ".\n")
-    .replace(/!\s*/g, "!\n")
-    .replace(/\?\s*/g, "?\n");
+    .replace(/!\s*/g, "!\n\n")
+    .replace(/\?\s*/g, "?\n\n");
 
   let lines = text
     .split("\n")
@@ -27,19 +26,19 @@ function formatText(raw) {
     let lower = line.toLowerCase();
 
     if (lower.startsWith("missão")) {
-      formatted.push("Missão:");
+      formatted.push("✨ Missão:\n");
       continue;
     }
     if (lower.startsWith("visão")) {
-      formatted.push("Visão:");
+      formatted.push("🌈 Visão:\n");
       continue;
     }
     if (lower.startsWith("valores")) {
-      formatted.push("Valores:");
+      formatted.push("💙 Valores:\n");
       continue;
     }
     if (lower.startsWith("o que fazemos")) {
-      formatted.push("O que fazemos:");
+      formatted.push("✨ O que fazemos:\n");
       continue;
     }
 
@@ -48,16 +47,12 @@ function formatText(raw) {
       continue;
     }
 
-    if (line.length < 80) {
-      formatted.push("• " + line);
-      continue;
-    }
-
     formatted.push(line);
   }
 
   return formatted.join("\n\n");
 }
+
 
 
 export default function Chatbot() {
