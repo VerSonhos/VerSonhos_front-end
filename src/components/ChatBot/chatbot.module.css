@@ -105,3 +105,9 @@
   padding: 0 12px;
   cursor: pointer;
 }
+
+.botMessage,
+.userMessage {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
