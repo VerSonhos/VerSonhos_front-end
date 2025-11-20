@@ -21,31 +21,28 @@ export default function Chatbot() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    // mensagem vazia que será preenchida via streaming
-    const botMessage = { role: "bot", content: "" };
-    setMessages((prev) => [...prev, botMessage]);
-
-    const res = await fetch("/api/groq", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: [...messages, userMessage] })
-    });
-
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-
-      const chunk = decoder.decode(value);
-      botMessage.content += chunk;
-
-      setMessages((prev) => {
-        const updated = [...prev];
-        updated[updated.length - 1] = { ...botMessage };
-        return updated;
+    try {
+      const response = await fetch("/api/groq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: [...messages, userMessage] }),
       });
+
+      const data = await response.json();
+      console.log("🧠 Resposta da rota /api/groq:", data);
+
+
+      const botMessage = {
+        role: "bot",
+        content: data.reply || "Desculpe, não consegui responder agora.",
+      };
+
+      setMessages((prev) => [...prev, botMessage]);
+
+    } catch (err) {
+      console.error("Erro ao enviar mensagem:", err);
+      const botMessage = { role: "bot", content: "Erro na comunicação com a IA 😢" };
+      setMessages((prev) => [...prev, botMessage]);
     }
   };
 
