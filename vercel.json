@@ -1,8 +1,18 @@
 {
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs18.x",
+      "memory": 512
+    }
+  },
   "rewrites": [
-    { 
-        "source": "/(.*)", 
-        "destination": "/index.html" 
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
