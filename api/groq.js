@@ -4,7 +4,7 @@ function validarResposta(text) {
   let resposta = text;
 
   resposta = resposta
-    .replace(/ods\s*18(?!\s*como)/gi, "ODS 18 (compromisso brasileiro de igualdade)")
+    .replace(/ods\s*18(?!\s*como)/gi, "ODS 18, compromisso brasileiro de igualdade racial e diversidade")
     .replace(/ods\s*1[9-9]/gi, "ODS inexistente");
 
   const linksPermitidos = [
@@ -29,6 +29,10 @@ function validarResposta(text) {
       resposta = "Eu não posso comentar sobre questões médicas, mas posso explicar o trabalho da VerSonhos 💙.";
       break;
     }
+  }
+
+  if (resposta.toLowerCase().includes("ods 18 não")) {
+  resposta = "A ODS 18 existe no contexto brasileiro como um compromisso social voltado para igualdade racial e diversidade, adotado pela VerSonhos.";
   }
 
   if (resposta.length > 1200) {
@@ -66,7 +70,6 @@ export default async function handler(req, res) {
         ${instructions.oQueFazemos}
         ${instructions.agendamento}
         ${instructions.equipe}
-        ${instructions.contato}
         ${instructions.missaoVisaoValores}
         ${instructions.monetizacao}
         ${instructions.ods3}
