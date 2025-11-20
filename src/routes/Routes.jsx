@@ -14,8 +14,8 @@ import HistoricoAgendamentoAdm from '../pages/HistoricoAgendamentoAdm/HistoricoA
 import HomeUserAgendarVisita from '../pages/HomeUserAgendarVisita/HomeUserAgendarVisita'
 import RequestsAdm from '@/pages/RequestsAdm/RequestsAdm'
 import HomeAdmin from '@/pages/HomeAdmin/HomeAdmin'
-import SettingsAdmin from '@/pages/SettingsAdmin/settingsAdmin'
-import SettingsUser from '@/pages/SettingsUser/settingsUser'
+import SettingsAdmin from '@/pages/SettingsAdmin/SettingsAdmin'
+import SettingsUser from '@/pages/SettingsUser/SettingsUser'
 
 const router = createBrowserRouter([
     // Páginas principais
