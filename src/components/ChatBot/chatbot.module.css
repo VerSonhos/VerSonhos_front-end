@@ -3,21 +3,6 @@
   bottom: 20px;
   right: 20px;
   z-index: 9999999999;
-  pointer-events: none; 
-}
-
-.chatbotContainer .chatOpen {
-  pointer-events: auto;
-  pointer-events: auto;
-}
-
-.chatbotContainer .chatbotIcon {
-  pointer-events: auto;
-}
-
-.chatClosed .chatbotIcon {
-  pointer-events: auto !important;
-  
 }
 
 .chatBackground {
@@ -144,7 +129,6 @@
   white-space: pre-wrap;
 }
 
-
 @media (max-width: 600px) {
   .chatWindow {
     width: 100vw;
@@ -170,3 +154,4 @@
     font-size: 34px;
   }
 }
+
