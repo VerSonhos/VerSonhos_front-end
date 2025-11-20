@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     });
 
     const stream = await client.chat.completions.create({
-      model: "llama3.2-3b-instant",
+      model: "mixtral-8x7b-32768",
       messages: finalMessages,
       stream: true
     });
