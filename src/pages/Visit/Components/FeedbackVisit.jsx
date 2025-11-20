@@ -49,7 +49,7 @@ export default function TestimonialsSection() {
         <span className="relative inline-block">
           <span className="text-gray-800">O que dizem</span>
         </span>{" "}
-        <span className="text-blue-600">sobre nós</span>
+        <span className="text-tertiary">sobre nós</span>
       </h2>
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">

@@ -10,8 +10,9 @@ import Register from '../pages/Register/Register'
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
-import HomeUserAgendamento from '../pages/HomeUserAgendamento/HomeUserAgendamento'
 import HistoricoAgendamentoAdm from '../pages/HistoricoAgendamentoAdm/HistoricoAgendamentoAdm'
+import HomeUserAgendarVisita from '../pages/HomeUserAgendarVisita/HomeUserAgendarVisita'
+import RequestsAdm from '@/pages/RequestsAdm/RequestsAdm'
 
 const router = createBrowserRouter([
     { path: "/", element: <Home />, },
@@ -36,9 +37,11 @@ const router = createBrowserRouter([
 
     { path: "/painelUsuario", element: <HomeUser />, },
 
-    { path: "/painelUsuarioAgendamento", element: <HomeUserAgendamento />, },
-
     { path: "/historicoAgendamentoAdm", element: <HistoricoAgendamentoAdm/>, },
+
+    { path: "/painelUsuarioAgendarVisita", element: <HomeUserAgendarVisita />, },
+    
+    { path: "/painelAdminSolicitacao", element: <RequestsAdm />, },
 ]);
 
 export default function  Routes() {

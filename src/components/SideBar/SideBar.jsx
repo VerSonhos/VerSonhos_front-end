@@ -31,7 +31,7 @@ export default function HeaderAdmin() {
     
             <ul className="nav-list px-3.5">
                 <li>
-                    <Link to={'/'} className="link">
+                    <Link to={'/painelUsuario'} className="link">
                         <div className='iconSideBar flex justify-center items-center'>
                             <FaHome className='text-2xl' />
                         </div>
@@ -41,7 +41,7 @@ export default function HeaderAdmin() {
                 </li>
 
                 <li>
-                    <Link to={'/'} className="link">
+                    <Link to={'/painelUsuarioAgendarVisita'} className="link">
                         <div className='iconSideBar flex justify-center items-center'>
                             <FaCalendarAlt className='text-2xl' />
                         </div>
