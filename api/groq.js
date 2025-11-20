@@ -45,11 +45,18 @@ ${instructions.faq}
       })
     });
 
-    const data = await response.json();
+  const data = await response.json();
 
-    return res.status(200).json({
-      reply: data.choices?.[0]?.message?.content || ""
-    });
+  console.log("🔍 RESPOSTA GROQ:", JSON.stringify(data, null, 2));
+
+  if (data.error) {
+    return res.status(500).json({ reply: "Erro interno: " + data.error.message });
+  }
+
+  return res.status(200).json({
+    reply: data.choices?.[0]?.message?.content || ""
+  });
+
   } catch (e) {
     return res.status(500).json({
       reply: "Erro interno."
