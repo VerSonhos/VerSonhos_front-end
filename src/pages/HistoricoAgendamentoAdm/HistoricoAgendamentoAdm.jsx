@@ -8,8 +8,6 @@ export default function historicoAgendamentoAdm(){
         <DashboardLayout>
             <HeaderCards/>
             <TableAgendamento/>
-
-        {/* hvhjvjh */}
         </DashboardLayout>
         </>
     );
