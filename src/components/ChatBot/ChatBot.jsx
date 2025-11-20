@@ -33,13 +33,20 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
 
-  const scrollDown = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const chatBodyRef = useRef(null);
+
+  const scrollToBottom = (force = false) => {
+    const el = chatBodyRef.current;
+    if (!el) return;
+
+    const nearBottom =
+      el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+
+    if (force || nearBottom) {
+      el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    }
   };
-
-  useEffect(scrollDown, [messages]);
 
   const handleToggle = () => {
     setOpen(!open);
@@ -66,6 +73,7 @@ export default function Chatbot() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsTyping(true);
+    scrollToBottom(true);
 
     try {
       const response = await fetch("/api/groq", {
@@ -81,8 +89,10 @@ export default function Chatbot() {
 
       let botMessage = { role: "bot", content: "" };
       setMessages((prev) => [...prev, botMessage]);
+      scrollToBottom(true);
 
       let index = 0;
+
       const interval = setInterval(() => {
         index++;
         botMessage.content = fullText.slice(0, index);
@@ -93,7 +103,7 @@ export default function Chatbot() {
           return updated;
         });
 
-        scrollDown();
+        scrollToBottom(true);
 
         if (index >= fullText.length) {
           clearInterval(interval);
@@ -140,7 +150,7 @@ export default function Chatbot() {
               <button onClick={handleClose}>×</button>
             </div>
 
-            <div className={styles.chatBody}>
+            <div className={styles.chatBody} ref={chatBodyRef}>
               {messages.map((msg, i) => (
                 <div
                   key={i}
@@ -153,12 +163,8 @@ export default function Chatbot() {
               ))}
 
               {isTyping && (
-                <div className={styles.botMessage}>
-                  Digitando...
-                </div>
+                <div className={styles.botMessage}>Digitando...</div>
               )}
-
-              <div ref={messagesEndRef}></div>
             </div>
 
             <div className={styles.chatInput}>
@@ -168,7 +174,9 @@ export default function Chatbot() {
                 disabled={isTyping}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={
-                  isTyping ? "Aguarde o Will terminar..." : "Digite sua mensagem..."
+                  isTyping
+                    ? "Aguarde o Will terminar..."
+                    : "Digite sua mensagem..."
                 }
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               />
