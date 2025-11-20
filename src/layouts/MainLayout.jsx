@@ -14,7 +14,7 @@ const MainLayout = ({ children }) => {
         {children}
       </section>
       <Footer />
-
+      <VLibras forceOnload={true} />
       <AccessibilityWidget />
       <Chatbot />
     </main>
