@@ -25,9 +25,12 @@ export default async function handler(req, res) {
           ${instructions.jogos}
           ${instructions.missaoVisaoValores}
           ${instructions.monetizacao}
-          ${instructions.ods}
+          ${instructions.ods3}
+          ${instructions.ods10}
+          ${instructions.ods18}
           ${instructions.planosFuturos}
           ${instructions.dadosEficacia}
+
       `
     };
 
