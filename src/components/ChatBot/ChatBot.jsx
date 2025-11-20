@@ -72,7 +72,7 @@ export default function Chatbot() {
 
   const handleClose = () => {
     setOpen(false);
-    document.body.style.overflow = ""; // destrava
+    document.body.style.overflow = "";
   };
 
 

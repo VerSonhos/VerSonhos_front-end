@@ -9,6 +9,7 @@ export default async function handler(req, res) {
     const system = {
       role: "system",
       content: `
+          ${instructions.slogan}
           ${instructions.identidadeWill}
           ${instructions.regrasProtecao}
           ${instructions.sobreVersonhos}
@@ -22,7 +23,11 @@ export default async function handler(req, res) {
           ${instructions.home}
           ${instructions.versonhos}
           ${instructions.jogos}
-          ${instructions.faq}
+          ${instructions.missaoVisaoValores}
+          ${instructions.monetizacao}
+          ${instructions.ods}
+          ${instructions.planosFuturos}
+          ${instructions.dadosEficacia}
       `
     };
 
