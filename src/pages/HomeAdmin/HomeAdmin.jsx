@@ -44,7 +44,7 @@ export default function HomeAdmin() {
         <>
             <DashboardLayout>
                 <section className='w-full p-4 sm:p-6 font-inter flex flex-col gap-5'>
-                    <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                    <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
                         <h1 className="text-2xl font-semibold">Início</h1>
 
                         <Link
@@ -65,7 +65,7 @@ export default function HomeAdmin() {
                     <CardInformations number={'0'} text={'Agendamentos confirmados'} color={'bg-green-500'} />
                 </section>
 
-                <section className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+                <section className='grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 sm:p-6'>
                     {cards.map((card, i) => (
                         <CardLinks key={i} image={card.img} imageTitle={card.title} title={card.title} desc={card.desc} link={card.link} btnText={card.button} />
                     ))}
