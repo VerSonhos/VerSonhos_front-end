@@ -11,6 +11,7 @@ import Register from '../pages/Register/Register'
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
+import NotFoundPage from '../pages/PagErro/NotFoundPage'
 
 const router = createBrowserRouter([
     { path: "/", element: <Home />, },
@@ -34,6 +35,8 @@ const router = createBrowserRouter([
     { path: "/senhaNova", element: <ChangePassword />, },
 
     { path: "/painelUsuario", element: <HomeUser />, },
+
+    { path: "*", element: <NotFoundPage />, },
 ]);
 
 export default function  Routes() {

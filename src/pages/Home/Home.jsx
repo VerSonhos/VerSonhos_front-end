@@ -161,7 +161,6 @@ export default function Home() {
       viewport={{ once: true }}
     >
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 px-6 relative z-20">
-        {/* Texto centralizado com contraste */}
         <motion.div
           className="flex-1 flex flex-col justify-center items-center text-center
                     bg-black/40 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none"
