@@ -13,7 +13,7 @@ const NotFoundPage = () => {
         />
       </div>
       <div className="flex flex-col items-center text-center">
-        <p className="text-lg md:text-xl font-semibold text-[#03184F] mt-10 mb-8 max-w-2xl leading-relaxed">
+       <p className="text-xl md:text-2xl font-semibold text-[#03184F] mt-10 mb-8 max-w-2xl leading-relaxed">
           Ops! Esta página é um universo inexplorado...<br />
           Mas não se preocupe, a diversão te espera de volta<br />
           ao nosso mundo de alegria!
@@ -30,7 +30,7 @@ const NotFoundPage = () => {
         >
           Voltar para o início
         </Link>
-        <p className="mt-8 text-gray-400 text-sm">
+        <p className="mt-8 text-gray-400 text-base">
           Vamos te guiar de volta para onde a aventura começa. 🚀
         </p>
       </div>
