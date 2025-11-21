@@ -1,5 +1,4 @@
 import { RouterProvider, createBrowserRouter} from 'react-router-dom'
-
 import Home from '../pages/Home/Home'
 import About from '../pages/About/About'
 import Visit from '../pages/Visit/Visit'
