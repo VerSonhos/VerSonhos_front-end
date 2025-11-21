@@ -16,6 +16,7 @@ import RequestsAdm from '@/pages/RequestsAdm/RequestsAdm'
 import HomeAdmin from '@/pages/HomeAdmin/HomeAdmin'
 import SettingsAdmin from '@/pages/SettingsAdmin/SettingsAdmin'
 import SettingsUser from '@/pages/SettingsUser/SettingsUser'
+import SchedulingStatusUser from '@/pages/SchedulingStatusUser/SchedulingStatusUser'
 
 const router = createBrowserRouter([
     // Páginas principais
@@ -43,16 +44,18 @@ const router = createBrowserRouter([
     // Dashboard do usuário
     { path: "/painelUsuario", element: <HomeUser />, },
 
-    { path: "/historicoAgendamentoAdm", element: <HistoricoAgendamentoAdm/>, },
-
+    { path: "/statusAgendamento", element: <SchedulingStatusUser />, },
+    
     { path: "/painelUsuarioAgendarVisita", element: <HomeUserAgendarVisita />, },
-
+    
     { path: "/configuracoesUsuario", element: <SettingsUser />, },
     
     // Dashboard do administrador
     { path: "/painelAdmin", element: <HomeAdmin />, },
 
     { path: "/painelAdminSolicitacao", element: <RequestsAdm />, },
+
+    { path: "/historicoAgendamentoAdm", element: <HistoricoAgendamentoAdm/>, },
     
     { path: "/configuracoesAdmin", element: <SettingsAdmin />, },
 ]);
