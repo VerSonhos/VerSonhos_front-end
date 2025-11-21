@@ -89,17 +89,22 @@ export default function GlassesExperience() {
   const showCanvas = progress < 0.75;  // remove o Canvas no final
 
   return (
-    <section
-      id="vr-section"
-      className="
-        relative w-full
-        h-[400vh]      /* mobile volta ao original */
-        md:h-[400vh]   /* desktop */
-        px-0 md:px-12
-      "
-    >
+  <section
+    id="vr-section"
+    className="
+      relative w-full
+      h-[300vh]           /* Desktop */
+      md:h-[350vh]        /* Tablets */
+      lg:h-[400vh]        /* Monitores grandes */
+      sm:h-[220vh]        /* Mobile grande */
+      xs:h-[180vh]        /* Mobile pequeno */
+      px-0 md:px-12
+    "
+  >
 
-      <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start pt-24">
+
+  <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start pt-12 sm:pt-20 md:pt-24">
+
 
         {/* TÍTULO */}
         {progress < 0.25 && (
@@ -134,7 +139,7 @@ export default function GlassesExperience() {
         <motion.div
           className="
             relative z-40 
-            mt-[25vh] sm:mt-[20vh] md:mt-[10vh]
+            mt-[18vh] sm:mt-[15vh] md:mt-[10vh] lg:mt-[5vh]
             w-full flex justify-center
             px-0 md:px-12
           "
