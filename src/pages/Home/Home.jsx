@@ -13,6 +13,7 @@ import Icon2 from "../../assets/icons/icon2-impacto.png";
 import Icon3 from "../../assets/icons/icon3-impacto.png";
 import proa from "../../assets/icons/logo-proa.svg";
 import senac from "../../assets/icons/logo-senac.png";
+import will from "../../assets/images/will.png";
 import GlassesExperience from "./components/GlassesExperience";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -38,6 +39,8 @@ export default function Home() {
 
   return (
     <MainLayout>
+
+      {/* HERO */}
       <motion.section
         className="relative w-full h-[100vh] flex items-center bg-cover bg-center"
         initial="hidden"
@@ -54,19 +57,12 @@ export default function Home() {
         >
           <source src={fundoHero} type="video/mp4" />
         </video>
+
         <div className="absolute inset-0 bg-black/20"></div>
+
         <motion.div
           className="relative z-10 text-white max-w-xl pl-10 md:pl-24"
           custom={1}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-        <motion.div
-          className="relative z-10 text-white max-w-xl pl-4 md:pl-4"
-          custom={1}
-          initial="hidden"
-          animate="visible"
           variants={fadeUp}
         >
           <h1 className="text-5xl font-bold mb-4 font-fredoka leading-tight">
@@ -79,16 +75,15 @@ export default function Home() {
           </p>
 
           <Link
-            to="/sobre" 
+            to="/sobre"
             className={`${styles.heroButton} font-fredoka mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer inline-block`}
           >
             Conheça-nos
           </Link>
         </motion.div>
-        </motion.div>
       </motion.section>
 
-      {/* seção: o que fazemos */}
+      {/* O QUE FAZEMOS */}
       <motion.section
         className="py-16 bg-white text-center"
         initial="hidden"
@@ -130,10 +125,10 @@ export default function Home() {
                 </h3>
                 <p className="text-white/90 text-sm leading-relaxed">
                   {i === 0
-                    ? "Levamos mundos inteiros para dentro dos quartos de hospital. Nossos óculos de Realidade Virtual transportam crianças para lugares mágicos e cheios de aventuras."
+                    ? "Levamos mundos inteiros para dentro dos quartos de hospital..."
                     : i === 1
-                    ? "Nosso foco é inspirar e renovar emocionalmente. Acreditamos que alegria e esperança ajudam no bem-estar e na recuperação."
-                    : "Tudo é feito para alinhar diversão com segurança. Nossas experiências VR são criadas junto a profissionais da saúde e psicólogos, planejadas com carinho."}
+                    ? "Nosso foco é inspirar e renovar emocionalmente..."
+                    : "Tudo é feito para alinhar diversão com segurança..."}
                 </p>
               </div>
             </motion.div>
@@ -141,88 +136,127 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/*seção: experiencia do oculos vr */}
+      {/* EXPERIÊNCIA VR */}
       <motion.section
         className="py-16 bg-white"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        variants={fadeUp} >
-
+        variants={fadeUp}
+      >
         <GlassesExperience />
-
       </motion.section>
 
-      {/* seção: banner de doação */}
       <motion.section
-      className="relative bg-[#145A94] text-white py-16 md:py-28 overflow-hidden min-h-[447px]"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-    >
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 px-6 relative z-20">
-        {/* Texto centralizado com contraste */}
+        className="py-20 bg-white text-center flex flex-col items-center mt-12 mb-12"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
         <motion.div
-          className="flex-1 flex flex-col justify-center items-center text-center
-                    bg-black/40 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none"
+          className="w-full mb-16"
           custom={0}
           variants={fadeUp}
         >
-        <h2 className="text-3xl md:text-5xl font-bold font-fredoka mb-6 text-center">
-          <span className="block md:hidden">Junte-se à nossa rede de carinho!</span>
-          <span className="hidden md:block">
-            <span>Junte-se à nossa</span>
-            <br />
-            <span>rede de carinho!</span>
-          </span>
-        </h2>
-          <p className="text-white/90 text-base md:text-lg mb-10 max-w-md leading-relaxed">
-            Compartilhe sua história e ajude-nos a transformar a jornada de mais crianças em aventuras cheias de alegria.
-          </p>
-          <Link to="/doar">
-            <motion.button
-              className={styles.doacaoButton}
-              whileHover={{ scale: 1.05 }}
-            >
-              Faça uma doação!
-            </motion.button>
-          </Link>
+          <h2 className="text-3xl md:text-5xl font-bold text-[#03184F] font-fredoka">
+            Conheça o <span className="text-[#3184EF]">Will</span>
+          </h2>
         </motion.div>
-      </div>
 
-      {/* Imagem */}
-      <motion.div
-        className="absolute right-0 top-[60%] transform -translate-y-1/2 z-10"
-        initial={{ x: 100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <img
-          src={doacaoImg}
-          alt="Imagem no banner de doação com uma criança no fundo do mar usando o oculos VR"
-          className="h-auto max-w-[500px] object-contain"
-        />
-      </motion.div>
-
-      {/* Onda branca em cima do banner */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
-        <svg
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          className="relative block w-full h-[100px]"
+        <motion.div
+          className="w-full flex flex-col md:flex-row justify-center items-center gap-12 px-6 max-w-6xl"
+          custom={1}
+          variants={fadeUp}
         >
-          <path
-            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-            fill="#FFFFFF"
+          <div className="w-full md:w-1/2 flex justify-center">
+            <img
+              src={will}
+              alt="Will, mascote do VerSonhos"
+              className="w-[160px] md:w-[250px] lg:w-[300px] object-contain drop-shadow-xl"
+            />
+          </div>
+
+          <div className="w-full md:w-1/2 text-left flex flex-col gap-6">
+            <h3 className="text-[#03184F] text-2xl md:text-3xl font-bold font-fredoka">
+              Quem é o Will?
+            </h3>
+
+            <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+              O seu guia na plataforma. Ele ajuda você a navegar pelo site, explica
+              cada parte das experiências e conversa através de um chatbot com
+              inteligência artificial. Sempre gentil, curioso e acolhedor, ele transforma
+              qualquer descoberta em um momento leve, seguro e cheio de magia.
+            </p>
+
+            <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+              Durante as experiências, o Will aparece para acolher, explicar, incentivar e
+              lembrar que ninguém está sozinho.
+            </p>
+
+            <p className="text-[#3184EF] font-bold text-lg md:text-xl font-fredoka">
+              “Pronto para se aventurar?” — Will ✨
+            </p>
+          </div>
+        </motion.div>
+      </motion.section>
+
+      <motion.section
+        className="relative bg-[#145A94] text-white py-16 md:py-28 overflow-hidden min-h-[447px]"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 px-6 relative z-20">
+          <motion.div
+            className="flex-1 flex flex-col justify-center items-center text-center bg-black/40 md:bg-transparent p-6 md:p-0 rounded-lg"
+            custom={0}
+            variants={fadeUp}
+          >
+            <h2 className="text-3xl md:text-5xl font-bold font-fredoka mb-6 text-center">
+              Junte-se à nossa rede de carinho!
+            </h2>
+            <p className="text-white/90 text-base md:text-lg mb-10 max-w-md leading-relaxed">
+              Compartilhe sua história e ajude-nos a transformar a jornada de mais crianças...
+            </p>
+            <Link to="/doar">
+              <motion.button
+                className={styles.doacaoButton}
+                whileHover={{ scale: 1.05 }}
+              >
+                Faça uma doação!
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="absolute right-0 top-[60%] transform -translate-y-1/2 z-10"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <img
+            src={doacaoImg}
+            alt="Banner de doação VerSonhos"
+            className="h-auto max-w-[500px] object-contain"
           />
-        </svg>
-      </div>
-    </motion.section>
+        </motion.div>
 
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            className="relative block w-full h-[100px]"
+          >
+            <path
+              d="M321.39,56.44c58-10.79,..."
+              fill="#FFFFFF"
+            />
+          </svg>
+        </div>
+      </motion.section>
 
-      {/* seção: onde levamos alegria */}
       <motion.section
         className="py-20 bg-white text-center"
         initial="hidden"
@@ -236,12 +270,13 @@ export default function Home() {
         >
           Onde levamos <span className="text-[#3184EF]">alegria</span>
         </motion.h2>
+
         <motion.p
           className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto mb-12"
           custom={1}
           variants={fadeUp}
         >
-          Transformando quartos de hospitais em portais de esperança, aventura e cor.
+          Transformando quartos de hospitais em portais de esperança e magia.
         </motion.p>
 
         <div className={styles.cardContainer}>
@@ -257,16 +292,18 @@ export default function Home() {
             <motion.div className={styles.cardItem} custom={0} variants={fadeUp}>
               <img
                 src={quartoInternacao}
-                alt="Imagem de Quarto de Internação"
+                alt="Quartos de internação"
                 className={`${styles.cardImage} ${styles.borderGreen}`}
               />
             </motion.div>
+
             <motion.div className={styles.cardItem} custom={1} variants={fadeUp}>
               <div className={styles.cardText}>
-                <h3 className="text-2xl font-bold mb-4 font-fredoka">Quartos de Internação</h3>
+                <h3 className="text-2xl font-bold mb-4 font-fredoka">
+                  Quartos de Internação
+                </h3>
                 <p>
-                  Transformando ambientes médicos em portais mágicos com óculos VR, levando esperança,
-                  alegria e diversão para crianças durante o tratamento.
+                  Levamos VR diretamente para o quarto das crianças...
                 </p>
               </div>
             </motion.div>
@@ -284,16 +321,18 @@ export default function Home() {
             <motion.div className={styles.cardItem} custom={2} variants={fadeUp}>
               <img
                 src={salaEspera}
-                alt="Imagem de Sala de Espera"
+                alt="Salas de espera"
                 className={`${styles.cardImage} ${styles.borderPink}`}
               />
             </motion.div>
+
             <motion.div className={styles.cardItem} custom={3} variants={fadeUp}>
               <div className={styles.cardText} style={{ backgroundColor: "#EB8AB4" }}>
-                <h3 className="text-2xl font-bold mb-4 font-fredoka">Salas de Espera e Recreação</h3>
+                <h3 className="text-2xl font-bold mb-4 font-fredoka">
+                  Salas de Espera e Recreação
+                </h3>
                 <p>
-                  Reduzimos a ansiedade e criamos experiências em espaços comuns interativos e educativos.
-                  Estimulando a imaginação e renovando a esperança.
+                  Reduzimos a ansiedade enquanto as crianças aguardam atendimento...
                 </p>
               </div>
             </motion.div>
@@ -301,7 +340,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* seção: impacto do VerSonhos */}
+      {/* IMPACTO */}
       <motion.section
         className={`relative bg-cover bg-center text-center py-16 ${styles.impactSection}`}
         style={{ backgroundImage: `url(${impactoFundo})` }}
@@ -321,7 +360,7 @@ export default function Home() {
           {[Icon1, Icon2, Icon3].map((icon, i) => (
             <motion.div
               key={i}
-              className={`bg-[#8BCDCC] rounded-2xl shadow-lg w-64 h-64 flex flex-col items-center justify-center p-6 ${styles.card} ${styles.GreenBorder}`}
+              className={`bg-[#8BCDCC] rounded-2xl shadow-lg w-64 h-64 flex flex-col items-center justify-center p-6 ${styles.card}`}
               custom={i}
               variants={fadeUp}
               initial="hidden"
@@ -329,26 +368,29 @@ export default function Home() {
               viewport={{ once: true }}
               whileHover={{ scale: 1.05 }}
             >
-              <img src={icon} alt={`Icon ${i + 1}`} className="w-12 h-12 mb-3" />
+              <img src={icon} alt="" className="w-12 h-12 mb-3" />
+
               <h3 className="font-semibold text-lg text-[#03184F]">
                 {i === 0 ? "Hospitais e Cidades" : i === 1 ? "Nossos Heróis" : "Horas de Magia"}
               </h3>
+
               <p className="text-[#03184F] text-2xl font-bold">
                 {i === 0 ? "12+" : i === 1 ? "10+" : "1h"}
               </p>
+
               <p className="text-sm text-[#03184F]">
                 {i === 0
-                  ? "Em parceria com hospitais de São Paulo"
+                  ? "Parcerias em SP"
                   : i === 1
-                  ? "Crianças em tratamento oncológico e internações prolongadas"
-                  : "De sorrisos, redução da ansiedade e transformação da experiência"}
+                  ? "Crianças impactadas"
+                  : "De alegria e redução de ansiedade"}
               </p>
             </motion.div>
           ))}
         </div>
       </motion.section>
 
-      {/* seção: herois que nos apoiam */}
+      {/* APOIADORES */}
       <motion.section
         className="py-20 bg-white text-center"
         initial="hidden"
@@ -360,34 +402,29 @@ export default function Home() {
           custom={0}
           variants={fadeUp}
         >
-          Heróis que nos<span className="text-[#3184EF]"> apoiam</span>
+          Heróis que nos <span className="text-[#3184EF]">apoiam</span>
         </motion.h2>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-20 px-6">
           <motion.img
             src={proa}
-            alt="Herói 1"
-            className="w-50 pt-15 h-auto"
+            alt="Logo PROA"
+            className="w-50 h-auto"
             custom={1}
             variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             whileHover={{ scale: 1.05 }}
           />
           <motion.img
             src={senac}
-            alt="Herói 2"
+            alt="Logo Senac"
             className="w-45 h-auto"
             custom={2}
             variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             whileHover={{ scale: 1.05 }}
           />
         </div>
       </motion.section>
+
     </MainLayout>
   );
 }
