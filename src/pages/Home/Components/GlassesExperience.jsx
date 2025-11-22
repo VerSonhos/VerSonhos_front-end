@@ -4,12 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import videoOculos from "../../../assets/videos/video-oculos.mp4";
 
-// Altura total do scroll
 const SCROLL_HEIGHT_VH = 400;
 
-/* -------------------------------------------------------
-   MODELO — alinhado, leve e centralizado
-------------------------------------------------------- */
 function GlassesModel({ progress }) {
   const { scene } = useGLTF("src/assets/models/oculos.glb");
   const ref = useRef();
@@ -18,7 +14,6 @@ function GlassesModel({ progress }) {
     if (scene) {
       scene.traverse((child) => {
         if (child.isMesh) {
-          // ajustes opcionais no material
         }
       });
     }
@@ -28,13 +23,15 @@ function GlassesModel({ progress }) {
     if (!ref.current) return;
 
     const p = progress;
-    const baseScale = 10;
+    const isMobile = window.innerWidth < 768;
+    const baseScale = isMobile ? 7.5 : 13;
+    const offsetY = isMobile ? -0.3 : -0.6;
     const initialCameraZ = 7;
     const zoomedCameraZ = 2;
 
     ref.current.visible = true;
     ref.current.scale.setScalar(baseScale);
-    ref.current.position.set(0, 0, 0);
+    ref.current.position.set(0, offsetY, 0);
 
     const rotateToFrontEnd = 0.3;
     const zoomStart = 0.4;
@@ -59,9 +56,6 @@ function GlassesModel({ progress }) {
   return <primitive ref={ref} object={scene} />;
 }
 
-/* -------------------------------------------------------
-   EXPERIÊNCIA — Mobile e Desktop fluindo igual
-------------------------------------------------------- */
 export default function GlassesExperience() {
   const [progress, setProgress] = useState(0);
 
@@ -91,40 +85,32 @@ export default function GlassesExperience() {
   return (
     <section
       id="vr-section"
-      className="
-        relative w-full
-        h-[400vh]     /* altura fixa para TODOS os devices */
-        px-0 md:px-12
-      "
+      className="relative w-full h-[400vh] px-0 md:px-12"
     >
       <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start">
-
-        {/* ---------- TÍTULO FIXO ---------- */}
         {progress < 0.25 && (
           <motion.h2
-            className="
-              absolute 
-              top-24 left-1/2 -translate-x-1/2
-              text-3xl md:text-5xl font-bold text-[#03184F]
-              text-center font-fredoka
-              z-[60]
+            className="absolute top-24 left-1/2 -translate-x-1/2
+              text-xl sm:text-2xl md:text-5xl font-bold text-[#03184F]
+              text-center font-fredoka z-[60]
             "
             initial={{ opacity: 1 }}
             animate={{ opacity: progress > 0.15 ? 0 : 1 }}
             transition={{ duration: 0.4 }}
           >
-            O que as crianças veem no óculos?
-            <br />
-            <span className="text-[#3184EF]">Prepare-se para a imersão!</span>
+            <span className="block whitespace-nowrap">
+              O que as crianças veem no óculos?
+            </span>
+
+            <span className="block text-[#3184EF]">
+              Prepare-se para a imersão!
+            </span>
           </motion.h2>
         )}
 
-        {/* ---------- CANVAS DO ÓCULOS ---------- */}
+        {/* canvas do óculos */}
         <div
-          className={`
-            absolute inset-0 flex justify-center items-center 
-            pointer-events-none 
-            z-50 transition-opacity duration-300
+          className={`absolute inset-0 w-full h-full flex justify-center items-center pointer-events-none z-50 transition-opacity duration-300
             ${showCanvas ? "opacity-100" : "opacity-0"}
           `}
         >
@@ -135,34 +121,24 @@ export default function GlassesExperience() {
           </Canvas>
         </div>
 
-        {/* ---------- VÍDEO ---------- */}
-        <motion.div
-          className="
-            relative z-40 
-            mt-[20vh] sm:mt-[15vh] md:mt-[10vh]
-            w-full flex justify-center
-            px-0 md:px-12
-          "
-          animate={{
-            opacity: videoVisible ? 1 : 0,
-            y: videoVisible ? 0 : 50,
-          }}
-          transition={{ duration: 0.45 }}
-        >
-          <video
-            src={videoOculos}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="
-              w-full md:w-[62vw]
-              max-w-[1200px]
-              rounded-none md:rounded-xl
-              shadow-xl
-            "
-          />
-        </motion.div>
+       {/* vídeo */}
+      <motion.div
+        className="relative z-40 mt-[28vh] sm:mt-[20vh] md:mt-[12vh] w-full flex justify-center px-4 md:px-12*/"
+        animate={{
+          opacity: videoVisible ? 1 : 0,
+          y: videoVisible ? 0 : 50,
+        }}
+        transition={{ duration: 0.45 }}
+      >
+        <video
+          src={videoOculos}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full md:w-[62vw] max-w-[1200px] rounded-none md:rounded-xl shadow-xl"
+        />
+      </motion.div>
 
       </div>
     </section>
