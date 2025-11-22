@@ -8,7 +8,7 @@ import videoOculos from "../../../assets/videos/video-oculos.mp4";
 const SCROLL_HEIGHT_VH = 400;
 
 /* -------------------------------------------------------
-   MODELO — alinhado, leve e 100% centralizado
+   MODELO — alinhado, leve e centralizado
 ------------------------------------------------------- */
 function GlassesModel({ progress }) {
   const { scene } = useGLTF("src/assets/models/oculos.glb");
@@ -18,7 +18,7 @@ function GlassesModel({ progress }) {
     if (scene) {
       scene.traverse((child) => {
         if (child.isMesh) {
-          // Caso queira ajustar material, pode colocar aqui
+          // ajustes opcionais no material
         }
       });
     }
@@ -60,7 +60,7 @@ function GlassesModel({ progress }) {
 }
 
 /* -------------------------------------------------------
-   EXPERIÊNCIA VR — responsiva para Mobile e Desktop
+   EXPERIÊNCIA — Mobile e Desktop fluindo igual
 ------------------------------------------------------- */
 export default function GlassesExperience() {
   const [progress, setProgress] = useState(0);
@@ -86,30 +86,29 @@ export default function GlassesExperience() {
   }, []);
 
   const videoVisible = progress >= 0.7;
-  const showCanvas = progress < 0.75;  // remove o Canvas no final
+  const showCanvas = progress < 0.75;
 
   return (
-  <section
-    id="vr-section"
-    className="
-      relative w-full
-      h-[300vh]           /* Desktop */
-      md:h-[350vh]        /* Tablets */
-      lg:h-[400vh]        /* Monitores grandes */
-      sm:h-[220vh]        /* Mobile grande */
-      xs:h-[180vh]        /* Mobile pequeno */
-      px-0 md:px-12
-    "
-  >
+    <section
+      id="vr-section"
+      className="
+        relative w-full
+        h-[400vh]     /* altura fixa para TODOS os devices */
+        px-0 md:px-12
+      "
+    >
+      <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start">
 
-
-  <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start pt-12 sm:pt-20 md:pt-24">
-
-
-        {/* TÍTULO */}
+        {/* ---------- TÍTULO FIXO ---------- */}
         {progress < 0.25 && (
           <motion.h2
-            className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka text-center z-20"
+            className="
+              absolute 
+              top-24 left-1/2 -translate-x-1/2
+              text-3xl md:text-5xl font-bold text-[#03184F]
+              text-center font-fredoka
+              z-[60]
+            "
             initial={{ opacity: 1 }}
             animate={{ opacity: progress > 0.15 ? 0 : 1 }}
             transition={{ duration: 0.4 }}
@@ -120,10 +119,11 @@ export default function GlassesExperience() {
           </motion.h2>
         )}
 
-        {/* CANVAS DO ÓCULOS */}
+        {/* ---------- CANVAS DO ÓCULOS ---------- */}
         <div
           className={`
-            absolute inset-0 flex justify-center items-center pointer-events-none 
+            absolute inset-0 flex justify-center items-center 
+            pointer-events-none 
             z-50 transition-opacity duration-300
             ${showCanvas ? "opacity-100" : "opacity-0"}
           `}
@@ -135,11 +135,11 @@ export default function GlassesExperience() {
           </Canvas>
         </div>
 
-        {/* VÍDEO RESPONSIVO */}
+        {/* ---------- VÍDEO ---------- */}
         <motion.div
           className="
             relative z-40 
-            mt-[18vh] sm:mt-[15vh] md:mt-[10vh] lg:mt-[5vh]
+            mt-[20vh] sm:mt-[15vh] md:mt-[10vh]
             w-full flex justify-center
             px-0 md:px-12
           "
@@ -156,7 +156,7 @@ export default function GlassesExperience() {
             muted
             playsInline
             className="
-              w-full md:w-[80vw]
+              w-full md:w-[62vw]
               max-w-[1200px]
               rounded-none md:rounded-xl
               shadow-xl
