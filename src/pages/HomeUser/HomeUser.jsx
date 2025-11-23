@@ -21,6 +21,7 @@ export default function HomeUser() {
       title: "Acompanhe seus agendamentos",
       desc: "Veja os agendamentos confirmados.",
       button: "Ver mais",
+      link: "/statusAgendamento" 
     },
     {
       img: livro,
