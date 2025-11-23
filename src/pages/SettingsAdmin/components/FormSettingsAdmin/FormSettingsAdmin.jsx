@@ -1,4 +1,4 @@
-import ModalEditUser from "../ModalEditUser/ModalEditUser"
+import ModalEditUser from "../ModalEditAdmin/ModalEditAdmin"
 import { IoIosMail, IoIosPaper } from "react-icons/io";
 import { IoDocumentText } from "react-icons/io5";
 import { TbPencilStar, TbNumber } from "react-icons/tb";
