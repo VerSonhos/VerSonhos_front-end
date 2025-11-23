@@ -13,12 +13,6 @@ export default function NavSettings({ activeItem, onSelect }) {
 
         {
             id: 2,
-            title: "Empresa",
-            icon: <MdOutlineWork />,
-        },
-
-        {
-            id: 3,
             title: "Segurança",
             icon: <MdOutlineSecurity />,
         },
@@ -32,7 +26,7 @@ export default function NavSettings({ activeItem, onSelect }) {
 
     return (
         <article className="w-[75%] md:w-[35%] border-2 border-black-custom-300 shadow-custom-sm rounded-lg">
-            <h2 className="w-full flex items-center bg-tertiary py-2 px-3 gap-2 text-white text-2xl font-fredoka font-medium rounded-t-md">
+            <h2 className="w-full flex items-center bg-quintenary py-2 px-3 gap-2 text-white text-2xl font-fredoka font-medium rounded-t-md">
                 <IoMdSettings />
                 Configurações
             </h2>
@@ -41,7 +35,7 @@ export default function NavSettings({ activeItem, onSelect }) {
                 {itens.map(item => (
                     <div
                         key={item.id}
-                        className={`${activeItem === item.title ? 'active' : ''} flex items-center gap-3 text-xl font-medium text-black-custom-400 cursor-pointer py-2 px-5 rounded-md hover:bg-tertiary hover:text-white transition`}
+                        className={`${activeItem === item.title ? 'active' : ''} flex items-center gap-3 text-xl font-medium text-black-custom-400 cursor-pointer py-2 px-5 rounded-md hover:bg-quintenary hover:text-white transition`}
                         onClick={() => onSelect(item.title)}
                     >
                         {item.icon}

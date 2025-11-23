@@ -17,7 +17,7 @@ export default function ModalEditAdmin({ dialogTitle, label, typeInput='text', i
             <DialogTrigger asChild>
                 <button 
                     type="button" 
-                    className="absolute right-0 bg-tertiary text-white text-xl text-center h-full w-10 rounded-r-lg cursor-pointer active:bg-blue-600 hover:bg-blue-500 transition"
+                    className="absolute right-0 bg-quintenary text-white text-xl text-center h-full w-10 rounded-r-lg cursor-pointer active:bg-thirteenth-500 hover:bg-thirteenth transition"
                     onClick={() => setNewValue(initialValue)}
                 >
                     <FiEdit className="m-auto" />
@@ -41,7 +41,7 @@ export default function ModalEditAdmin({ dialogTitle, label, typeInput='text', i
                             value={newValue}
                             onChange={(e) => setNewValue(e.target.value)}
                             placeholder={`Digite o novo ${label.toLowerCase()}`}
-                            className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ${IconComponent ? 'ps-9' : 'ps-4'}`} 
+                            className={`bg-gray-100 border-2 border-gray-300 focus:border-quintenary outline-0 focus:shadow-quintenary transition ease-in-out rounded-md w-full py-1.5 ${IconComponent ? 'ps-9' : 'ps-4'}`} 
                         />
                     </div>
                     <DialogDescription className="text-sm mt-1 text-gray-500">
@@ -55,7 +55,7 @@ export default function ModalEditAdmin({ dialogTitle, label, typeInput='text', i
                     </DialogClose>
 
                     <Button 
-                        className="cursor-pointer bg-tertiary text-white hover:bg-blue-600 transition"
+                        className="cursor-pointer bg-quintenary text-white hover:bg-thirteenth transition"
                         onClick={handleSave}
                         disabled={newValue === initialValue || !newValue.trim()}
                     >
