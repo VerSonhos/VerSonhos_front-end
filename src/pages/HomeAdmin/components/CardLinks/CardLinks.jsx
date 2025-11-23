@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 
 export default function CardLinks({ image, imageTitle, title, desc, link, btnText  }) {
     return (
-        <article className={`${styles.card} bg-white shadow rounded-lg border-2 hover:shadow-md transition border-ninth-500`} >
+        <article className={`${styles.card} bg-white shadow rounded-lg border-2 hover:shadow-md transition`} >
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-left p-5 h-auto sm:h-40">
                 <div className="flex-shrink-0">
                     <img
