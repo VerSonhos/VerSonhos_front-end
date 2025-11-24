@@ -3,11 +3,12 @@ import { useGLTF } from "@react-three/drei";
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import videoOculos from "../../../assets/videos/video-oculos.mp4";
+import oculosModel from '@/assets/models/oculos.glb';
 
 const SCROLL_HEIGHT_VH = 400;
 
 function GlassesModel({ progress }) {
-  const { scene } = useGLTF("src/assets/models/oculos.glb");
+  const { scene } = useGLTF(oculosModel);
   const ref = useRef();
 
   useEffect(() => {
