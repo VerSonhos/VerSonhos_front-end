@@ -1,139 +1,121 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido" });
+import instructions from "./instructions.js";
+
+function validarResposta(text) {
+  let resposta = text;
+
+  resposta = resposta
+    .replace(/ods\s*18(?!\s*como)/gi, "ODS 18, compromisso brasileiro de igualdade racial e diversidade")
+    .replace(/ods\s*1[9-9]/gi, "ODS inexistente");
+
+  const linksPermitidos = [
+    "instagram.com/versonhos.oficial",
+    "linktr.ee/versonhos",
+    "linktr.ee/equipeversonhos",
+    "docs.google.com/forms/d/e/1FAIpQLScBKEvOLMdb0LS9FfYCqz3dvjjbkEhpaJlgC1HexITijJF9sw/viewform"
+  ];
+
+  const linksEncontrados = resposta.match(/https?:\/\/[^\s]+/gi) || [];
+  const temLinkProibido = linksEncontrados.some(link => {
+    return !linksPermitidos.some(ok => link.includes(ok));
+  });
+
+  if (temLinkProibido) {
+    resposta = "Desculpe, eu só posso compartilhar links oficiais da VerSonhos quando você pedir.";
   }
+
+  const proibidos = ["diagnóstico", "medicação", "tratamento médico", "prognóstico"];
+  for (const t of proibidos) {
+    if (resposta.toLowerCase().includes(t)) {
+      resposta = "Eu não posso comentar sobre questões médicas, mas posso explicar o trabalho da VerSonhos 💙.";
+      break;
+    }
+  }
+
+  if (resposta.toLowerCase().includes("ods 18 não")) {
+  resposta = "A ODS 18 existe no contexto brasileiro como um compromisso social voltado para igualdade racial e diversidade, adotado pela VerSonhos.";
+  }
+
+  if (resposta.length > 1200) {
+    resposta = resposta.slice(0, 1200);
+  }
+
+  return resposta;
+}
+
+function comprimirTexto(texto) {
+  let t = texto;
+  t = t.replace(/\s{2,}/g, " ");
+  t = t.replace(/\n{3,}/g, "\n\n");
+  t = t.replace(/(VerSonhos)/gi, "VerSonhos");
+  t = t.replace(/(\.\s+){2,}/g, ". ");
+  t = t.replace(/(Nós\s+trabalhamos\s+com\s+)+/gi, "Nós trabalhamos com ");
+  return t.trim();
+}
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") return res.status(405).end();
 
   try {
     const { messages } = req.body;
 
-    console.log("🔑 GROQ_API_KEY:", process.env.GROQ_API_KEY ? "Carregada" : "Não encontrada");
+    const system = {
+      role: "system",
+      content: `
+        ${instructions.regrasProtecao}
+        ${instructions.identidadeWill}
+        ${instructions.estiloFala}
+        ${instructions.redirect}
+        ${instructions.base}
+        ${instructions.sobreVersonhos}
+        ${instructions.oQueFazemos}
+        ${instructions.agendamento}
+        ${instructions.equipe}
+        ${instructions.missaoVisaoValores}
+        ${instructions.monetizacao}
+        ${instructions.ods3}
+        ${instructions.ods10}
+        ${instructions.ods18}
+        ${instructions.planosFuturos}
+        ${instructions.dadosEficacia}
+        ${instructions.slogan}
+      `
+    };
+
+    const final = [
+      system,
+      ...messages.map(m => ({
+        role: m.role === "user" ? "user" : "assistant",
+        content: m.content
+      }))
+    ];
 
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+        Authorization: `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
         model: "llama-3.1-8b-instant",
-        messages: [
-        {
-          role: "system",
-          content: `
-            Você é Will, o mascote e assistente virtual da empresa VerSonhos 💙.
-            Fale sempre em nome da VerSonhos, com um tom acolhedor, otimista e profissional.
-            Use frases curtas, claras e positivas, sem formatação especial como asteriscos ou markdown.
-
-            Sobre a VerSonhos:
-            - Somos uma empresa social que leva experiências em realidade virtual para crianças hospitalizadas.
-            - Nossa missão é levar alegria, aprendizado e esperança durante o tratamento.
-            - Nossos valores são empatia, inovação, acessibilidade e esperança.
-            - Nossa visão é ser referência em inovação e humanização hospitalar.
-            - Nossa equipe é formada por Heitor Sales, João Pedro, Vitor Mota, Nicolas Coelho, Mariana Ocireu e Maurício.
-
-            Seu papel:
-            - Representar a empresa VerSonhos.
-            - Explicar de forma simples o que fazemos e por que existimos.
-            - Ajudar visitantes a entender como participar, doar ou divulgar.
-            - Falar sempre de modo positivo, humano e inspirador.
-
-            Se o usuário fizer perguntas fora do tema da VerSonhos, responda de forma educada e redirecione:
-            "Prefiro falar sobre a VerSonhos e como estamos levando alegria e esperança através da realidade virtual. Quer saber mais sobre isso?"
-
-            Fale como parte da equipe, usando “nós” quando se referir à empresa.
-            Evite respostas longas. Seja direto, simpático e inspirador.
-
-        ---
-
-        ### 🌈 SOBRE O VERSONHOS
-        O VerSonhos leva experiências imersivas em realidade virtual para crianças hospitalizadas, criando momentos de alegria, aprendizado e esperança durante o tratamento.  
-        A missão é complementar o cuidado dos profissionais de saúde com tecnologia que acolhe e cura através das emoções.
-
-        - Missão: Levar alegria, aprendizado e esperança por meio da realidade virtual.  
-        - Visão: Ser referência em inovação e humanização hospitalar.  
-        - Valores: Empatia 💙 | Inovação 💡 | Acessibilidade 🌍 | Esperança 🌈  
-
-        ---
-
-        ### 🏥 O QUE O VERSONHOS FAZ
-        Com óculos de realidade virtual, o projeto leva o mundo até o leito das crianças:
-        - 🐠 Aventuras e explorações virtuais;  
-        - 🎮 Jogos que reduzem o estresse e a dor;  
-        - 🧘 Experiências relaxantes e educativas.
-
-        Público principal:
-        - 👧 Crianças hospitalizadas;  
-        - 👩‍👦 Famílias;  
-        - 👨‍⚕️ Profissionais de saúde.
-
-        ---
-
-        ### 👥 EQUIPE VERSONHOS
-        - Heitor Sales — PO, Financeiro e Desenvolvedor Full Stack  
-        - João Pedro — Scrum Master e Front-End  
-        - Vitor Mota — UX/UI, Front-End e Marketing  
-        - Nicolas Coelho — Desenvolvedor Full Stack  
-        - Mariana Ocireu — Desenvolvedora Full Stack  
-        - Maurício — UX/UI e Desenvolvedor Full Stack  
-
-        ---
-
-        ### 🧩 REGRAS DE CONDUTA
-        - Fale somente sobre temas relacionados ao projeto VerSonhos (realidade virtual, missão, equipe, contato, impacto social, etc).  
-        - Se o usuário fizer perguntas fora desse contexto, redirecione educadamente:  
-          > “Posso te contar mais sobre as experiências em realidade virtual do VerSonhos?”  
-        - Nunca invente informações pessoais sobre a equipe.  
-        - Se perguntarem sobre contato, informe:  
-          📧 contato@versonhos.com.br  
-          🌐 versonhos.com.br  
-          📍 São Paulo, SP – Brasil  
-
-        ---
-
-        ### 💬 ESTILO DE FALA
-        - Sempre otimista, gentil e inspirador.  
-        - Use emojis com moderação (💙, 🌈, 🕶️, ✨).  
-        - Seja breve e envolvente nas respostas.  
-        - Mostre gratidão e empatia:  
-          > “Que bom ter você aqui 💙”  
-          > “Juntos, podemos levar o mundo até quem mais precisa.”  
-
-        ---
-
-        “Você é o Will — um símbolo de esperança, inovação e amor.  
-        Ajude o visitante a sonhar junto com o VerSonhos.”  
-        `
-        },
-
-          ...messages.map((m) => ({
-            role: m.role === "bot" ? "assistant" : "user", 
-            content: m.content,
-          })),
-        ],
-      }),
+        messages: final
+      })
     });
 
     const data = await response.json();
 
     if (data.error) {
-      console.error("Erro Groq:", data.error);
-      return res.status(500).json({
-        reply: "Erro ao processar resposta da IA",
-        debug: data.error,
-      });
+      return res.status(500).json({ reply: "Erro interno: " + data.error.message });
     }
 
-    const reply =
-      data.choices?.[0]?.message?.content ||
-      "Desculpe, não consegui responder agora.";
+    const respostaBruta = data.choices?.[0]?.message?.content || "";
+    const respostaValidada = validarResposta(respostaBruta);
+    const respostaFinal = comprimirTexto(respostaValidada);
 
-    return res.status(200).json({ reply, raw: data });
-
-  } catch (error) {
-    console.error("Erro na API Groq:", error);
-    return res.status(500).json({
-      reply: "Erro na comunicação com a IA",
-      debug: error.message,
+    return res.status(200).json({
+      reply: respostaFinal
     });
+
+  } catch (e) {
+    return res.status(500).json({ reply: "Erro interno." });
   }
 }

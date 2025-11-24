@@ -12,7 +12,6 @@ export default function historicoAgendamentoAdm(){
                 <HeaderCards number={'0'} text={'Agendamentos concluídos'} color={'bg-green-500'} />
             </section>
             <TableAgendamento/>
-
         </DashboardLayout>
         </>
     );

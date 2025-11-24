@@ -276,3 +276,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.vw-access-button {
+  z-index: 999999 !important;
+}
