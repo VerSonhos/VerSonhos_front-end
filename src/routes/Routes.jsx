@@ -10,7 +10,6 @@ import Register from '../pages/Register/Register'
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
-import NotFoundPage from '../pages/PagErro/NotFoundPage'
 import HistoricoAgendamentoAdm from '../pages/HistoricoAgendamentoAdm/HistoricoAgendamentoAdm'
 import HomeUserAgendarVisita from '../pages/HomeUserAgendarVisita/HomeUserAgendarVisita'
 import RequestsAdm from '@/pages/RequestsAdm/RequestsAdm'
@@ -30,8 +29,6 @@ const router = createBrowserRouter([
     { path: "/visita", element: <Visit />, },
 
     { path: "/doar", element: <Donate />, },
-
-    { path: "*", element: <NotFoundPage />, },
 
     // Páginas de autenticação
     { path: "/login", element: <Login />, },
