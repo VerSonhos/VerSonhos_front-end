@@ -7,7 +7,7 @@ import card3 from "../../assets/images/card3.png";
 import will from "../../assets/images/will.png";
 import doacaoImg from "../../assets/images/doacaoImg-home.png";
 import quartoInternacao from "../../assets/images/quartos-internacao-home.png";
-import salaEspera from "../../assets/images/salas-espera.jpg;";
+import salaEspera from "../../assets/images/salas-espera.jpg";
 import impactoFundo from "../../assets/images/Secao-impacto.png";
 import Icon1 from "../../assets/icons/icon1-impacto.png";
 import Icon2 from "../../assets/icons/icon2-impacto.png";
