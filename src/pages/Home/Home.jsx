@@ -15,7 +15,7 @@ import Icon3 from "../../assets/icons/icon3-impacto.png";
 import estrelas from "../../assets/images/estrelas.png";
 import proa from "../../assets/icons/logo-proa.svg";
 import senac from "../../assets/icons/logo-senac.png";
-import GlassesExperience from "./components/GlassesExperience";
+import GlassesExperience from "./Components/GlassesExperience";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
