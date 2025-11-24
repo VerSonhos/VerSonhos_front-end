@@ -43,7 +43,7 @@ export default function HomeUser() {
           <h1 className="text-xl font-semibold">Início</h1>
           <Link
             to="/painelUsuarioAgendarVisita"
-            className="flex items-center gap-2 bg-blue-500 text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
+            className="flex items-center gap-2 bg-tertiary text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
           >
             <img
               src={iconAgendamento}
@@ -86,7 +86,7 @@ export default function HomeUser() {
                   </div>
                     <Link
                       to={card.link}
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md transition w-full sm:w-fit mt-3 hover:scale-105 cursor-pointer text-center"
+                      className="bg-tertiary text-white px-4 py-2 rounded-md transition w-full sm:w-fit mt-3 hover:scale-105 cursor-pointer text-center"
                     >
                       {card.button}
                     </Link>
