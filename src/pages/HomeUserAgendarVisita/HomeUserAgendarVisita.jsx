@@ -1,6 +1,8 @@
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import iconAgendamento from "../../assets/icons/icon-agenda.png";
 
 function maskCPF(value) {
   return value
@@ -54,17 +56,26 @@ function CPFInput() {
 export default function HomeUserAgendarVisita() {
   return (
     <DashboardLayout>
-      <div className="p-8 max-w-6xl mx-auto">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-[#0B2149]">Agendar nova visita</h2>
-          <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
-            Escolha a data horário e local da próxima visita para levar alegria e esperança às crianças hospitalizadas
-          </p>
-        </div>
+      <div className="p-4 sm:p-6 mx-auto">
+        <section className='w-full font-inter flex flex-col gap-5 mb-10'>
+            <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
+                <h1 className="text-2xl font-semibold">Agendar nova visita</h1>
 
-        <form className="space-y-8">
+                <Link
+                    to={'/statusAgendamento'}
+                    className="flex items-center gap-2 bg-tertiary text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
+                >
+                    <img src={iconAgendamento} alt="Ícone de calendário" className="w-5 h-5"/>
+                    Veja seus agendamentos
+                </Link>
+            </div>
+
+            <p className='text-xl text-black-custom-400 font-semibold mt-2'>Escolha a data horário e local da próxima visita para a <span className='font-bold text-quintenary'>VerSonhos</span> levar alegria e esperança às crianças hospitalizadas.</p>
+        </section>
+
+        <form className="space-y-8 p-10 shadow-lg">
+          <h2 className="text-3xl text-center font-semibold text-quintenary">Preencha o formulário</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Data da visita</label>
               <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 
