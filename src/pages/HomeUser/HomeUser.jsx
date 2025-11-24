@@ -43,7 +43,7 @@ export default function HomeUser() {
           <h1 className="text-xl font-semibold">Início</h1>
           <Link
             to="/painelUsuarioAgendarVisita"
-            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
+            className="flex items-center gap-2 bg-blue-500 text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
           >
             <img
               src={iconAgendamento}
