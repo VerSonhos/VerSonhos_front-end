@@ -48,7 +48,7 @@ export default function HomeAdmin() {
                         <h1 className="text-2xl font-semibold">Início</h1>
 
                         <Link
-                            to={'/'}
+                            to={'/painelAdminSolicitacao'}
                             className="flex items-center gap-2 bg-quintenary text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
                         >
                             <img src={iconAgendamento} alt="Ícone de calendário" className="w-5 h-5"/>

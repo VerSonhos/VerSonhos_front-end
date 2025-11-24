@@ -1,7 +1,8 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
 import React, { useState, useEffect } from "react";
-import { FaEllipsisV, FaChevronLeft, FaChevronRight } from "react-icons/fa"; 
-
+import { FaEllipsisV, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import iconAgendamento from "../../assets/icons/icon-agenda.png";
+import { Link } from "react-router-dom";
 
 const dadosExemplo = [
     { id: 1, empresa: "Hospital Central", data: "2025-11-20", status: "Pendente", endereco: "Rua A, 123", horario: "10:00" },
@@ -109,11 +110,24 @@ export default function RequestsAdm() {
     return (
         <DashboardLayout>
             <div className="p-4 sm:p-6 bg-transparent">
+                <section className='w-full font-inter flex flex-col gap-5 mb-10'>
+                    <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
+                        <h1 className="text-2xl font-semibold">Situação de solicitações de agendamento</h1>
 
+                        <Link
+                            to={'/historicoAgendamentoAdm'}
+                            className="flex items-center gap-2 bg-quintenary text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
+                        >
+                            <img src={iconAgendamento} alt="Ícone de calendário" className="w-5 h-5"/>
+                            Veja o histórico de agendamentos
+                        </Link>
+                    </div>
+
+                    <p className='text-xl text-black-custom-400 font-semibold mt-2'>Gerencie as solicitações de agendamento da <span className='font-bold text-quintenary'>VerSonhos</span>.</p>
+                </section>
                
                 <SimpleCalendar dadosEventos={tabelaData} />
 
-                
                 <div className="overflow-x-auto w-full">
                     <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md font-fredoka">
                         <thead className="bg-thirteenth-500 text-white">
