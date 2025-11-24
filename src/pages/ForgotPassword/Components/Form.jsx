@@ -16,7 +16,7 @@ export default function Form() {
                 </Link>
 
                 <section className='shadow-custom-sm w-[90%] lg:w-[40%] m-auto px-10 py-15 rounded-lg bg-white-custom'>
-                    <img src={LogoForm} alt="Logotipo VerSonhos" className='w-[65%] mx-auto mb-7' />
+                    <img src={LogoForm} alt="Logotipo VerSonhos" className='w-[75%] md:w-[65%] mx-auto mb-7' />
 
                     <div className='text-center font-inter mb-7'>
                         <h2 className='font-bold text-2xl mb-2'>Recupere sua senha</h2>

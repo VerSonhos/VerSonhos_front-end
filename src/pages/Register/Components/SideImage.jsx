@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
-import { IoIosArrowBack, IoIosMail } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 import ImageBg from '../../../assets/images/ImagemCadastro.png'
-import styles from '../styles.module.css'
 
 export default function SideImage() {
     return (
