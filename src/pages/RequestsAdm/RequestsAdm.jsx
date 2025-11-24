@@ -1,4 +1,4 @@
-import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardLayoutAdmin from '@/layouts/DashboardLayoutAdmin'
 import React, { useState, useEffect } from "react";
 import { FaEllipsisV, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
@@ -108,7 +108,7 @@ export default function RequestsAdm() {
     };
 
     return (
-        <DashboardLayout>
+        <DashboardLayoutAdmin>
             <div className="p-4 sm:p-6 bg-transparent">
                 <section className='w-full font-inter flex flex-col gap-5 mb-10'>
                     <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
@@ -191,6 +191,6 @@ export default function RequestsAdm() {
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </DashboardLayoutAdmin>
     );
 }

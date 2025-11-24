@@ -1,22 +1,20 @@
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
+import SidebarAdmin from '../components/SideBarAdmin/SideBarAdmin';
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 import Chatbot from "../components/ChatBot/ChatBot";
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop.jsx'
 
-const MainLayout = ({ children }) => {
+const DashboardLayout = ({ children }) => {
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="flex min-h-screen">
       <ScrollToTop />
-      <Header />
-      <section className="grow">
+      <SidebarAdmin />
+      <section className="grow p-6 ms-20 bg-gray-100">
         {children}
       </section>
-      <Footer />
       <AccessibilityWidget />
       <Chatbot />
     </main>
   );
 };
 
-export default MainLayout;
+export default DashboardLayout;

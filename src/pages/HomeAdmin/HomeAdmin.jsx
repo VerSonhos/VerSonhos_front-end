@@ -1,4 +1,4 @@
-import DashboardLayout from '@/layouts/DashboardLayout'
+import DashboardLayoutAdmin from '@/layouts/DashboardLayoutAdmin'
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
 import iconCalendarAdmin from "../../assets/icons/iconCalendarAdmin.png";
 import IconCalendarAdmin2 from "../../assets/icons/IconCalendarAdmin2.png";
@@ -42,7 +42,7 @@ export default function HomeAdmin() {
 
     return (
         <>
-            <DashboardLayout>
+            <DashboardLayoutAdmin>
                 <section className='w-full p-4 sm:p-6 font-inter flex flex-col gap-5'>
                     <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
                         <h1 className="text-2xl font-semibold">Início</h1>
@@ -70,7 +70,7 @@ export default function HomeAdmin() {
                         <CardLinks key={i} image={card.img} imageTitle={card.title} title={card.title} desc={card.desc} link={card.link} btnText={card.button} />
                     ))}
                 </section>
-            </DashboardLayout>
+            </DashboardLayoutAdmin>
         </>
     )
 }

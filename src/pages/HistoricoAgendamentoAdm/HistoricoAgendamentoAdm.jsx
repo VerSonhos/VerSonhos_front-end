@@ -1,4 +1,4 @@
-import DashboardLayout from "../../layouts/DashboardLayout";
+import DashboardLayoutAdmin from "../../layouts/DashboardLayoutAdmin";
 import HeaderCards from "./Components/HeaderCards";
 import TableAgendamento from "./Components/TableAgendamento";
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function historicoAgendamentoAdm(){
     return(
         <>
-        <DashboardLayout>
+        <DashboardLayoutAdmin>
             <section className='w-full p-4 sm:p-6 font-inter flex flex-col gap-5'>
                 <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
                     <h1 className="text-2xl font-semibold">Histórico de agendamentos</h1>
@@ -30,7 +30,7 @@ export default function historicoAgendamentoAdm(){
                 <HeaderCards number={'0'} text={'Agendamentos concluídos'} color={'bg-green-500'} />
             </section>
             <TableAgendamento/>
-        </DashboardLayout>
+        </DashboardLayoutAdmin>
         </>
     );
 }

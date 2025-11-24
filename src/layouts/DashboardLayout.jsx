@@ -8,7 +8,7 @@ const DashboardLayout = ({ children }) => {
     <main className="flex min-h-screen">
       <ScrollToTop />
       <Sidebar />
-      <section className="flex-grow p-6 ms-20 bg-gray-100">
+      <section className="grow p-6 ms-20 bg-gray-100">
         {children}
       </section>
       <AccessibilityWidget />
