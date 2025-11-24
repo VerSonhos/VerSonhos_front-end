@@ -4,6 +4,7 @@ import fundoHero from "../../assets/videos/fundoHero.mp4";
 import card1 from "../../assets/images/card1.png";
 import card2 from "../../assets/images/card2.png";
 import card3 from "../../assets/images/card3.png";
+import will from "../../assets/images/will.png";
 import doacaoImg from "../../assets/images/doacaoImg-home.png";
 import quartoInternacao from "../../assets/images/quartos-internacao-home.png";
 import salaEspera from "../../assets/images/salas-espera.png";
@@ -11,344 +12,428 @@ import impactoFundo from "../../assets/images/Secao-impacto.png";
 import Icon1 from "../../assets/icons/icon1-impacto.png";
 import Icon2 from "../../assets/icons/icon2-impacto.png";
 import Icon3 from "../../assets/icons/icon3-impacto.png";
+import estrelas from "../../assets/images/estrelas.png";
 import proa from "../../assets/icons/logo-proa.svg";
 import senac from "../../assets/icons/logo-senac.png";
+import GlassesExperience from "./components/GlassesExperience";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 export default function Home() {
-  const fadeDeafult = {
-    hidden: { opacity: 0},
-    visible: (custom = 0) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: custom * 0.2, duration: 0.8 },
-    }),
-  };
+  const fadeDeafult = {
+    hidden: { opacity: 0},
+    visible: (custom = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: custom * 0.2, duration: 0.8 },
+    }),
+  };
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (custom = 0) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: custom * 0.2, duration: 0.8 },
-    }),
-  };
+  const fadeUp = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (custom = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: custom * 0.2, duration: 0.8 },
+    }),
+  };
 
-  return (
-    <MainLayout>
-      <motion.section
-        className="relative w-full h-[100vh] flex items-center bg-cover bg-center"
-        initial="hidden"
-        animate="visible"
-        variants={fadeDeafult}
-      >
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-        >
-          <source src={fundoHero} type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-black/20"></div>
-        <motion.div
-          className="relative z-10 text-white max-w-xl pl-10 md:pl-24"
-          custom={1}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-        <motion.div
-          className="relative z-10 text-white max-w-xl pl-4 md:pl-4"
-          custom={1}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-          <h1 className="text-5xl font-bold mb-4 font-fredoka leading-tight">
-            <span className="whitespace-nowrap text-[#EB8AB4]">Sonhos</span> virtuais,
-            <span className="block mt-2">Alegria real</span>
-          </h1>
+  return (
+    <MainLayout>
+      <motion.section
+        className="relative w-full h-[100vh] flex items-center bg-cover bg-center"
+        initial="hidden"
+        animate="visible"
+        variants={fadeDeafult}
+      >
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src={fundoHero} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/20"></div>
+        <motion.div
+          className="relative z-10 text-white max-w-xl pl-10 md:pl-24"
+          custom={1}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+        >
+        <motion.div
+          className="relative z-10 text-white max-w-xl pl-4 md:pl-4"
+          custom={1}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+        >
+          <h1 className="text-5xl font-bold mb-4 font-fredoka leading-tight">
+            <span className="whitespace-nowrap text-[#EB8AB4]">Sonhos</span> virtuais,
+            <span className="block mt-2">Alegria real</span>
+          </h1>
 
-          <p className="max-w-2xl font-inter text-2xl leading-relaxed">
-            Transformando a jornada de pequenos heróis com VR
-          </p>
+          <p className="max-w-2xl font-inter text-2xl leading-relaxed">
+            Transformando a jornada de pequenos heróis com VR
+          </p>
 
-          <Link
-            to="/sobre" 
-            className={`${styles.heroButton} font-fredoka mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer inline-block`}
-          >
-            Conheça-nos
-          </Link>
-        </motion.div>
-        </motion.div>
-      </motion.section>
+          <Link
+            to="/sobre" 
+            className={`${styles.heroButton} font-fredoka mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer inline-block`}
+          >
+            Conheça-nos
+          </Link>
+        </motion.div>
+        </motion.div>
+      </motion.section>
 
-      {/* seção: o que fazemos */}
-      <motion.section
-        className="py-16 bg-white text-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.h2
-          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
-          custom={0}
-          variants={fadeUp}
-        >
-          O que <span className="text-[#3184EF]">fazemos?</span>
-        </motion.h2>
+      {/* seção: o que fazemos */}
+      <motion.section
+        className="py-16 bg-white text-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        <motion.h2
+          className="text-5xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
+          custom={0}
+          variants={fadeUp}
+        >
+          O que <span className="text-[#3184EF]">fazemos?</span>
+        </motion.h2>
 
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8 px-6 max-w-6xl mx-auto">
-          {[card1, card2, card3].map((card, i) => (
-            <motion.div
-              key={i}
-              className="rounded-2xl shadow-md overflow-hidden w-full md:w-1/3 hover:shadow-lg transition"
-              custom={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              whileHover={{ scale: 1.05 }}
-            >
-              <img
-                src={card}
-                alt={`card${i + 1}`}
-                className="w-full h-56 object-cover"
-              />
-              <div className="bg-[#000F35] p-6 text-center">
-                <h3 className="text-xl font-semibold mb-3 text-[#FFF] font-fredoka">
-                  {i === 0
-                    ? "A Experiência de Imersão e Evasão"
-                    : i === 1
-                    ? "Promovendo a Alegria e Esperança"
-                    : "De Cuidado ao Cuidado Humanizado"}
-                </h3>
-                <p className="text-white/90 text-sm leading-relaxed">
-                  {i === 0
-                    ? "Levamos mundos inteiros para dentro dos quartos de hospital. Nossos óculos de Realidade Virtual transportam crianças para lugares mágicos e cheios de aventuras."
-                    : i === 1
-                    ? "Nosso foco é inspirar e renovar emocionalmente. Acreditamos que alegria e esperança ajudam no bem-estar e na recuperação."
-                    : "Tudo é feito para alinhar diversão com segurança. Nossas experiências VR são criadas junto a profissionais da saúde e psicólogos, planejadas com carinho."}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 px-6 max-w-6xl mx-auto">
+          {[card1, card2, card3].map((card, i) => (
+            <motion.div
+              key={i}
+              className="rounded-2xl shadow-md overflow-hidden w-full md:w-1/3 hover:shadow-lg transition"
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              whileHover={{ scale: 1.05 }}
+            >
+              <img
+                src={card}
+                alt={`card${i + 1}`}
+                className="w-full h-56 object-cover"
+              />
+              <div className="bg-[#000F35] p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-[#FFF] font-fredoka">
+                  {i === 0
+                    ? "A Experiência de Imersão e Evasão"
+                    : i === 1
+                    ? "Promovendo a Alegria e Esperança"
+                    : "De Cuidado ao Cuidado Humanizado"}
+                </h3>
+                <p className="text-white/90 text-sm leading-relaxed">
+                  {i === 0
+                    ? "Levamos mundos inteiros para dentro dos quartos de hospital. Nossos óculos de Realidade Virtual transportam crianças para lugares mágicos e cheios de aventuras."
+                    : i === 1
+                    ? "Nosso foco é inspirar e renovar emocionalmente. Acreditamos que alegria e esperança ajudam no bem-estar e na recuperação."
+                    : "Tudo é feito para alinhar diversão com segurança. Nossas experiências VR são criadas junto a profissionais da saúde e psicólogos, planejadas com carinho."}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
 
-      {/* seção: banner de doação */}
-      <motion.section
-      className="relative bg-[#145A94] text-white py-20 md:py-28 overflow-hidden min-h-[447px]"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-    >
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 px-6 relative z-20">
-        {/* Texto centralizado com contraste */}
-        <motion.div
-          className="flex-1 flex flex-col justify-center items-center text-center
-                    bg-black/40 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none"
-          custom={0}
-          variants={fadeUp}
-        >
-        <h2 className="text-3xl md:text-5xl font-bold font-fredoka mb-6 text-center">
-          <span className="block md:hidden">Junte-se à nossa rede de carinho!</span>
-          <span className="hidden md:block">
-            <span>Junte-se à nossa</span>
-            <br />
-            <span>rede de carinho!</span>
-          </span>
-        </h2>
-          <p className="text-white/90 text-base md:text-lg mb-10 max-w-md leading-relaxed">
-            Compartilhe sua história e ajude-nos a transformar a jornada de mais crianças em aventuras cheias de alegria.
-          </p>
-          <Link to="/doar">
-            <motion.button
-              className={styles.doacaoButton}
-              whileHover={{ scale: 1.05 }}
-            >
-              Faça uma doação!
-            </motion.button>
-          </Link>
-        </motion.div>
-      </div>
+      {/* seção: Quem é o Will? (Ajustada novamente: largura da seção principal restaurada, ajuste apenas no texto) */}
+      <motion.div
+          // Restaura a largura total (w-full) para que as estrelas continuem nas extremidades
+          className="relative w-full flex flex-col md:flex-row justify-center items-center gap-6 px-6 h-auto py-16 bg-quintenary"
+          custom={1}
+          variants={fadeUp}
+        >
+          <img
+            src={estrelas}
+            alt="Estrelas decorativas"
+            className="absolute top-4 left-4 w-[60px] md:top-10 md:left-10 md:w-[100px] z-10 opacity-70"
+          />
+        
+          <img
+            src={estrelas}
+            alt="Estrelas decorativas"
+            className="absolute top-4 right-4 w-[60px] md:top-10 md:right-10 md:w-[100px] z-10 opacity-70"
+          />
 
-      {/* Imagem */}
-      <motion.div
-        className="absolute right-0 top-[60%] transform -translate-y-1/2 z-10"
-        initial={{ x: 100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <img
-          src={doacaoImg}
-          alt="Imagem no banner de doação"
-          className="h-auto max-w-[500px] object-contain"
-        />
-      </motion.div>
+          <img
+            src={estrelas}
+            alt="Estrelas decorativas"
+            className="absolute bottom-4 left-4 w-[60px] md:bottom-10 md:left-10 md:w-[100px] z-10 opacity-70"
+          />
 
-      {/* Onda branca em cima do banner */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
-        <svg
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          className="relative block w-full h-[100px]"
-        >
-          <path
-            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-            fill="#FFFFFF"
-          />
-        </svg>
-      </div>
-    </motion.section>
+          <img
+            src={estrelas}
+            alt="Estrelas decorativas"
+            className="absolute bottom-4 right-4 w-[60px] md:bottom-10 md:right-10 md:w-[100px] z-10 opacity-70"
+          />
+
+          {/* Envolvemos o conteúdo principal para centralizar o bloco Will + Texto */}
+           <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row justify-center items-center gap-6 px-6 relative z-20"> 
+                <div className="w-full md:w-1/2 flex justify-center"> 
+                    <img
+                        src={will}
+                        alt="Will, mascote do VerSonhos"
+                        className="w-[160px] md:w-[250px] lg:w-[300px] object-contain drop-shadow-xl"
+                    />
+                </div>
+
+                <div className="w-full md:w-1/2 text-left flex flex-col gap-6">
+                    {/* A classe max-w-md foi mantida AQUI para reduzir a largura do BLOCO de texto */}
+                    <div className="max-w-md"> 
+                        <h3 className="text-quaternary text-2xl md:text-3xl font-bold font-fredoka">
+                            Quem é o Will?
+                        </h3>
+
+                        <p className="text-amber-50 text-base md:text-lg leading-relaxed mb-6">
+                            O seu guia na plataforma. Ele ajuda você a navegar pelo site, explica
+                            cada parte das experiências e conversa através de um chatbot com
+                            inteligência artificial. Sempre gentil, curioso e acolhedor, ele transforma
+                            qualquer descoberta em um momento leve, seguro e cheio de magia.
+                        </p>
+
+                        <p className="text-amber-50 text-base md:text-lg leading-relaxed mb-6">
+                            Durante as experiências, o Will aparece para acolher, explicar, incentivar e
+                            lembrar que ninguém está sozinho.
+                        </p>
+
+                        <p className="text-[#3184EF] font-bold text-lg md:text-xl font-fredoka">
+                            “Pronto para se aventurar?” — Will ✨
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+
+      {/*seção: experiencia do oculos vr */}
+      <motion.section
+        className="py-16 bg-white"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeUp} >
+
+        <GlassesExperience />
+
+        
+
+      </motion.section>
+
+      {/* seção: banner de doação */}
+      <motion.section
+      className="relative bg-[#145A94] text-white py-16 md:py-28 overflow-hidden min-h-[447px]"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-4 px-6 relative z-20">
+        {/* Texto centralizado com contraste */}
+        <motion.div
+          className="flex-1 flex flex-col justify-center items-center text-center
+                      bg-black/40 md:bg-transparent p-6 md:p-0 rounded-lg md:rounded-none"
+          custom={0}
+          variants={fadeUp}
+        >
+        <h2 className="text-3xl md:text-5xl font-bold font-fredoka mb-6 text-center">
+          <span className="block md:hidden">Junte-se à nossa rede de carinho!</span>
+          <span className="hidden md:block">
+            <span>Junte-se à nossa</span>
+            <br />
+            <span>rede de carinho!</span>
+          </span>
+        </h2>
+          <p className="text-white/90 text-base md:text-lg mb-10 max-w-md leading-relaxed">
+            Compartilhe sua história e ajude-nos a transformar a jornada de mais crianças em aventuras cheias de alegria.
+          </p>
+          <Link to="/doar">
+            <motion.button
+              className={styles.doacaoButton}
+              whileHover={{ scale: 1.05 }}
+            >
+              Faça uma doação!
+            </motion.button>
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Imagem */}
+      <motion.div
+        className="absolute right-0 top-[60%] transform -translate-y-1/2 z-10"
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <img
+          src={doacaoImg}
+          alt="Imagem no banner de doação com uma criança no fundo do mar usando o oculos VR"
+          className="h-auto max-w-[500px] object-contain"
+        />
+      </motion.div>
+
+      {/* Onda branca em cima do banner */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          className="relative block w-full h-[100px]"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+            fill="#FFFFFF"
+          />
+        </svg>
+      </div>
+    </motion.section>
 
 
-      {/* seção: onde levamos alegria */}
-      <motion.section
-        className="py-20 bg-white text-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.h2
-          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-4 font-fredoka"
-          custom={0}
-          variants={fadeUp}
-        >
-          Onde levamos <span className="text-[#3184EF]">alegria</span>
-        </motion.h2>
-        <motion.p
-          className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto mb-12"
-          custom={1}
-          variants={fadeUp}
-        >
-          Transformando quartos de hospitais em portais de esperança, aventura e cor.
-        </motion.p>
+      {/* seção: onde levamos alegria */}
+      <motion.section
+        className="py-20 bg-white text-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-4 font-fredoka"
+          custom={0}
+          variants={fadeUp}
+        >
+          Onde levamos <span className="text-[#3184EF]">alegria</span>
+        </motion.h2>
+        <motion.p
+          className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto mb-12"
+          custom={1}
+          variants={fadeUp}
+        >
+          Transformando quartos de hospitais em portais de esperança, aventura e cor.
+        </motion.p>
 
-        <div className={styles.cardContainer}>
-          {/* Card 1 */}
-          <motion.div
-            className={styles.cardRow}
-            custom={0}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.div className={styles.cardItem} custom={0} variants={fadeUp}>
-              <img
-                src={quartoInternacao}
-                alt="Quarto de Internação"
-                className={`${styles.cardImage} ${styles.borderGreen}`}
-              />
-            </motion.div>
-            <motion.div className={styles.cardItem} custom={1} variants={fadeUp}>
-              <div className={styles.cardText}>
-                <h3 className="text-2xl font-bold mb-4 font-fredoka">Quartos de Internação</h3>
-                <p>
-                  Transformando ambientes médicos em portais mágicos com óculos VR, levando esperança,
-                  alegria e diversão para crianças durante o tratamento.
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
+        <div className={styles.cardContainer}>
+          {/* Card 1 */}
+          <motion.div
+            className={styles.cardRow}
+            custom={0}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.div className={styles.cardItem} custom={0} variants={fadeUp}>
+              <img
+                src={quartoInternacao}
+                alt="Imagem de Quarto de Internação"
+                className={`${styles.cardImage} ${styles.borderGreen}`}
+              />
+            </motion.div>
+            <motion.div className={styles.cardItem} custom={1} variants={fadeUp}>
+              <div className={styles.cardText}>
+                <h3 className="text-2xl font-bold mb-4 font-fredoka">Quartos de Internação</h3>
+                <p>
+                  Transformando ambientes médicos em portais mágicos com óculos VR, levando esperança,
+                  alegria e diversão para crianças durante o tratamento.
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Card 2 */}
-          <motion.div
-            className={styles.cardRowReverse}
-            custom={2}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.div className={styles.cardItem} custom={2} variants={fadeUp}>
-              <img
-                src={salaEspera}
-                alt="Sala de Espera"
-                className={`${styles.cardImage} ${styles.borderPink}`}
-              />
-            </motion.div>
-            <motion.div className={styles.cardItem} custom={3} variants={fadeUp}>
-              <div className={styles.cardText} style={{ backgroundColor: "#EB8AB4" }}>
-                <h3 className="text-2xl font-bold mb-4 font-fredoka">Salas de Espera e Recreação</h3>
-                <p>
-                  Reduzimos a ansiedade e criamos experiências em espaços comuns interativos e educativos.
-                  Estimulando a imaginação e renovando a esperança.
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </motion.section>
+          {/* Card 2 */}
+          <motion.div
+            className={styles.cardRowReverse}
+            custom={2}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.div className={styles.cardItem} custom={2} variants={fadeUp}>
+              <img
+                src={salaEspera}
+                alt="Imagem de Sala de Espera"
+                className={`${styles.cardImage} ${styles.borderPink}`}
+              />
+            </motion.div>
+            <motion.div className={styles.cardItem} custom={3} variants={fadeUp}>
+              <div className={styles.cardText} style={{ backgroundColor: "#EB8AB4" }}>
+                <h3 className="text-2xl font-bold mb-4 font-fredoka">Salas de Espera e Recreação</h3>
+                <p>
+                  Reduzimos a ansiedade e criamos experiências em espaços comuns interativos e educativos.
+                  Estimulando a imaginação e renovando a esperança.
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
 
-      {/* seção: impacto do VerSonhos */}
-      <motion.section
-        className={`relative bg-cover bg-center text-center py-16 ${styles.impactSection}`}
-        style={{ backgroundImage: `url(${impactoFundo})` }}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.h2
-          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
-          custom={0}
-          variants={fadeUp}
-        >
-          Impacto do Ver<span className="text-[#3184EF]">Sonhos</span>
-        </motion.h2>
+      {/* seção: impacto do VerSonhos */}
+      <motion.section
+        className={`relative bg-cover bg-center text-center py-16 ${styles.impactSection}`}
+        style={{ backgroundImage: `url(${impactoFundo})` }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
+          custom={0}
+          variants={fadeUp}
+        >
+          Impacto do Ver<span className="text-[#3184EF]">Sonhos</span>
+        </motion.h2>
 
-        <div className="flex flex-col md:flex-row justify-center items-center gap-6 px-6 font-fredoka">
-          {[Icon1, Icon2, Icon3].map((icon, i) => (
-            <motion.div
-              key={i}
-              className={`bg-[#8BCDCC] rounded-2xl shadow-lg w-64 h-64 flex flex-col items-center justify-center p-6 ${styles.card} ${styles.GreenBorder}`}
-              custom={i}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <img src={icon} alt={`Icon ${i + 1}`} className="w-12 h-12 mb-3" />
-              <h3 className="font-semibold text-lg text-[#03184F]">
-                {i === 0 ? "Hospitais e Cidades" : i === 1 ? "Nossos Heróis" : "Horas de Magia"}
-              </h3>
-              <p className="text-[#03184F] text-2xl font-bold">
-                {i === 0 ? "12+" : i === 1 ? "10+" : "1h"}
-              </p>
-              <p className="text-sm text-[#03184F]">
-                {i === 0
-                  ? "Em parceria com hospitais de São Paulo"
-                  : i === 1
-                  ? "Crianças em tratamento oncológico e internações prolongadas"
-                  : "De sorrisos, redução da ansiedade e transformação da experiência"}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
+        <div className="flex flex-col md:flex-row justify-center items-center gap-6 px-6 font-fredoka">
+          {[Icon1, Icon2, Icon3].map((icon, i) => (
+            <motion.div
+              key={i}
+              className={`bg-[#8BCDCC] rounded-2xl shadow-lg w-64 h-64 flex flex-col items-center justify-center p-6 ${styles.card} ${styles.GreenBorder}`}
+              custom={i}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <img src={icon} alt={`Icon ${i + 1}`} className="w-12 h-12 mb-3" />
+              <h3 className="font-semibold text-lg text-[#03184F]">
+                {i === 0 ? "Hospitais e Cidades" : i === 1 ? "Nossos Heróis" : "Horas de Magia"}
+              </h3>
+              <p className="text-[#03184F] text-2xl font-bold">
+                {i === 0 ? "12+" : i === 1 ? "10+" : "1h"}
+              </p>
+              <p className="text-sm text-[#03184F]">
+                {i === 0
+                  ? "Em parceria com hospitais de São Paulo"
+                  : i === 1
+                  ? "Crianças em tratamento oncológico e internações prolongadas"
+                  : "De sorrisos, redução da ansiedade e transformação da experiência"}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
 
-      {/* seção: herois que nos apoiam */}
-      <motion.section
-        className="py-20 bg-white text-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.h2
-          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
-          custom={0}
-          variants={fadeUp}
-        >
-          Heróis que nos<span className="text-[#3184EF]"> apoiam</span>
-        </motion.h2>
+      {/* seção: herois que nos apoiam */}
+      <motion.section
+        className="py-20 bg-white text-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold text-[#03184F] mb-10 font-fredoka"
+          custom={0}
+          variants={fadeUp}
+        >
+          Heróis que nos<span className="text-[#3184EF]"> apoiam</span>
+        </motion.h2>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-20 px-6">
           <motion.img
