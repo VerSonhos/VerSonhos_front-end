@@ -92,7 +92,7 @@ export default function GlassesExperience() {
           <motion.h2
             className="
               absolute
-              top-24 left-1/2 -translate-x-1/2
+              top-20 left-1/2 -translate-x-1/2
               text-3xl md:text-5xl font-bold text-[#03184F]
               text-center font-fredoka
               z-[60]
