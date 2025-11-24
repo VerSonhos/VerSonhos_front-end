@@ -73,7 +73,7 @@ export default function HomeUserAgendarVisita() {
             <p className='text-xl text-black-custom-400 font-semibold mt-2'>Escolha a data horário e local da próxima visita para a <span className='font-bold text-quintenary'>VerSonhos</span> levar alegria e esperança às crianças hospitalizadas.</p>
         </section>
 
-        <form className="space-y-8 p-10 shadow-lg">
+        <form className="space-y-8 p-10 shadow-custom-sm rounded-md">
           <h2 className="text-3xl text-center font-semibold text-quintenary">Preencha o formulário</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
