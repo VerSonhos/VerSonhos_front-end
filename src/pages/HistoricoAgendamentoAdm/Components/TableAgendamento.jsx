@@ -19,6 +19,14 @@ const dadosExemplo = [
     horario: "10:30"
   },
   {
+    id: "#444",
+    empresa: "Hospital do Guilherme Amado",
+    data: "14/12/25",
+    status: "Cancelada",
+    endereco: "Av. Paulista, 1000",
+    horario: "10:30"
+  },
+  {
     id: "#333",
     empresa: "Casa do seu zé",
     data: "14/06/25",
@@ -50,7 +58,8 @@ export default function TableAgendamento() {
   const corStatus = {
     Expirada: "bg-tertiary",
     Recusado: "bg-red-500",
-    Concluída: "bg-green-500"
+    Concluída: "bg-green-500",
+    Cancelada: "bg-red-500"
   };
 
   return (
