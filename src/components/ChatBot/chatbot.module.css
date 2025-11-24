@@ -5,18 +5,16 @@
   z-index: 9999999999;
 }
 
-/*imagem atras do chatbot*/
 .chatBackground {
   position: fixed;
-  bottom: 370px; 
+  bottom: 370px;
   right: 0;
-  width: 200px; 
+  width: 200px;
   opacity: 0.8;
-  z-index: 9999999999; 
+  z-index: 9999999999;
   pointer-events: none;
 }
 
-/* Ícone fixo na mesma posição e com efeito */
 .chatbotIcon {
   width: 70px;
   height: 70px;
@@ -35,9 +33,9 @@
   box-shadow: 0 0 18px rgba(49, 132, 239, 0.6);
 }
 
-/* Janela do chat */
 .chatWindow {
-  width: 320px;
+  width: 380px;
+  max-width: 90vw;
   height: 310px;
   background: white;
   border-radius: 20px;
@@ -45,24 +43,38 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
   position: fixed;
   bottom: 100px;
   right: 20px;
   z-index: 9999999999;
 }
 
-/* Cabeçalho */
 .chatHeader {
   background: #3184ef;
   color: white;
-  padding: 10px;
+  padding: 10px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 50px;
 }
 
-/* Corpo */
+.chatHeader h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.chatHeader button {
+  font-size: 30px;
+  font-weight: bold;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  line-height: 20px;
+}
+
 .chatBody {
   flex: 1;
   padding: 10px;
@@ -79,6 +91,7 @@
   padding: 6px 10px;
   border-radius: 8px;
   max-width: 80%;
+  white-space: pre-wrap;
 }
 
 .botMessage {
@@ -87,9 +100,9 @@
   padding: 6px 10px;
   border-radius: 8px;
   max-width: 80%;
+  white-space: pre-wrap;
 }
 
-/* Input */
 .chatInput {
   display: flex;
   border-top: 1px solid #ccc;
@@ -109,3 +122,36 @@
   padding: 0 12px;
   cursor: pointer;
 }
+
+.botMessage,
+.userMessage {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 600px) {
+  .chatWindow {
+    width: 100vw;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    border-radius: 0;
+    height: 100dvh;
+    max-width: 100vw;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .chatBackground {
+    display: none;
+  }
+
+  .chatbotContainer.chatOpen .chatbotIcon {
+    display: none;
+  }
+
+  .chatHeader button {
+    font-size: 34px;
+  }
+}
+

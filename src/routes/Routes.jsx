@@ -11,8 +11,16 @@ import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import ChangePassword from '../pages/ChangePassword/ChangePassword'
 import HomeUser from '../pages/HomeUser/HomeUser'
 import NotFoundPage from '../pages/PagErro/NotFoundPage'
+import HistoricoAgendamentoAdm from '../pages/HistoricoAgendamentoAdm/HistoricoAgendamentoAdm'
+import HomeUserAgendarVisita from '../pages/HomeUserAgendarVisita/HomeUserAgendarVisita'
+import RequestsAdm from '@/pages/RequestsAdm/RequestsAdm'
+import HomeAdmin from '@/pages/HomeAdmin/HomeAdmin'
+import SettingsAdmin from '@/pages/SettingsAdmin/SettingsAdmin'
+import SettingsUser from '@/pages/SettingsUser/SettingsUser'
+import SchedulingStatusUser from '@/pages/SchedulingStatusUser/SchedulingStatusUser'
 
 const router = createBrowserRouter([
+    // Páginas principais
     { path: "/", element: <Home />, },
 
     { path: "/sobre", element: <About />, },
@@ -23,6 +31,9 @@ const router = createBrowserRouter([
 
     { path: "/doar", element: <Donate />, },
 
+    { path: "*", element: <NotFoundPage />, },
+
+    // Páginas de autenticação
     { path: "/login", element: <Login />, },
 
     { path: "/cadastro", element: <Register />, },
@@ -33,9 +44,23 @@ const router = createBrowserRouter([
 
     { path: "/senhaNova", element: <ChangePassword />, },
 
+    // Dashboard do usuário
     { path: "/painelUsuario", element: <HomeUser />, },
 
-    { path: "*", element: <NotFoundPage />, },
+    { path: "/statusAgendamento", element: <SchedulingStatusUser />, },
+    
+    { path: "/painelUsuarioAgendarVisita", element: <HomeUserAgendarVisita />, },
+    
+    { path: "/configuracoesUsuario", element: <SettingsUser />, },
+    
+    // Dashboard do administrador
+    { path: "/painelAdmin", element: <HomeAdmin />, },
+
+    { path: "/painelAdminSolicitacao", element: <RequestsAdm />, },
+
+    { path: "/historicoAgendamentoAdm", element: <HistoricoAgendamentoAdm/>, },
+    
+    { path: "/configuracoesAdmin", element: <SettingsAdmin />, },
 ]);
 
 export default function  Routes() {

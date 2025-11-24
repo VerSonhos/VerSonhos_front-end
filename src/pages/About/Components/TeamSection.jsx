@@ -70,14 +70,14 @@ export default function TeamSection() {
         {members.map((m, i) => (
           <div
             key={i}
-            className="flex min-h-40 rounded-2xl shadow-xl overflow-hidden relative hover:scale-105 transition-transform duration-300"
+            className="flex min-h-46 rounded-2xl shadow-xl overflow-hidden relative hover:scale-105 transition-transform duration-300"
             style={{
               backgroundColor: '#e0f2f7', 
               border: '1px solid #c0d9e7',
             }}
           >
             <div
-              className="flex items-center justify-center p-2 z-10"
+              className="flex items-center justify-center z-10"
               style={{
                 backgroundImage: `url(${background_time})`,
                 backgroundSize: 'cover',
@@ -89,7 +89,7 @@ export default function TeamSection() {
               <img 
                 src={m.img} 
                 alt={m.name} 
-                className="w-28 h-28 rounded-full object-cover border-4 border-white"
+                className="w-30 h-30 rounded-full object-cover border-4 border-white"
               />
             </div>
 

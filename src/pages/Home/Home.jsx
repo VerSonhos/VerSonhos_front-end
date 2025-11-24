@@ -435,31 +435,31 @@ export default function Home() {
           Heróis que nos<span className="text-[#3184EF]"> apoiam</span>
         </motion.h2>
 
-        <div className="flex flex-col md:flex-row justify-center items-center gap-20 px-6">
-          <motion.img
-            src={proa}
-            alt="Herói 1"
-            className="w-50 pt-15 h-auto"
-            custom={1}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.05 }}
-          />
-          <motion.img
-            src={senac}
-            alt="Herói 2"
-            className="w-45 h-auto"
-            custom={2}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.05 }}
-          />
-        </div>
-      </motion.section>
-    </MainLayout>
-  );
+        <div className="flex flex-col md:flex-row justify-center items-center gap-20 px-6">
+          <motion.img
+            src={proa}
+            alt="Herói 1"
+            className="w-50 pt-15 h-auto"
+            custom={1}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.05 }}
+          />
+          <motion.img
+            src={senac}
+            alt="Herói 2"
+            className="w-45 h-auto"
+            custom={2}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.05 }}
+          />
+        </div>
+      </motion.section>
+    </MainLayout>
+  );
 }
