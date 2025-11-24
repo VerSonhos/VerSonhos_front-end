@@ -7,7 +7,7 @@ import card3 from "../../assets/images/card3.png";
 import will from "../../assets/images/will.png";
 import doacaoImg from "../../assets/images/doacaoImg-home.png";
 import quartoInternacao from "../../assets/images/quartos-internacao-home.png";
-import salaEspera from "../../assets/images/salas-espera.png";
+import salaEspera from "../../assets/images/salas-espera.jpg;";
 import impactoFundo from "../../assets/images/Secao-impacto.png";
 import Icon1 from "../../assets/icons/icon1-impacto.png";
 import Icon2 from "../../assets/icons/icon2-impacto.png";
@@ -145,7 +145,6 @@ export default function Home() {
 
       {/* seção: Quem é o Will? (Ajustada novamente: largura da seção principal restaurada, ajuste apenas no texto) */}
       <motion.div
-          // Restaura a largura total (w-full) para que as estrelas continuem nas extremidades
           className="relative w-full flex flex-col md:flex-row justify-center items-center gap-6 px-6 h-auto py-16 bg-quintenary"
           custom={1}
           variants={fadeUp}
