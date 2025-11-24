@@ -8,7 +8,7 @@ const mockAppointments = [
     id: 1,
     date: '05/12/2025',
     time: '14:30',
-    service: 'Limpeza e Avaliação',
+    service: '',
     status: 'Confirmado',
     action: 'Ver Detalhes',
     isUpcoming: true,
@@ -17,7 +17,7 @@ const mockAppointments = [
     id: 2,
     date: '12/12/2025',
     time: '09:00',
-    service: 'Retorno para Aparelho',
+    service: '',
     status: 'Confirmado',
     action: 'Ver Detalhes',
     isUpcoming: true,
@@ -26,7 +26,7 @@ const mockAppointments = [
     id: 3,
     date: '20/11/2025',
     time: '09:00',
-    service: 'Retorno para Aparelho',
+    service: '',
     status: 'Confirmar', 
     action: 'Reagendar',
     isUpcoming: true,
@@ -35,7 +35,7 @@ const mockAppointments = [
     id: 4,
     date: '25/10/2025',
     time: '10:00',
-    service: 'Limpeza',
+    service: '',
     status: 'Concluído',
     action: 'Ver Detalhes',
     isUpcoming: false,
@@ -44,7 +44,7 @@ const mockAppointments = [
     id: 5,
     date: '20/10/2025',
     time: '15:00',
-    service: 'Extração',
+    service: '',
     status: 'Cancelado',
     action: 'Ver Detalhes',
     isUpcoming: false,
@@ -90,7 +90,6 @@ const AppointmentRow = ({ appointment }) => {
       <tr className="border-b">
         <td className="py-3 px-4 text-sm font-medium">
           <p className="font-semibold text-gray-700">{appointment.date}</p>
-          <p className="text-xs text-gray-500">{appointment.service}</p>
         </td>
         <td className="py-3 px-4 text-sm">{appointment.time}</td>
         <td className="py-3 px-4 text-sm font-medium">
@@ -124,13 +123,13 @@ const AppointmentRow = ({ appointment }) => {
 export default function SchedulingStatusUser() {
   const [activeFilter, setActiveFilter] = useState('Todos')
   const [searchTerm, setSearchTerm] = useState('')
-  const filters = ['Todos (5)', 'Confirmados (3)', 'Cancelados (1)', 'Concluídos (1)'] 
+  const filters = ['Todos (3)', 'Confirmados (2)', 'Cancelados (0)', 'Concluídos (0)'] 
   const filteredUpcomingAppointments = useMemo(() => {
     const upcoming = mockAppointments.filter(app => app.isUpcoming)
     return upcoming.filter(app => {
       const matchStatus = 
-        activeFilter === 'Todos (5)' ||
-        (activeFilter === 'Confirmados (3)' && app.status === 'Confirmado') ||
+        activeFilter === 'Todos (3)' ||
+        (activeFilter === 'Confirmados (2)' && app.status === 'Confirmado') ||
         (activeFilter === 'Cancelados (1)' && app.status === 'Cancelado') ||
         (activeFilter === 'Concluídos (1)' && app.status === 'Concluído');
 
@@ -173,7 +172,7 @@ export default function SchedulingStatusUser() {
         <div className="flex justify-between items-center mb-6">
           <div className="flex space-x-2 text-sm font-medium">
             <span className="text-gray-700 font-bold mr-2">Filters</span>
-            {['Todos (5)', 'Confirmados (3)', 'Cancelados (1)', 'Concluídos (1)'].map(filter => (
+            {['Todos (3)', 'Confirmados (2)', 'Cancelados (0)', 'Concluídos (0)'].map(filter => (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
@@ -191,7 +190,7 @@ export default function SchedulingStatusUser() {
           <div className="relative">
             <input
               type="text"
-              placeholder="Buscar por data ou serviço"
+              placeholder="Buscar por datas"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
