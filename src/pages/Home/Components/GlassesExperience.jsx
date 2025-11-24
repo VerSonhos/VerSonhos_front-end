@@ -86,14 +86,21 @@ export default function GlassesExperience() {
         px-0 md:px-12
       "
     >
-      <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-start">
+      <div
+        className="
+          sticky top-0 w-full h-screen
+          flex flex-col items-center justify-start
+          pt-10 md:pt-16   /* evita que tudo cole no topo */
+        "
+      >
 
         {progress < 0.25 && (
           <motion.h2
             className="
               absolute
-              top-20 left-1/2 -translate-x-1/2
-              text-3xl md:text-5xl font-bold text-[#03184F]
+              top-28 sm:top-20 md:top-20    /* mais espaçamento no mobile */
+              left-1/2 -translate-x-1/2
+              text-3xl md:text-3xl font-bold text-[#03184F]
               text-center font-fredoka
               z-[60]
             "
@@ -125,7 +132,7 @@ export default function GlassesExperience() {
         <motion.div
           className="
             relative z-40
-            mt-[20vh] sm:mt-[15vh] md:mt-[10vh]
+            mt-[18vh] sm:mt-[14vh] md:mt-[10vh] lg:mt-[12vh]  /* vídeo mais baixo */
             w-full flex justify-center
             px-0 md:px-12
           "
