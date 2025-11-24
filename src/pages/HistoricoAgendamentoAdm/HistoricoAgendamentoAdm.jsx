@@ -6,10 +6,13 @@ export default function historicoAgendamentoAdm(){
     return(
         <>
         <DashboardLayout>
-            <HeaderCards/>
+           <section className='w-full flex flex-col items-center lg:flex-row justify-center gap-15 font-inter my-10'>
+                <HeaderCards number={'0'} text={'Agendamentos cancelados ou recusados'} color={'bg-red-500'} />
+                <HeaderCards number={'0'} text={'Agendamentos expirados'} color={'bg-blue-500'} />
+                <HeaderCards number={'0'} text={'Agendamentos concluídos'} color={'bg-green-500'} />
+            </section>
             <TableAgendamento/>
 
-        {/* hvhjvjh */}
         </DashboardLayout>
         </>
     );
