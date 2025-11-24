@@ -3,11 +3,12 @@ import { useGLTF } from "@react-three/drei";
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import videoOculos from "../../../assets/videos/video-oculos.mp4";
+import modelOculos from "@/assets/models/oculos.glb"
 
 const SCROLL_HEIGHT_VH = 400;
 
 function GlassesModel({ progress }) {
-  const { scene } = useGLTF("src/assets/models/oculos.glb");
+  const { scene } = useGLTF(modelOculos);
   const ref = useRef();
 
   useEffect(() => {
@@ -108,7 +109,6 @@ export default function GlassesExperience() {
           </motion.h2>
         )}
 
-        {/* canvas do óculos */}
         <div
           className={`absolute inset-0 w-full h-full flex justify-center items-center pointer-events-none z-50 transition-opacity duration-300
             ${showCanvas ? "opacity-100" : "opacity-0"}
@@ -121,7 +121,6 @@ export default function GlassesExperience() {
           </Canvas>
         </div>
 
-        {/* vídeo */}
       <motion.div
         className="relative z-40 mt-[28vh] sm:mt-[20vh] md:mt-[12vh] w-full flex justify-center px-4 md:px-12*/"
         animate={{
