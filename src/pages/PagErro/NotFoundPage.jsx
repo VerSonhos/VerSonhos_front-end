@@ -8,7 +8,7 @@ const NotFoundPage = () => {
     <MainLayout>
       <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-white p-6 text-white overflow-hidden">
 
-        <div className="flex-shrink-0 mb-2 md:mb-0 md:mr-12 mt-20 md:mt-0">
+        <div className="shrink-0 mb-2 md:mb-0 md:mr-12 mt-20 md:mt-0">
           <img 
             src={will} 
             alt="Mascote triste" 
@@ -18,7 +18,7 @@ const NotFoundPage = () => {
 
         <div className="flex flex-col items-center text-center">
 
-          <p className="text-base md:text-2xl font-semibold text-[#03184F] mt-2 md:mt-10 mb-4 md:mb-8 max-w-xs md:max-w-2xl leading-relaxed">
+          <p className="text-base md:text-2xl font-semibold text-quintenary mt-2 md:mt-10 mb-4 md:mb-8 max-w-xs md:max-w-2xl leading-relaxed">
             <span className="block md:hidden">
               Ops! Esta página é um universo inexplorado...  
               Mas não se preocupe, a diversão te espera de volta ao nosso mundo de alegria!
@@ -35,8 +35,8 @@ const NotFoundPage = () => {
             to="/"
             className="
               px-6 py-3 text-sm md:text-base font-bold leading-5 text-white transition-colors duration-300 transform 
-              bg-[#3184EF] rounded-full 
-              hover:bg-[#3184EF] hover:bg-[#4391F6] 
+              bg-tertiary rounded-full 
+              hover:bg-[#4391F6] 
               focus:outline-none 
               shadow-xl uppercase tracking-wider
             "

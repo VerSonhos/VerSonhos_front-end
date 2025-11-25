@@ -12,7 +12,7 @@ export default function Donate() {
     <MainLayout>
       {/* Seção principal */}
       <section id="doacao"
-        className="relative w-full h-[100vh] flex items-center bg-cover bg-center overflow-hidden"
+        className="relative w-full h-screen flex items-center bg-cover bg-center overflow-hidden"
       >
         <video
           className="absolute inset-0 w-full h-full object-cover"
@@ -39,7 +39,7 @@ export default function Donate() {
             transition={{ delay: 0.2, duration: 1 }}
           >
             Pronto para espalhar <br /> alegria com a sua
-            <span className="text-[#EB8AB4]"> contribuição?</span>
+            <span className="text-eleventh"> contribuição?</span>
           </motion.h1>
 
           <motion.p
@@ -75,8 +75,8 @@ export default function Donate() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="text-[#3184EF]">Doe</span>{" "}
-            <span className="text-[#03184F]">e receba nossa gratidão!</span>
+            <span className="text-tertiary">Doe</span>{" "}
+            <span className="text-quintenary">e receba nossa gratidão!</span>
           </motion.h2>
 
          <motion.div

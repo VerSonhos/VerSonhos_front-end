@@ -70,7 +70,7 @@ export default function HomeUser() {
               className={`${styles.card} bg-white shadow rounded-lg border hover:shadow-md transition`}
             >
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-left p-5 h-auto sm:h-40">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <img
                     src={card.img}
                     alt={card.title}
@@ -79,7 +79,7 @@ export default function HomeUser() {
                 </div>
                 <div className="flex flex-col justify-between text-center sm:text-left w-full">
                   <div>
-                    <h3 className="font-semibold text-[#03184F] text-lg mb-1">
+                    <h3 className="font-semibold text-quintenary text-lg mb-1">
                       {card.title}
                     </h3>
                     <p className="text-gray-600 text-sm">{card.desc}</p>

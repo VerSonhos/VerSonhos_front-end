@@ -30,12 +30,12 @@ function CPFInput() {
       <div
         className={`
           flex items-center gap-2 border rounded-lg px-4 py-3 transition-all duration-300 group
-          ${focused ? "border-[#3184EF] ring-2 ring-[#3184EF]/40" : "border-slate-300 hover:border-slate-400"}
+          ${focused ? "border-tertiary ring-2 ring-tertiary/40" : "border-slate-300 hover:border-slate-400"}
         `}
       >
         <Users
           className={`w-5 h-5 transition-colors duration-300
-            ${focused ? "text-[#3184EF]" : "text-slate-400 group-focus-within:text-[#3184EF]"}
+            ${focused ? "text-tertiary" : "text-slate-400 group-focus-within:text-tertiary"}
           `}
         />
 
@@ -80,8 +80,8 @@ export default function HomeUserAgendarVisita() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Data da visita</label>
               <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 
                               transition-all hover:border-slate-400 focus-within:ring-2 
-                              focus-within:ring-[#3184EF]/40 focus-within:border-[#3184EF] group">
-                <CalendarDays className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-[#3184EF]" />
+                              focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <CalendarDays className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-tertiary" />
                 <input type="date" className="w-full outline-none bg-transparent" />
               </div>
             </div>
@@ -90,8 +90,8 @@ export default function HomeUserAgendarVisita() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Horário</label>
               <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 
                               transition-all hover:border-slate-400 focus-within:ring-2 
-                              focus-within:ring-[#3184EF]/40 focus-within:border-[#3184EF] group">
-                <Clock className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-[#3184EF]" />
+                              focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <Clock className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-tertiary" />
                 <input type="time" className="w-full outline-none bg-transparent" />
               </div>
             </div>
@@ -100,8 +100,8 @@ export default function HomeUserAgendarVisita() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Local da visita (Hospital)</label>
               <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 
                               transition-all hover:border-slate-400 focus-within:ring-2 
-                              focus-within:ring-[#3184EF]/40 focus-within:border-[#3184EF] group">
-                <MapPin className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-[#3184EF]" />
+                              focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <MapPin className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-tertiary" />
                 <input type="text" placeholder="Ex: Hospital Santa Luzia" className="w-full outline-none bg-transparent" />
               </div>
             </div>
@@ -110,8 +110,8 @@ export default function HomeUserAgendarVisita() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Duração estimada</label>
               <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 
                               transition-all hover:border-slate-400 focus-within:ring-2 
-                              focus-within:ring-[#3184EF]/40 focus-within:border-[#3184EF] group">
-                <Clock className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-[#3184EF]" />
+                              focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <Clock className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-tertiary" />
                 <input type="text" placeholder="Ex: 1h30min" className="w-full outline-none bg-transparent" />
               </div>
             </div>
@@ -120,8 +120,8 @@ export default function HomeUserAgendarVisita() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Quantidade de pacientes</label>
               <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 
                               transition-all hover:border-slate-400 focus-within:ring-2 
-                              focus-within:ring-[#3184EF]/40 focus-within:border-[#3184EF] group">
-                <Users className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-[#3184EF]" />
+                              focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <Users className="w-5 h-5 text-slate-400 transition-colors group-focus-within:text-tertiary" />
                 <input type="number" placeholder="Ex: 10" className="w-full outline-none bg-transparent" />
               </div>
             </div>
@@ -136,14 +136,14 @@ export default function HomeUserAgendarVisita() {
               rows="6"
               placeholder="Ex: Levar óculos extras, confirmar transporte..."
               className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none transition-all 
-                         hover:border-slate-400 focus:ring-2 focus:ring-[#3184EF]/40 focus:border-[#3184EF]"
+                         hover:border-slate-400 focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary"
             ></textarea>
           </div>
 
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-[#3184EF] hover:bg-[#256bd1] text-white font-semibold py-3 px-8 
+              className="bg-tertiary hover:bg-[#256bd1] text-white font-semibold py-3 px-8 
                          rounded-lg shadow-md transition duration-200 cursor-pointer"
             >
               Confirmar Agendamento
