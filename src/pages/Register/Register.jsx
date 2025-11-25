@@ -1,6 +1,6 @@
 import AuthLayout from '../../layouts/AuthLayout'
 import SideImage from './Components/SideImage'
-import FormWizard  from './Components/FormWizard'
+import FormRegister  from './Components/FormRegister'
 import styles from './styles.module.css'
 
 export default function Register() {
@@ -9,7 +9,7 @@ export default function Register() {
             <AuthLayout>
                 <section className='w-full min-h-screen flex'>
                     <SideImage />
-                    <FormWizard  />
+                    <FormRegister />
                 </section>
             </AuthLayout>
         </>

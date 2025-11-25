@@ -16,8 +16,8 @@ export default function HeaderAdmin() {
     };
 
     return (
-        <header className={`sidebar fixed top-0 left-0 bg-quintenary shadow font-inter ${isOpen ? 'open' : ''}`}>
-            <div className="logo-details bg-thirteenth w-full px-5">
+        <header className={`sidebar fixed top-0 left-0 bg-tertiary shadow font-inter ${isOpen ? 'open' : ''}`}>
+            <div className="logo-details bg-blue-800 w-full px-5">
                 <img src={Logo} className={isOpen ? 'block' : 'hidden'} alt="Logo VerSonhos" />
 
                 <div className="iconSideBar w-full flex justify-center items-center" onClick={toggleSidebar}>
@@ -51,7 +51,7 @@ export default function HeaderAdmin() {
                 </li>
                 
                 <li>
-                    <Link to={'/'} className="link">
+                    <Link to={'/statusAgendamento'} className="link">
                         <div className='iconSideBar flex justify-center items-center'>
                             <HiOutlineStatusOnline className='text-2xl' />
                         </div>
@@ -61,7 +61,7 @@ export default function HeaderAdmin() {
                 </li>
                 
                 <li>
-                    <Link to={'/'} className="link">
+                    <Link to={'/configuracoesUsuario'} className="link">
                         <div className='iconSideBar flex justify-center items-center'>
                             <IoMdSettings className='text-2xl' />
                         </div>
@@ -70,7 +70,7 @@ export default function HeaderAdmin() {
                     <span className="tooltip">Configuração</span>
                 </li>
                 
-                <li className="profile bg-thirteenth">
+                <li className="profile bg-blue-800">
                     <div className="profile-details">
                         <div className="name-job">
                             <div className="name">
@@ -82,7 +82,7 @@ export default function HeaderAdmin() {
                         </div>
                     </div>
                     
-                    <div className='iconSideBar flex justify-center items-center cursor-pointer bg-thirteenth' id="log-out">
+                    <div className='iconSideBar flex justify-center items-center cursor-pointer bg-blue-800' id="log-out">
                         <FiLogOut className='text-2xl'/>
                     </div>
                 </li>

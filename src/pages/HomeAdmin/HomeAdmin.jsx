@@ -1,4 +1,4 @@
-import DashboardLayout from '@/layouts/DashboardLayout'
+import DashboardLayoutAdmin from '@/layouts/DashboardLayoutAdmin'
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
 import iconCalendarAdmin from "../../assets/icons/iconCalendarAdmin.png";
 import IconCalendarAdmin2 from "../../assets/icons/IconCalendarAdmin2.png";
@@ -42,13 +42,13 @@ export default function HomeAdmin() {
 
     return (
         <>
-            <DashboardLayout>
+            <DashboardLayoutAdmin>
                 <section className='w-full p-4 sm:p-6 font-inter flex flex-col gap-5'>
-                    <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                    <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
                         <h1 className="text-2xl font-semibold">Início</h1>
 
                         <Link
-                            to={'/'}
+                            to={'/painelAdminSolicitacao'}
                             className="flex items-center gap-2 bg-quintenary text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
                         >
                             <img src={iconAgendamento} alt="Ícone de calendário" className="w-5 h-5"/>
@@ -65,12 +65,12 @@ export default function HomeAdmin() {
                     <CardInformations number={'0'} text={'Agendamentos confirmados'} color={'bg-green-500'} />
                 </section>
 
-                <section className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+                <section className='grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 sm:p-6'>
                     {cards.map((card, i) => (
                         <CardLinks key={i} image={card.img} imageTitle={card.title} title={card.title} desc={card.desc} link={card.link} btnText={card.button} />
                     ))}
                 </section>
-            </DashboardLayout>
+            </DashboardLayoutAdmin>
         </>
     )
 }

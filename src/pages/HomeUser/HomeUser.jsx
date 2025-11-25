@@ -44,7 +44,7 @@ export default function HomeUser() {
           <h1 className="text-xl font-semibold">Início</h1>
           <Link
             to="/painelUsuarioAgendarVisita"
-            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
+            className="flex items-center gap-2 bg-tertiary text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
           >
             <img
               src={iconAgendamento}
@@ -71,7 +71,7 @@ export default function HomeUser() {
               className={`${styles.card} bg-white shadow rounded-lg border hover:shadow-md transition`}
             >
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-left p-5 h-auto sm:h-40">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <img
                     src={card.img}
                     alt={card.title}
@@ -80,14 +80,14 @@ export default function HomeUser() {
                 </div>
                 <div className="flex flex-col justify-between text-center sm:text-left w-full">
                   <div>
-                    <h3 className="font-semibold text-[#03184F] text-lg mb-1">
+                    <h3 className="font-semibold text-quintenary text-lg mb-1">
                       {card.title}
                     </h3>
                     <p className="text-gray-600 text-sm">{card.desc}</p>
                   </div>
                     <Link
                       to={card.link}
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md transition w-full sm:w-fit mt-3 hover:scale-105 cursor-pointer text-center"
+                      className="bg-tertiary text-white px-4 py-2 rounded-md transition w-full sm:w-fit mt-3 hover:scale-105 cursor-pointer text-center"
                     >
                       {card.button}
                     </Link>
