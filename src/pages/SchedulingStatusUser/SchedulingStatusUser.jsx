@@ -115,7 +115,7 @@ const AppointmentRow = ({ appointment }) => {
           </td>
           <td className="py-3 px-4 text-sm">
             <button
-              className={`px-3 py-1 text-sm font-semibold rounded ${isCanceled ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-[#3184EF] text-white hover:bg-[#4391F6]'}`}
+              className={`px-3 py-1 text-sm font-semibold rounded ${isCanceled ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-tertiary text-white hover:bg-[#4391F6]'}`}
             >
               {appointment.action}
             </button>
@@ -186,7 +186,7 @@ export default function SchedulingStatusUser() {
           </div>
          <Link
             to="/painelUsuarioAgendarVisita"
-            className="flex items-center gap-2 bg-[#3184EF] hover:bg-[#4391F6] text-white px-4 py-2 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
+            className="flex items-center gap-2 bg-tertiary hover:bg-[#4391F6] text-white px-4 py-2 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center"
           >
             <img
               src={iconAgendamento}
@@ -279,7 +279,7 @@ export default function SchedulingStatusUser() {
         <section className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
             <h2 className="text-xl font-semibold text-gray-800">Histórico de Agendamentos Anteriores</h2>
-            <button className="flex items-center gap-2 bg-[#3184EF] hover:bg-[#4391F6] text-white px-4 py-2 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center">
+            <button className="flex items-center gap-2 bg-tertiary hover:bg-[#4391F6] text-white px-4 py-2 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer text-center justify-center">
               Ver Histórico Completo
             </button>
           </div>
