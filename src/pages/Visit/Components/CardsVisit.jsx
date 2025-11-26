@@ -1,8 +1,10 @@
 import IconCadastre from '../../../assets/images/icon_cadastre.png';
 import IconLogin from '../../../assets/images/icon_login.png';
 import IconVisita from '../../../assets/images/icon_visita.png';
+import IconHospital from '../../../assets/images/icon01.svg';
+import IconPresente from '../../../assets/images/icon02.svg';
 
-const MvvCard = ({ item }) => (
+const MvvCard = ({ item, index }) => (
   <div
     className="
       bg-white text-gray-800 rounded-2xl shadow-lg 
@@ -24,28 +26,43 @@ const MvvCard = ({ item }) => (
       {item.title}
     </h4>
 
-    <p className="text-gray-700 text-base sm:text-lg leading-relaxed text-center">
+    <p className="text-gray-700 text-base sm:text-lg leading-relaxed text-center mb-4">
       {item.text}
     </p>
+
+    {index === 0 && (
+      <a
+        href="/agendar-visita"
+        className="w-full py-3 px-6 text-center text-white font-bold rounded-md bg-tertiary hover:bg-blue-700 transition-colors duration-200 mt-auto"
+      >
+        Agendar Visita
+      </a>
+    )}
+
+    {index === 1 && (
+      <>
+        <a
+          href="/doacao/apadrinhamento"
+          className="w-full py-3 px-6 text-center text-white font-bold rounded-md bg-eleventh hover:bg-rose-400 transition-colors duration-200 mt-auto"
+        >
+          Apadrinhar Visita
+        </a>
+      </>
+    )}
   </div>
 );
 
 export default function CardsVisit() {
   const data = [
     {
-      title: "Cadastre-se",
-      text: "Crie sua conta em poucos segundos! Basta informar seus dados básicos e o local onde deseja receber nossas visitas. Assim conseguimos organizar tudo com carinho e agilidade.",
-      img: IconCadastre,
+      title: "Visitas para Hospitais e Clínicas",
+      text: "Leva a VerSonhos para seus pacientes! Agende uma visita com nossa equipe para proporcionar momentos de alegria e bem-estar atráves da Realidade Virtual",
+      img: IconHospital,
     },
     {
-      title: "Faça login",
-      text: "Acesse sua conta para acompanhar e gerenciar seus pedidos. Com o login, você pode visualizar suas visitas anteriores, ajustar informações e seguir para o agendamento de novas experiências.",
-      img: IconLogin,
-    },
-    {
-      title: "Agende sua visita",
-      text: "Escolha o tipo de atividade, a data e o horário que melhor se encaixam na sua rotina. Nossa equipe confirma a disponibilidade e envia os detalhes por e-mail. Pronto — a alegria já tem hora marcada!",
-      img: IconVisita,
+      title: "Apadrinhamento de visita VerSonhos",
+      text: "Seja a pessoa que ilumina um sonho! Apadrinhe uma visita de Realidade Virtual e proporcione um momento de mágia para a criança hospitalizada.",
+      img: IconPresente,
     },
   ];
 
@@ -53,13 +70,13 @@ export default function CardsVisit() {
     <section className="bg-gradient-to-r bg-thirteenth to-blue-800 text-white py-16 sm:py-20 font-fredoka mt-14">
       <div className="container mx-auto px-6 text-center">
         <h3 className="text-3xl sm:text-5xl font-semibold mb-10 sm:mb-12">
-          Agende uma <span className="text-blue-400">Visita</span>
+          Escolha sua forma de transformar a <span className="text-blue-400">realidade!</span>
         </h3>
 
         <div className="flex flex-wrap justify-center gap-8 sm:gap-10 md:gap-14">
           {data.map((item, i) => (
             <div key={i} className="w-full sm:w-[80%] md:w-[45%] lg:w-[30%] flex justify-center">
-              <MvvCard item={item} />
+              <MvvCard item={item} index={i} />
             </div>
           ))}
         </div>
