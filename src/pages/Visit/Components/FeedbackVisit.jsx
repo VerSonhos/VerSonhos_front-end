@@ -9,7 +9,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-// Importações de imagem
 import ImgCarol from '../../../assets/images/carol_santos.png'
 import ImgVinicius from '../../../assets/images/vini_mota.png'
 import ImgLucas from '../../../assets/images/lucas_lopes.png'
@@ -53,7 +52,6 @@ export default function TestimonialsSection() {
         <span className="text-tertiary">sobre nós</span>
       </h2>
 
-      {/* Padding aumentado para telas grandes (LG:PX-16) MANTIDO para cards mais estreitos no desktop. */}
       <div className="relative max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
         <Carousel 
           opts={{
@@ -62,7 +60,6 @@ export default function TestimonialsSection() {
           }}
           className="w-full"
         >
-          {/* AJUSTE PRINCIPAL: Removido o padding do CarouselContent. O espaçamento agora é definido pelo pl-4 no item e -ml-4 no content. */}
           <CarouselContent className="-ml-4">
             {testimonials.map((t, index) => (
               <CarouselItem
@@ -71,7 +68,6 @@ export default function TestimonialsSection() {
                 className="pl-4 basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
               >
                 <Card 
-                    // Padding do card agora usa 'px-6' por padrão, que é um bom respiro interno.
                     className={`relative flex flex-col pt-12 pb-8 px-6 border 
                                 z-10 border-blue-200 bg-white shadow-lg rounded-2xl 
                                 h-full transition-all duration-300 ease-in-out
@@ -101,7 +97,6 @@ export default function TestimonialsSection() {
             ))}
           </CarouselContent>
 
-          {/* AJUSTE SETAS: Voltando para 'left-1'/'right-1' no mobile (que funciona melhor quando não há padding extra). */}
           <CarouselPrevious 
             className="absolute top-1/2 -translate-y-1/2 
               w-9 h-9 sm:w-10 sm:h-10 border-blue-400 bg-white text-blue-600 
