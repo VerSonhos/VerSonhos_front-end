@@ -1,4 +1,4 @@
-import DashboardLayout from "../../layouts/DashboardLayout";
+import DashboardLayoutUser from "../../layouts/DashboardLayoutUser";
 import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -55,7 +55,7 @@ function CPFInput() {
 
 export default function HomeUserAgendarVisita() {
   return (
-    <DashboardLayout>
+    <DashboardLayoutUser>
       <div className="p-4 sm:p-6 mx-auto">
         <section className='w-full font-inter flex flex-col gap-5 mb-10'>
             <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
@@ -152,6 +152,6 @@ export default function HomeUserAgendarVisita() {
 
         </form>
       </div>
-    </DashboardLayout>
+    </DashboardLayoutUser>
   );
 }

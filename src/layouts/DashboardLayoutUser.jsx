@@ -1,13 +1,13 @@
-import Sidebar from '../components/SideBar/SideBar';
+import SideBarUser from '../components/SideBarUser/SideBarUser';
 import AccessibilityWidget from "@/components/AccessibilityWidget/AccessibilityWidget";
 import Chatbot from "../components/ChatBot/ChatBot";
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop.jsx'
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayoutUser = ({ children }) => {
   return (
     <main className="flex min-h-screen">
       <ScrollToTop />
-      <Sidebar />
+      <SideBarUser />
       <section className="grow p-6 ms-20 bg-gray-100">
         {children}
       </section>
@@ -17,4 +17,4 @@ const DashboardLayout = ({ children }) => {
   );
 };
 
-export default DashboardLayout;
+export default DashboardLayoutUser;

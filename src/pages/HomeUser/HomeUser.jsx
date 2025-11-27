@@ -1,4 +1,4 @@
-import DashboardLayout from "../../layouts/DashboardLayout";
+import DashboardLayoutUser from "../../layouts/DashboardLayoutUser";
 import styles from "./styles.module.css";
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
 import iconcalendario from "../../assets/icons/icon-calendario.png";
@@ -38,7 +38,7 @@ export default function HomeUser() {
   ];
 
   return (
-    <DashboardLayout>
+    <DashboardLayoutUser>
       <div className="p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <h1 className="text-xl font-semibold">Início</h1>
@@ -97,6 +97,6 @@ export default function HomeUser() {
           ))}
         </div>
       </div>
-    </DashboardLayout>
+    </DashboardLayoutUser>
   );
 }

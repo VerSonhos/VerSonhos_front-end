@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import DashboardLayout from '@/layouts/DashboardLayout'
+import DashboardLayoutUser from '@/layouts/DashboardLayoutUser'
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
 import NavSettings from "./components/NavSettings/NavSettings"
 import FormSettingsUser from "./components/FormSettingsUser/FormSettingsUser"
@@ -14,7 +14,7 @@ export default function SettingsUser() {
 
     return (
         <>
-            <DashboardLayout>
+            <DashboardLayoutUser>
                 <section className='w-full p-4 sm:p-6 font-inter flex flex-col gap-5'>
                     <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
                         <h1 className="text-2xl font-semibold">Configurações</h1>
@@ -35,7 +35,7 @@ export default function SettingsUser() {
                     <NavSettings activeItem={activeTab} onSelect={handleSelectTab} />
                     <FormSettingsUser activeItem={activeTab} />
                 </section>
-            </DashboardLayout>
+            </DashboardLayoutUser>
         </>
     )
 }

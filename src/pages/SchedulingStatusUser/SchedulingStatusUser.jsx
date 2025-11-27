@@ -1,4 +1,4 @@
-import DashboardLayout from '@/layouts/DashboardLayout'
+import DashboardLayoutUser from '@/layouts/DashboardLayoutUser'
 import React, { useState, useMemo } from 'react'
 import { Link } from "react-router-dom"
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
@@ -175,7 +175,7 @@ export default function SchedulingStatusUser() {
 
 
   return (
-    <DashboardLayout>
+    <DashboardLayoutUser>
       <div className="p-4 sm:p-6 bg-gray-50 min-h-screen"> 
         <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <div>
@@ -310,6 +310,6 @@ export default function SchedulingStatusUser() {
           </div>
         </section>
       </div>
-    </DashboardLayout>
+    </DashboardLayoutUser>
   )
 }

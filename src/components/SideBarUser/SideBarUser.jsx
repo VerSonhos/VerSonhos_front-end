@@ -6,9 +6,9 @@ import { FiLogOut } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
 import { FaBars, FaBarsStaggered } from "react-icons/fa6";
 import Logo from '../../assets/images/LogotipoFundoEscuro.png'
-import "./sidebar.css"
+import "./sidebarUser.css"
 
-export default function HeaderAdmin() {
+export default function SideBarUser() {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleSidebar = () => {
