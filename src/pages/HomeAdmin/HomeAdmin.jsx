@@ -15,28 +15,28 @@ export default function HomeAdmin() {
             title: "Verifique os agendamentos",
             desc: "Veja os agendamentos a ser confirmados.",
             button: "Verificar",
-            link: "/",
+            link: "/painelAdminSolicitacao",
         },
         {
             img: IconCalendarAdmin2,
             title: "Acompanhe os agendamentos",
             desc: "Veja os agendamentos confirmados.",
             button: "Ver mais",
-            link: "/",
+            link: "/historicoAgendamentoAdm",
         },
         {
             img: IconBookAdmin,
             title: "Veja o histórico",
             desc: "Veja todas as solicitações de uma visita.",
             button: "Ver mais",
-            link: "/",
+            link: "/historicoAgendamentoAdm",
         },
         {
             img: IconSettingsAdmin,
             title: "Configurações",
             desc: "Gerencie sua conta e preferências.",
             button: "Ver mais",
-            link: "/",
+            link: "/configuracoesAdmin",
         },
     ];
 

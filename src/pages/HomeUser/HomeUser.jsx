@@ -28,12 +28,14 @@ export default function HomeUser() {
       title: "Veja o histórico",
       desc: "Veja todas as solicitações de uma visita.",
       button: "Ver mais",
+      link: "/statusAgendamento" 
     },
     {
       img: Configuracoes,
       title: "Configurações",
       desc: "Gerencie sua conta e preferências.",
       button: "Ver mais",
+      link: "/configuracoesUsuario" 
     },
   ];
 
