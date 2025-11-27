@@ -45,14 +45,14 @@ export default function TestimonialsSection() {
 
   return (
     <section className="py-20 bg-gray-50 text-center"> 
-      <h2 className="text-4xl md:text-5xl font-extrabold text-[#03184F] mb-12 font-fredoka">
+      <h2 className="text-4xl md:text-5xl font-extrabold text-thirteenth mb-12 font-fredoka">
         <span className="relative inline-block">
           <span className="text-gray-800">O que dizem</span>
         </span>{" "}
         <span className="text-tertiary">sobre nós</span>
       </h2>
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
         <Carousel 
           opts={{
             align: "start",
@@ -64,13 +64,14 @@ export default function TestimonialsSection() {
             {testimonials.map((t, index) => (
               <CarouselItem
                 key={index}
-                className="pl-4 basis-full md:basis-1/2 lg:basis-1/3"
+                // basis-1/2 no LG é MANTIDO (2 cards).
+                className="pl-4 basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
               >
                 <Card 
                     className={`relative flex flex-col pt-12 pb-8 px-6 border 
                                 z-10 border-blue-200 bg-white shadow-lg rounded-2xl 
                                 h-full transition-all duration-300 ease-in-out
-                                ${t.isHighlighted ? "shadow-xl border-blue-400" : ""}`}
+                                ${t.isHighlighted ? "shadow-xl border-tertiary" : ""}`}
                 >
                   <div className="absolute top-10 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     <Avatar className="w-20 h-20 border-4 border-white shadow-xl bg-white">
@@ -98,15 +99,15 @@ export default function TestimonialsSection() {
 
           <CarouselPrevious 
             className="absolute top-1/2 -translate-y-1/2 
-             w-9 h-9 sm:w-10 sm:h-10 border-blue-400 bg-white text-blue-600 
-             hover:bg-blue-50 hover:text-blue-700 shadow-md transition-all 
-             left-2 sm:left-0 md:left-[-2rem] lg:left-[-3.5rem] z-20"
+              w-9 h-9 sm:w-10 sm:h-10 border-blue-400 bg-white text-blue-600 
+              hover:bg-blue-50 hover:text-blue-700 shadow-md transition-all 
+              left-1 sm:left-4 md:left-[-1.5rem] lg:left-[-2.5rem] z-20"
           />
           <CarouselNext 
             className="absolute top-1/2 -translate-y-1/2 
-             w-9 h-9 sm:w-10 sm:h-10 border-blue-400 bg-white text-blue-600 
-             hover:bg-blue-50 hover:text-blue-700 shadow-md transition-all 
-             right-2 sm:right-0 md:right-[-2rem] lg:right-[-3.5rem] z-20"
+              w-9 h-9 sm:w-10 sm:h-10 border-blue-400 bg-white text-blue-600 
+              hover:bg-blue-50 hover:text-blue-700 shadow-md transition-all 
+              right-1 sm:right-4 md:right-[-1.5rem] lg:right-[-2.5rem] z-20"
           />
         </Carousel>
       </div>
