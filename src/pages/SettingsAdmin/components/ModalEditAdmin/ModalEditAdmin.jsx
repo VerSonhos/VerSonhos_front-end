@@ -24,7 +24,7 @@ export default function ModalEditAdmin({ dialogTitle, label, typeInput='text', i
                 </button>
             </DialogTrigger>
 
-            <DialogContent className="font-inter [&>button]:hidden">
+            <DialogContent className="font-inter [&>button]:hidden z-500">
                 <DialogHeader>
                     <DialogTitle className="text-2xl">{dialogTitle}</DialogTitle>
                 </DialogHeader>

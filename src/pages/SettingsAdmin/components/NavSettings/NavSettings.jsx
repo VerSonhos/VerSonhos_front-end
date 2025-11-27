@@ -25,7 +25,7 @@ export default function NavSettings({ activeItem, onSelect }) {
     ]
 
     return (
-        <article className="w-[75%] md:w-[35%] border-0 shadow-custom-sm rounded-lg">
+        <article className="w-full md:w-[35%] border-0 shadow-custom-sm rounded-lg">
             <h2 className="w-full flex items-center bg-quintenary py-2 px-3 gap-2 text-white text-2xl font-fredoka font-medium rounded-t-md">
                 <IoMdSettings />
                 Configurações

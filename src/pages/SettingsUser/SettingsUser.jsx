@@ -31,7 +31,7 @@ export default function SettingsUser() {
                     <p className='text-xl text-black-custom-400 font-semibold mt-2'>Gerencie seu perfil e informações de acesso da sua conta <span className='font-bold text-quintenary'>VerSonhos</span>.</p>
                 </section>
 
-                <section className='w-full p-4 sm:p-6 flex flex-col md:flex-row items-center md:items-start gap-10'>
+                <section className='w-full p-1 sm:p-6 flex flex-col md:flex-row items-center md:items-start gap-10'>
                     <NavSettings activeItem={activeTab} onSelect={handleSelectTab} />
                     <FormSettingsUser activeItem={activeTab} />
                 </section>
