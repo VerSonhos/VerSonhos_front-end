@@ -5,6 +5,7 @@ import card1 from "../../assets/images/card1.png";
 import card2 from "../../assets/images/card2.png";
 import card3 from "../../assets/images/card3.png";
 import will from "../../assets/images/will.png";
+import willGif from "../../assets/videos/gifWillControles.gif"
 import doacaoImg from "../../assets/images/doacaoImg-home.png";
 import quartoInternacao from "../../assets/images/quartos-internacao-home.png";
 import salaEspera from "../../assets/images/salas-espera.jpg";
@@ -177,7 +178,7 @@ export default function Home() {
            <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row justify-center items-center gap-6 px-6 relative z-20"> 
                 <div className="w-full md:w-1/2 flex justify-center"> 
                     <img
-                        src={will}
+                        src={willGif}
                         alt="Will, mascote do VerSonhos"
                         className="w-[160px] md:w-[250px] lg:w-[300px] object-contain drop-shadow-xl"
                     />
