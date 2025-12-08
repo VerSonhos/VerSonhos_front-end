@@ -89,34 +89,54 @@ export default function Contact() {
 
         <div className="bg-white shadow-lg rounded-2xl p-8">
           <h2 className="text-xl font-bold mb-6 font-fredoka">Envie uma mensagem:</h2>
-          <form className="flex flex-col gap-4">
-            <input
-              type="text"
-              placeholder="Nome"
-              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 font-inter"
-            />
-            <input
-              type="tel"
-              placeholder="Telefone"
-              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 font-inter"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 font-inter"
-            />
-            <textarea
-              rows="4"
-              placeholder="Escreva aqui"
-              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none font-inter"
-            ></textarea>
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg py-2 transition font-fredoka cursor-pointer"
-            >
-              Enviar
-            </button>
-          </form>
+         <form 
+          action="https://formsubmit.co/contatoversonhos@gmail.com" 
+          method="POST"
+          className="flex flex-col gap-4"
+        >
+        {/* Evita captcha */}
+        <input type="hidden" name="_captcha" value="false" />
+
+        {/* Redireciona para uma página de sucesso */}
+        <input type="hidden" name="_next" value="https://seu-site.com/sucesso" />
+
+        <input
+          type="text"
+          name="nome"
+          placeholder="Nome"
+          required
+          className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 font-inter"
+        />
+        <input
+          type="tel"
+          name="telefone"
+          placeholder="Telefone"
+          required
+          className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 font-inter"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 font-inter"
+        />
+        <textarea
+          rows="4"
+          name="mensagem"
+          placeholder="Escreva aqui"
+          required
+          className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none font-inter"
+        ></textarea>
+
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg py-2 transition font-fredoka cursor-pointer"
+        >
+          Enviar
+        </button>
+      </form>
+
         </div>
       </section>
 

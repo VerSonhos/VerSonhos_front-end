@@ -82,10 +82,10 @@ export default function Home() {
           </p>
 
           <Link
-            to="/sobre" 
+            to="/visita" 
             className={`${styles.heroButton} font-fredoka mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer inline-block`}
           >
-            Conheça-nos
+           Agende Uma Visita
           </Link>
         </motion.div>
         </motion.div>

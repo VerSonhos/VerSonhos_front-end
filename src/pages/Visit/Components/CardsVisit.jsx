@@ -42,7 +42,7 @@ const MvvCard = ({ item, index }) => (
     {index === 1 && (
       <>
         <a
-          href="/doar"
+          href="/login"
           className="w-full py-3 px-6 text-center text-white font-bold rounded-md bg-eleventh hover:bg-rose-400 transition-colors duration-200 mt-auto"
         >
           Apadrinhar Visita
