@@ -4,8 +4,28 @@ import ImgTelefone from '../../assets/images/img_telefone.png';
 import ImgPing from '../../assets/images/img_ping.png';
 import styles from './styles.module.css';
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Contact() {
+  const [success, setSuccess] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    // Envia manualmente os dados para o FormSubmit
+    const form = e.target;
+
+    fetch("https://formsubmit.co/ajax/contatoversonhos@gmail.com", {
+      method: "POST",
+      body: new FormData(form)
+    })
+      .then(() => {
+        setSuccess(true);
+        form.reset();
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <MainLayout>
       <motion.div
@@ -94,15 +114,24 @@ export default function Contact() {
           </div>
 
           <div className="bg-white shadow-lg rounded-2xl p-8">
+
+            {/* Mensagem de sucesso */}
+            {success && (
+              <motion.div
+                className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg font-fredoka text-center shadow"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                ✨ Sua mensagem foi enviada com sucesso!  
+                Entraremos em contato em breve. 💙
+              </motion.div>
+            )}
+
             <h2 className="text-xl font-bold mb-6 font-fredoka">Envie uma mensagem:</h2>
 
-            <form 
-              action="https://formsubmit.co/contatoversonhos@gmail.com" 
-              method="POST"
-              className="flex flex-col gap-4"
-            >
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_next" value="https://seu-site.com/sucesso" />
 
               <input
                 type="text"
@@ -143,7 +172,6 @@ export default function Contact() {
                 Enviar
               </button>
             </form>
-
           </div>
         </section>
       </motion.div>
