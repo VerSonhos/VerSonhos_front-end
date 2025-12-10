@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import ImgOds3 from "../../../assets/images/ods3.png";
 import ImgOds10 from "../../../assets/images/ods10.png";
 import ImgOds18 from "../../../assets/images/ods18.png";
@@ -33,8 +34,15 @@ export default function OdsSection() {
         </h3>
 
         <div className="flex flex-wrap justify-center gap-10 mb-30">
-          {ods.map((o) => (
-            <div key={o.id} className="flex flex-col items-center text-center">
+          {ods.map((o, i) => (
+            <motion.div
+              key={o.id}
+              className="flex flex-col items-center text-center"
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, delay: i * 0.15 }}
+              viewport={{ once: true }}
+            >
               <div className="w-50 h-50 flex items-center justify-center transition-transform duration-300 hover:scale-105">
                 <img
                   src={o.img}
@@ -46,30 +54,29 @@ export default function OdsSection() {
                   }`}
                 />
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
-      <svg
-        data-name="Layer 1"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1200 120"
-        preserveAspectRatio="none"
-        className="relative block w-[calc(100%+1.3px)] h-[200px]"
-      >
-        <path
-          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,
-             82.39-16.72,168.19-17.73,250.45-.39C823.78,31,
-             906.67,72,985.66,92.83c70.05,18.48,146.53,
-             26.09,214.34,3V0H0V27.35A600.21,600.21,0,
-             0,0,321.39,56.44Z"
-          className="fill-white"
-        />
-      </svg>
-    </div>
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          className="relative block w-[calc(100%+1.3px)] h-[200px]"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,
+               82.39-16.72,168.19-17.73,250.45-.39C823.78,31,
+               906.67,72,985.66,92.83c70.05,18.48,146.53,
+               26.09,214.34,3V0H0V27.35A600.21,600.21,0,
+               0,0,321.39,56.44Z"
+            className="fill-white"
+          />
+        </svg>
+      </div>
     </section>
   );
 }
-

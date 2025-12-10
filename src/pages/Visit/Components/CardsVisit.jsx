@@ -4,8 +4,15 @@ import IconVisita from '../../../assets/images/icon_visita.png';
 import IconHospital from '../../../assets/images/icon01.svg';
 import IconPresente from '../../../assets/images/icon02.svg';
 
+import { motion } from "framer-motion";
+import { fadeUp } from "../../../motion/animations";
+
 const MvvCard = ({ item, index }) => (
-  <div
+  <motion.div
+    variants={fadeUp}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true }}
     className="
       bg-white text-gray-800 rounded-2xl shadow-lg 
       p-6 flex flex-col items-center justify-start 
@@ -49,7 +56,7 @@ const MvvCard = ({ item, index }) => (
         </a>
       </>
     )}
-  </div>
+  </motion.div>
 );
 
 export default function CardsVisit() {
@@ -69,17 +76,32 @@ export default function CardsVisit() {
   return (
     <section className="bg-gradient-to-r bg-thirteenth to-blue-800 text-white py-16 sm:py-20 font-fredoka mt-14">
       <div className="container mx-auto px-6 text-center">
-        <h3 className="text-3xl sm:text-5xl font-semibold mb-10 sm:mb-12">
+
+        <motion.h3
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="text-3xl sm:text-5xl font-semibold mb-10 sm:mb-12"
+        >
           Escolha sua forma de transformar a <span className="text-blue-400">realidade!</span>
-        </h3>
+        </motion.h3>
 
         <div className="flex flex-wrap justify-center gap-8 sm:gap-10 md:gap-14">
           {data.map((item, i) => (
-            <div key={i} className="w-full sm:w-[80%] md:w-[45%] lg:w-[30%] flex justify-center">
+            <motion.div
+              key={i}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="w-full sm:w-[80%] md:w-[45%] lg:w-[30%] flex justify-center"
+            >
               <MvvCard item={item} index={i} />
-            </div>
+            </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   );
