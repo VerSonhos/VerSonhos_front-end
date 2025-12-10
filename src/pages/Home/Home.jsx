@@ -82,10 +82,10 @@ export default function Home() {
           </p>
 
           <Link
-            to="/sobre" 
+            to="/visita" 
             className={`${styles.heroButton} font-fredoka mt-6 bg-[#3184EF] hover:bg-[#4391F6] text-white font-semibold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer inline-block`}
           >
-            Conheça-nos
+           Agende Uma Visita
           </Link>
         </motion.div>
         </motion.div>
@@ -144,7 +144,6 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* seção: Quem é o Will? (Ajustada novamente: largura da seção principal restaurada, ajuste apenas no texto) */}
       <motion.div
           className="relative w-full flex flex-col md:flex-row justify-center items-center gap-6 px-6 h-auto py-16 bg-quintenary"
           custom={1}

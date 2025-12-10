@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Carousel,
@@ -44,7 +45,13 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-20 bg-gray-50 text-center"> 
+    <motion.section 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: true }}
+      className="py-20 bg-gray-50 text-center"
+    >
       <h2 className="text-4xl md:text-5xl font-extrabold text-thirteenth mb-12 font-fredoka">
         <span className="relative inline-block">
           <span className="text-gray-800">O que dizem</span>
@@ -64,14 +71,13 @@ export default function TestimonialsSection() {
             {testimonials.map((t, index) => (
               <CarouselItem
                 key={index}
-                // basis-1/2 no LG é MANTIDO (2 cards).
                 className="pl-4 basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
               >
                 <Card 
-                    className={`relative flex flex-col pt-12 pb-8 px-6 border 
-                                z-10 border-blue-200 bg-white shadow-lg rounded-2xl 
-                                h-full transition-all duration-300 ease-in-out
-                                ${t.isHighlighted ? "shadow-xl border-tertiary" : ""}`}
+                  className={`relative flex flex-col pt-12 pb-8 px-6 border 
+                              z-10 border-blue-200 bg-white shadow-lg rounded-2xl 
+                              h-full transition-all duration-300 ease-in-out
+                              ${t.isHighlighted ? "shadow-xl border-tertiary" : ""}`}
                 >
                   <div className="absolute top-10 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     <Avatar className="w-20 h-20 border-4 border-white shadow-xl bg-white">
@@ -111,6 +117,6 @@ export default function TestimonialsSection() {
           />
         </Carousel>
       </div>
-    </section>
+    </motion.section>
   );
 }
