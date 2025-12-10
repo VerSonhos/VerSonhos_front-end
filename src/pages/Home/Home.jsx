@@ -148,6 +148,9 @@ export default function Home() {
       <motion.div
           className="relative w-full flex flex-col md:flex-row justify-center items-center gap-6 px-6 h-auto py-16 bg-quintenary"
           custom={1}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={fadeUp}
         >
           <img
@@ -174,41 +177,39 @@ export default function Home() {
             className="absolute bottom-4 right-4 w-[60px] md:bottom-10 md:right-10 md:w-[100px] z-10 opacity-70"
           />
 
-          {/* Envolvemos o conteúdo principal para centralizar o bloco Will + Texto */}
-           <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row justify-center items-center gap-6 px-6 relative z-20"> 
-                <div className="w-full md:w-1/2 flex justify-center"> 
-                    <img
-                        src={willGif}
-                        alt="Will, mascote do VerSonhos"
-                        className="w-[160px] md:w-[250px] lg:w-[300px] object-contain drop-shadow-xl"
-                    />
-                </div>
+           <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row justify-center items-center gap-6 px-6 relative z-20"> 
+                <div className="w-full md:w-1/2 flex justify-center"> 
+                    <img
+                        src={willGif}
+                        alt="Will, mascote do VerSonhos"
+                        className="w-[160px] md:w-[250px] lg:w-[300px] object-contain drop-shadow-xl"
+                    />
+                </div>
 
-                <div className="w-full md:w-1/2 text-left flex flex-col gap-6">
-                    {/* A classe max-w-md foi mantida AQUI para reduzir a largura do BLOCO de texto */}
-                    <div className="max-w-md"> 
-                        <h3 className="text-quaternary text-2xl md:text-3xl font-bold font-fredoka">
-                            Quem é o Will?
-                        </h3>
+                <div className="w-full md:w-1/2 text-left flex flex-col gap-6">
+                    <div className="max-w-md"> 
+                        <h3 className="text-quaternary text-2xl md:text-3xl font-bold font-fredoka">
+                            Quem é o Will?
+                        </h3>
 
-                        <p className="text-amber-50 text-base md:text-lg leading-relaxed mb-6">
-                            O seu guia na plataforma. Ele ajuda você a navegar pelo site, explica
-                            cada parte das experiências e conversa através de um chatbot com
-                            inteligência artificial. Sempre gentil, curioso e acolhedor, ele transforma
-                            qualquer descoberta em um momento leve, seguro e cheio de magia.
-                        </p>
+                        <p className="text-amber-50 text-base md:text-lg leading-relaxed mb-6">
+                            O seu guia na plataforma. Ele ajuda você a navegar pelo site, explica
+                            cada parte das experiências e conversa através de um chatbot com
+                            inteligência artificial. Sempre gentil, curioso e acolhedor, ele transforma
+                            qualquer descoberta em um momento leve, seguro e cheio de magia.
+                        </p>
 
-                        <p className="text-amber-50 text-base md:text-lg leading-relaxed mb-6">
-                            Durante as experiências, o Will aparece para acolher, explicar, incentivar e
-                            lembrar que ninguém está sozinho.
-                        </p>
+                        <p className="text-amber-50 text-base md:text-lg leading-relaxed mb-6">
+                            Durante as experiências, o Will aparece para acolher, explicar, incentivar e
+                            lembrar que ninguém está sozinho.
+                        </p>
 
-                        <p className="text-[#3184EF] font-bold text-lg md:text-xl font-fredoka">
-                            “Pronto para se aventurar?” — Will ✨
-                        </p>
-                    </div>
-                </div>
-            </div>
+                        <p className="text-[#3184EF] font-bold text-lg md:text-xl font-fredoka">
+                            “Pronto para se aventurar?” — Will ✨
+                        </p>
+                    </div>
+                </div>
+            </div>
         </motion.div>
 
       {/*seção: experiencia do oculos vr */}
