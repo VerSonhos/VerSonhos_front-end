@@ -1,15 +1,16 @@
 import DashboardLayoutAdmin from '@/layouts/DashboardLayoutAdmin'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { FaEllipsisV, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
 import { Link } from "react-router-dom";
 
-// Dados de Exemplo para a tela de RequestsAdm (Foco em Pendente, Confirmado, Recusado)
+// Dados de Exemplo
 const dadosExemplo = [
     { id: "#101", empresa: "Hospital Central", data: "2025-12-15", status: "Pendente", endereco: "Rua A, 123", horario: "10:00" },
     { id: "#102", empresa: "Clínica Saúde Já", data: "2025-12-16", status: "Pendente", endereco: "Av. B, 456", horario: "14:30" },
     { id: "#103", empresa: "Posto de Atendimento", data: "2025-12-17", status: "Confirmado", endereco: "Praça C, 789", horario: "08:00" },
     { id: "#104", empresa: "Clínica Visão Clara", data: "2025-12-18", status: "Recusado", endereco: "Rua D, 500", horario: "11:00" },
+    { id: "#105", empresa: "Hospital Regional", data: "2025-12-20", status: "Pendente", endereco: "Av. Principal, 10", horario: "15:00" },
 ];
 
 const corStatus = {
@@ -51,7 +52,6 @@ const SimpleCalendar = ({ dadosEventos }) => {
         const mesFormatado = (month + 1) < 10 ? `0${month + 1}` : month + 1;
         const dataString = `${year}-${mesFormatado}-${diaFormatado}`;
         
-        // Mantém a lógica de mostrar marcadores apenas para Pendente ou Confirmado
         const eventosVisiveis = dadosEventos.filter(d => 
             d.data === dataString && (d.status === "Pendente" || d.status === "Confirmado")
         );
@@ -106,6 +106,13 @@ export default function RequestsAdm() {
     const [isVisible, setIsVisible] = useState(false);
     const [itemSelecionado, setItemSelecionado] = useState(null);
     const [tabelaData, setTabelaData] = useState(dadosExemplo);
+    
+    // Novo estado para os filtros
+    const [filterTerm, setFilterTerm] = useState({
+        searchText: '',
+        status: 'Todos',
+        date: '',
+    });
 
     useEffect(() => { setIsMounted(true); }, []);
 
@@ -137,6 +144,36 @@ export default function RequestsAdm() {
         fecharModal();
     };
 
+    // Função principal de filtragem
+    const filteredData = useMemo(() => {
+        return tabelaData.filter(item => {
+            const searchLower = filterTerm.searchText.toLowerCase();
+            
+            // 1. Filtrar por Status
+            if (filterTerm.status !== 'Todos' && item.status !== filterTerm.status) {
+                return false;
+            }
+
+            // 2. Filtrar por Data
+            // Assumimos que a data na tabela é 'YYYY-MM-DD' para corresponder ao input type="date"
+            if (filterTerm.date && item.data !== filterTerm.date) {
+                return false;
+            }
+
+            // 3. Filtrar por Texto (ID ou Empresa)
+            if (searchLower) {
+                const matchesId = item.id.toLowerCase().includes(searchLower);
+                const matchesEmpresa = item.empresa.toLowerCase().includes(searchLower);
+                if (!matchesId && !matchesEmpresa) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+    }, [tabelaData, filterTerm]);
+
+
     return (
         <DashboardLayoutAdmin>
             <div className="p-4 sm:p-6 bg-transparent">
@@ -157,6 +194,53 @@ export default function RequestsAdm() {
                 </section>
                 
                 <SimpleCalendar dadosEventos={tabelaData} />
+                
+                {/* --- Seção de Filtros Adicionada --- */}
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-6 font-fredoka">
+                    <h3 className="text-lg font-bold text-thirteenth-500 mb-4">Filtrar Agendamentos</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        
+                        {/* 1. Filtro por ID / Empresa */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Buscar (ID ou Empresa)</label>
+                            <input
+                                type="text"
+                                placeholder="Buscar por ID ou Empresa"
+                                value={filterTerm.searchText}
+                                onChange={(e) => setFilterTerm({...filterTerm, searchText: e.target.value})}
+                                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-thirteenth-500 focus:border-thirteenth-500"
+                            />
+                        </div>
+
+                        {/* 2. Filtro por Status */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <select
+                                value={filterTerm.status}
+                                onChange={(e) => setFilterTerm({...filterTerm, status: e.target.value})}
+                                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-thirteenth-500 focus:border-thirteenth-500 bg-white"
+                            >
+                                <option value="Todos">Todos</option>
+                                <option value="Pendente">Pendente</option>
+                                <option value="Confirmado">Confirmado</option>
+                                <option value="Recusado">Recusado</option>
+                            </select>
+                        </div>
+                        
+                        {/* 3. Filtro por Data */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Data</label>
+                            <input
+                                type="date"
+                                value={filterTerm.date}
+                                onChange={(e) => setFilterTerm({...filterTerm, date: e.target.value})}
+                                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-thirteenth-500 focus:border-thirteenth-500"
+                            />
+                        </div>
+                    </div>
+                </div>
+                {/* --- Fim da Seção de Filtros --- */}
+
 
                 {/* Tabela telas grandes */}
                 <div className="hidden sm:block overflow-x-auto w-full">
@@ -171,64 +255,79 @@ export default function RequestsAdm() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tabelaData.map((item, i) => (
-                                <tr key={i} className="border-b hover:bg-gray-100 transition">
-                                    <td className="py-3 px-4 text-base">{item.id}</td>
-                                    <td className="py-3 px-4 text-base">{item.empresa}</td>
-                                    <td className="py-3 px-4 text-base">{item.data}</td>
-                                    <td className="py-3 px-4">
-                                        <StatusBadge status={item.status} />
-                                    </td>
-                                    <td className="py-3 px-4 text-right">
-                                        <button onClick={() => abrirModal(item)} className="p-2 hover:bg-gray-200 rounded-full">
-                                            <FaEllipsisV size={18} />
-                                        </button>
+                            {/* Usa dados filtrados */}
+                            {filteredData.length > 0 ? (
+                                filteredData.map((item, i) => (
+                                    <tr key={i} className="border-b hover:bg-gray-100 transition">
+                                        <td className="py-3 px-4 text-base">{item.id}</td>
+                                        <td className="py-3 px-4 text-base">{item.empresa}</td>
+                                        <td className="py-3 px-4 text-base">{item.data}</td>
+                                        <td className="py-3 px-4">
+                                            <StatusBadge status={item.status} />
+                                        </td>
+                                        <td className="py-3 px-4 text-right">
+                                            <button onClick={() => abrirModal(item)} className="p-2 hover:bg-gray-200 rounded-full">
+                                                <FaEllipsisV size={18} />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="5" className="py-4 text-center text-gray-500">
+                                        Nenhum agendamento encontrado com os filtros selecionados.
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>
                 
                 {/* Cards telas pequenas */}
                 <div className="sm:hidden space-y-4 font-fredoka">
-                    {tabelaData.map((item, i) => (
-                        <div
-                            key={i}
-                            className="bg-white p-4 rounded-lg shadow-md border border-gray-200"
-                        >
-                            <div className="flex justify-between items-start mb-2">
-                                <span className="text-sm xs:text-base font-bold text-thirteenth-500 break-words">
-                                    {item.empresa}
-                                </span>
+                    {filteredData.length > 0 ? (
+                        filteredData.map((item, i) => (
+                            <div
+                                key={i}
+                                className="bg-white p-4 rounded-lg shadow-md border border-gray-200"
+                            >
+                                <div className="flex justify-between items-start mb-2">
+                                    <span className="text-sm xs:text-base font-bold text-thirteenth-500 break-words">
+                                        {item.empresa}
+                                    </span>
 
-                                <button
-                                    onClick={() => abrirModal(item)}
-                                    className="p-1 hover:bg-gray-100 rounded-full flex-shrink-0"
-                                >
-                                    <FaEllipsisV size={18} />
-                                </button>
+                                    <button
+                                        onClick={() => abrirModal(item)}
+                                        className="p-1 hover:bg-gray-100 rounded-full flex-shrink-0"
+                                    >
+                                        <FaEllipsisV size={18} />
+                                    </button>
+                                </div>
+
+                                <div className="text-xs xs:text-sm space-y-1">
+                                    <p>
+                                        <span className="font-semibold text-gray-700">ID:</span> {item.id}
+                                    </p>
+
+                                    <p>
+                                        <span className="font-semibold text-gray-700">Data:</span> {item.data}
+                                    </p>
+                                </div>
+
+                                <div className="mt-3">
+                                    <StatusBadge status={item.status} />
+                                </div>
                             </div>
-
-                            <div className="text-xs xs:text-sm space-y-1">
-                                <p>
-                                    <span className="font-semibold text-gray-700">ID:</span> {item.id}
-                                </p>
-
-                                <p>
-                                    <span className="font-semibold text-gray-700">Data:</span> {item.data}
-                                </p>
-                            </div>
-
-                            <div className="mt-3">
-                                <StatusBadge status={item.status} />
-                            </div>
+                        ))
+                    ) : (
+                        <div className="bg-white p-4 rounded-lg shadow-md text-center text-gray-500">
+                            Nenhum agendamento encontrado com os filtros selecionados.
                         </div>
-                    ))}
+                    )}
                 </div>
 
                 
-                {/* Modal */}
+                {/* Modal (Mantém funcionalidade de alteração de status) */}
                 {isMounted && itemSelecionado && (
                     <div 
                         onClick={fecharModal}
@@ -286,7 +385,7 @@ export default function RequestsAdm() {
                                 <StatusBadge status={itemSelecionado?.status} />
                             </div>
                             
-                            {/* BOTÕES DE AÇÃO: Apenas Confirmar e Recusar (Pendente removido) */}
+                            {/* Botões de Ação */}
                             <div className="mt-6 pt-4 border-t border-gray-200 text-center">
                                 <p className="font-semibold text-gray-700 text-sm sm:text-base mb-3">Mudar status para:</p>
                                 <div className="flex justify-center space-x-2 sm:space-x-4">
