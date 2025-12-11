@@ -3,6 +3,7 @@ export default function HeaderCards({ number, text, color }) {
     <article
       className={`
         w-[90%] sm:w-[80%] lg:w-[24%]
+        h-[200px]
         font-fredoka transition hover:scale-102
         cursor-default text-white font-semibold
         flex flex-col justify-center items-center
@@ -15,12 +16,13 @@ export default function HeaderCards({ number, text, color }) {
         {number}
       </div>
 
-      <p className="
-        text-base xs:text-lg sm:text-xl md:text-2xl
-        text-center
-        px-2 sm:px-4 
-        leading-snug break-words
-      ">
+      <p
+        className="
+          text-base xs:text-lg sm:text-xl md:text-2xl
+          text-center px-2 sm:px-4
+          leading-snug break-words
+        "
+      >
         {text}
       </p>
     </article>
