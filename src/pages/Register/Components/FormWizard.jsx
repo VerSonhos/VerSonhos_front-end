@@ -17,6 +17,10 @@ import { HiInformationCircle } from "react-icons/hi";
 import ModalRegister from './ModalRegister';
 import { applyMask } from "@/utils/masks";
 import { getCidadesSP } from '../../../../api/ibgeCidades';
+import { registerUsuario, registerEmpresa, deleteUsuario } from '@/services/registerService';
+import { useNavigate } from 'react-router-dom';
+import SuccessRegisterModal from "./SuccessRegisterModal";
+import ErrorAlert from "./ErrorAlert";
 
 export default function FormWizard() {
     const [step, setStep] = useState(1);
@@ -52,6 +56,10 @@ export default function FormWizard() {
         objetivoRegister: '',
         termosLgpd: '',
     });
+
+    const navigate = useNavigate();
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
@@ -123,6 +131,38 @@ export default function FormWizard() {
     const prevStep = () => {
         setErrors({});
         setStep(step - 1);
+    };
+
+    const handleSubmit = async () => {
+        if (!validateStep()) return;
+
+        let idUsuarioCriado = null;
+
+        try {
+            const userResponse = await registerUsuario(formData);
+
+            idUsuarioCriado = userResponse.id || userResponse.idUsuario;
+            if (!idUsuarioCriado) throw new Error("ID do usuário não retornado pelo servidor.");
+
+            await registerEmpresa(formData, idUsuarioCriado);
+
+            setShowSuccess(true);
+
+            setTimeout(() => navigate("/login"), 3000);
+
+        } catch (error) {
+            console.error("Erro no fluxo de cadastro:", error);
+
+            if (idUsuarioCriado) {
+                try {
+                    await deleteUsuario(idUsuarioCriado);
+                } catch (delErr) {
+                    console.error("Falha ao remover usuário:", delErr);
+                }
+            }
+
+            setErrorMessage(error.message || "Erro inesperado. Tente novamente.");
+        }
     };
 
     return (
@@ -444,12 +484,15 @@ export default function FormWizard() {
                             </label>
                         </div>
 
+                        {showSuccess && <SuccessRegisterModal />}
+                        {errorMessage && <ErrorAlert message={errorMessage} />}
+
                         <div className='flex w-full gap-5'>
                             <button type='button' onClick={prevStep} className='bg-quintenary hover:bg-quintenary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
                                 Voltar
                             </button>
 
-                            <button type='button' onClick={validateStep} className='bg-tertiary hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
+                            <button type='button' onClick={handleSubmit} className='bg-tertiary hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
                                 Cadastrar
                             </button>
                         </div>

@@ -50,13 +50,13 @@ export default function FormRegister() {
 
                     <div className='text-center flex flex-col gap-5 text-black-custom-500'>
                         <div className="flex items-center my-2">
-                            <div className="flex-grow border-t border-black-custom-400"></div>
+                            <div className="grow border-t border-black-custom-400"></div>
                             
                             <p className="mx-4 whitespace-nowrap">
                                 Entrar na conta
                             </p>
                             
-                            <div className="flex-grow border-t border-black-custom-400"></div>
+                            <div className="grow border-t border-black-custom-400"></div>
                         </div>
 
                         <p>

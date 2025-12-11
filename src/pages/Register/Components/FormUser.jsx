@@ -7,6 +7,10 @@ import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
 import ModalRegister from './ModalRegister';
 import { applyMask } from "@/utils/masks";
+import { registerUsuario } from '@/services/registerService';
+import { useNavigate } from 'react-router-dom';
+import SuccessRegisterModal from "./SuccessRegisterModal";
+import ErrorAlert from "./ErrorAlert";
 
 export default function FormUser() {
     const [formData, setFormData] = useState({
@@ -18,6 +22,10 @@ export default function FormUser() {
         termosLgpd: '',
     });
     
+    const navigate = useNavigate();
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -57,6 +65,26 @@ export default function FormUser() {
         setErrors(newErrors);
 
         return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async () => {
+        if (!validateStep()) return;
+
+        try {
+            const response = await registerUsuario(formData);
+            console.log("Usuário cadastrado:", response);
+
+            setShowSuccess(true);
+            
+            setTimeout(() => {
+                navigate("/login");
+            }, 3000);
+            
+        } catch (error) {
+            console.error("Erro ao cadastrar:", error);
+            setErrorMessage(error.message || "Erro inesperado. Tente novamente.");
+            setTimeout(() => setErrorMessage(""), 3000);
+        }
     };
 
     return (
@@ -154,8 +182,11 @@ export default function FormUser() {
                         </label>
                     </div>
 
+                    {showSuccess && <SuccessRegisterModal />}
+                    {errorMessage && <ErrorAlert message={errorMessage} />}
+
                     <div className='flex justify-center w-full'>
-                        <button type='button' onClick={validateStep} className='bg-tertiary hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
+                        <button type='button' onClick={handleSubmit} className='bg-tertiary hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
                             Cadastrar
                         </button>
                     </div>
