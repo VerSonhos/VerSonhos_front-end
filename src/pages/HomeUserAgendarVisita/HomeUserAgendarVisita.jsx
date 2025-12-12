@@ -74,6 +74,8 @@ export default function HomeUserAgendarVisita() {
   const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
+  const [successModal, setSuccessModal] = useState(false); // MODAL DE SUCESSO
+
   const multaPercentual = "30%";
   const prazoCancelamento = "48 horas";
 
@@ -94,33 +96,19 @@ export default function HomeUserAgendarVisita() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // =======================================================
-  // FORMATAÇÃO DO CAMPO DE DURAÇÃO ESTIMADA
-  // =======================================================
   const handleDuracaoChange = (e) => {
-    let value = e.target.value.toLowerCase();
-    let cleaned = value.replace(/[^0-9h]/g, "");
+    let valor = e.target.value.replace(/\D/g, "");
 
-    if (!cleaned) {
-      setDuracaoEstimada("");
-      return;
+    if (valor.length > 4) valor = valor.slice(0, 4);
+
+    const h = valor.slice(0, 2);
+    const m = valor.slice(2, 4);
+
+    if (valor.length <= 2) {
+      setDuracaoEstimada(`${h}h`);
+    } else {
+      setDuracaoEstimada(`${h}h${m}`);
     }
-
-    const posH = cleaned.indexOf("h");
-
-    if (posH === -1) {
-      setDuracaoEstimada(cleaned.slice(0, 3));
-      return;
-    }
-
-    const horas = cleaned.substring(0, posH).replace(/\D/g, "");
-    let minutos = cleaned.substring(posH + 1).replace(/\D/g, "");
-
-    if (minutos.length > 2) minutos = minutos.slice(0, 2);
-
-    const finalValue = minutos ? `${horas}h${minutos}min` : `${horas}h`;
-
-    setDuracaoEstimada(finalValue);
   };
 
   const handleSubmitForm = (e) => {
@@ -138,9 +126,23 @@ export default function HomeUserAgendarVisita() {
     const dataToSend = { ...formData, duracao: duracaoEstimada };
 
     console.log("Enviando agendamento:", dataToSend);
-    alert("Agendamento solicitado com sucesso!");
 
     closeTermsModal();
+
+    // 🔥 RESET COMPLETO DO FORMULÁRIO 🔥
+    setFormData({
+      data: "",
+      horario: "",
+      local: "",
+      pacientes: "",
+      cpfResponsavel: "",
+      observacoes: "",
+    });
+
+    setDuracaoEstimada("");
+
+    // Abrir modal de sucesso
+    setSuccessModal(true);
   };
 
   // =======================================================
@@ -212,6 +214,37 @@ export default function HomeUserAgendarVisita() {
     );
 
   // =======================================================
+  // MODAL DE SUCESSO
+  // =======================================================
+  const SuccessModal = () =>
+    successModal && (
+      <div
+        onClick={() => setSuccessModal(false)}
+        className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999] p-4"
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="bg-white px-8 py-6 w-full max-w-sm rounded-xl shadow-xl text-center animate-[fadeIn_0.3s_ease-out]"
+        >
+          <h2 className="text-2xl font-bold text-green-600 mb-2">
+            Agendamento realizado!
+          </h2>
+
+          <p className="text-gray-700 mb-6">
+            Sua solicitação foi enviada com sucesso.
+          </p>
+
+          <button
+            onClick={() => setSuccessModal(false)}
+            className="bg-tertiary text-white py-2 px-6 rounded-lg hover:bg-[#256bd1] transition"
+          >
+            Fechar
+          </button>
+        </div>
+      </div>
+    );
+
+  // =======================================================
   // RENDER
   // =======================================================
   return (
@@ -241,13 +274,13 @@ export default function HomeUserAgendarVisita() {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+
             {/* Data */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Data da visita
               </label>
-
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 transition-all hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
                 <CalendarDays className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
                 <input
                   type="date"
@@ -263,8 +296,7 @@ export default function HomeUserAgendarVisita() {
             {/* Horário */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Horário</label>
-
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 transition-all hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
                 <Clock className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
                 <input
                   type="time"
@@ -283,7 +315,7 @@ export default function HomeUserAgendarVisita() {
                 Local da visita (Hospital)
               </label>
 
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 transition-all hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
                 <MapPin className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
                 <input
                   type="text"
@@ -297,25 +329,23 @@ export default function HomeUserAgendarVisita() {
               </div>
             </div>
 
-            {/* DURAÇÃO ESTIMADA (corrigido e padronizado) */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Duração estimada
-              </label>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Duração estimada
+  </label>
 
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 transition-all hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
-                <Clock className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
+  <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+    <Clock className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
 
-                <input
-                  type="text"
-                  name="duracao"
-                  value={duracaoEstimada}
-                  onChange={handleDuracaoChange}
-                  placeholder="Ex: 1h30min"
-                  className="w-full outline-none bg-transparent"
-                  required
-                />
-              </div>
+    <input
+      type="time"
+      name="duracao"
+      value={duracaoEstimada}
+      onChange={(e) => setDuracaoEstimada(e.target.value)}
+      className="w-full outline-none bg-transparent"
+      required
+    />
+  </div>
             </div>
 
             {/* Pacientes */}
@@ -323,7 +353,7 @@ export default function HomeUserAgendarVisita() {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Quantidade de pacientes
               </label>
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 transition-all hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
                 <Users className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
                 <input
                   type="number"
@@ -370,7 +400,9 @@ export default function HomeUserAgendarVisita() {
         </form>
       </div>
 
+      {/* Modais */}
       <TermsModal />
+      <SuccessModal />
     </DashboardLayoutUser>
   );
 }
