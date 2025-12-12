@@ -1,20 +1,63 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import { IoIosArrowBack, IoIosMail } from "react-icons/io";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
 import LogoForm from '../../../assets/images/Logotipo.png'
+import ErrorAlert from "@/components/ErrorAlert/ErrorAlert";
+import { loginUser} from '@/services/authServiceUser';
+import { useAuth } from '@/context/AuthContext';
 import styles from '../styles.module.css'
 
 export default function SideForm() {
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
     const [showPassword, setShowPassword] = useState(false);
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+    
+    const { login } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogin = async () => {
+        if (!email || !senha) {
+            setErrorMessage("Preencha todos os campos!");
+            setTimeout(() => setErrorMessage(""), 3000);
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            const token = await loginUser(email, senha); // pega o token
+
+            login(token); // salva usando o hook (AGORA FUNCIONA)
+
+            setTimeout(() => navigate("/painelUsuario"), 100);
+
+        } catch (error) {
+            console.error("Erro ao logar:", error);
+
+            setErrorMessage(
+                error.response?.data?.message ||
+                "E-mail ou senha inválidos"
+            );
+
+            setTimeout(() => setErrorMessage(""), 3000);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
+            {errorMessage && <ErrorAlert message={errorMessage} />}
+
             <section className='w-full lg:w-[50%] min-h-screen flex flex-col items-baseline'>
                 <Link to={'/'} className='flex justify-center items-center gap-2 font-inter font-bold text-lg mt-5 ms-5'>
                     <span className='text-white-custom text-xl bg-black-custom rounded-full'>
@@ -38,7 +81,7 @@ export default function SideForm() {
                             
                             <div className='w-full flex relative'>
                                 <IoIosMail className='text-xl text-black-custom-400 absolute left-2 top-2.5'/>
-                                <input type="email" placeholder='seu@email.com' name="emailLogin" id="emailLogin" className='bg-gray-100 border-gray-300 border-2 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4' />
+                                <input type="email" placeholder='seu@email.com' name="emailLogin" id="emailLogin" value={email} onChange={(e) => setEmail(e.target.value)} className='bg-gray-100 border-gray-300 border-2 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4' />
                             </div>
                         </div>
 
@@ -47,7 +90,7 @@ export default function SideForm() {
                             
                             <div className="w-full flex relative">
                                 <RiLockPasswordFill className='text-xl text-black-custom-400 absolute left-2 top-2.5'/>
-                                <input type={showPassword ? "text" : "password"} placeholder='*********' name="passwordLogin" id="passwordLogin" className='bg-gray-100 border-gray-300 border-2 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4' />
+                                <input type={showPassword ? "text" : "password"} placeholder='*********'  name="passwordLogin" id="passwordLogin" value={senha} onChange={(e) => setSenha(e.target.value)} className='bg-gray-100 border-gray-300 border-2 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4' />
                                 
                                 <button 
                                     type="button"
@@ -69,20 +112,20 @@ export default function SideForm() {
                             <Link to={'/esqueceuSenha'} className='text-tertiary hover:text-tertiary-400 transition ease-in-out italic'> Recuperar aqui!</Link>
                         </p>
 
-                        <button type='button' className='bg-tertiary hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
-                            Entrar
+                        <button type='button' onClick={handleLogin} disabled={loading} className='bg-tertiary hover:bg-tertiary-500 transition ease-in-out text-white-custom font-semibold w-[80%] py-1 mt-1.5 rounded-sm cursor-pointer shadow-sm'>
+                            {loading ? "Entrando..." : "Entrar"}
                         </button>
                     </form>
 
                     <div className='text-center flex flex-col gap-5 text-black-custom-500'>
                         <div className="flex items-center my-2">
-                            <div className="flex-grow border-t border-black-custom-400"></div>
+                            <div className="grow border-t border-black-custom-400"></div>
                             
                             <p className="mx-4 whitespace-nowrap">
                                 Criar uma conta
                             </p>
                             
-                            <div className="flex-grow border-t border-black-custom-400"></div>
+                            <div className="grow border-t border-black-custom-400"></div>
                         </div>
 
                         <p>
