@@ -186,7 +186,6 @@ export default function Home() {
                       src={willGif}
                       alt="Will, mascote do VerSonhos"
                       className="w-[160px] md:w-[250px] lg:w-[300px] object-contain drop-shadow-xl"
-                      loading="lazy"
                   />
               </div>
 
