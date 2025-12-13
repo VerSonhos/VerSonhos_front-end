@@ -23,39 +23,31 @@ const formatarData = (isoDate) => {
     return isoDate;
 };
 
-// =========================================================================
-// statusMap com as cores definidas
-// =========================================================================
 const statusMap = {
     Confirmado: {
-        // Confirmado: Verde
         style: 'text-green-700 bg-green-100',
         action: 'Ver Detalhes'
     },
     Pendente: { 
-        // Pendente: Fundo Amarelo (yellow-400) e Texto Cinza Escuro (gray-900)
         style: 'text-gray-900 bg-yellow-500', 
         action: 'Aguardando' 
     },
     Concluído: { 
-        // Concluído: Verde (igual a Confirmado)
         style: 'text-green-700 bg-green-100', 
         action: 'Ver Detalhes'
     },
     Cancelado: {
-        // Cancelado: Vermelho
         style: 'text-red-700 bg-red-100',
         action: 'Ver Motivo'
     },
     Expirado: {
-        // Expirado: Azul
         style: 'text-blue-700 bg-blue-100',
         action: 'Ver Detalhes'
     },
 }
 
 const getStatusInfo = (status) => {
-    const info = statusMap[status] || { style: 'text-gray-500 bg-gray-100' } // Fallback
+    const info = statusMap[status] || { style: 'text-gray-500 bg-gray-100' }
     return (
         <span className={`flex items-center justify-center px-2 py-1 rounded-full text-xs font-semibold w-fit ${info.style}`}>
             <span>{status}</span>
@@ -131,8 +123,6 @@ export default function SchedulingStatusUser() {
     const [error, setError] = useState(null);
     const [activeFilter, setActiveFilter] = useState('Todos')
     const [searchTerm, setSearchTerm] = useState('')
-    
-    // Inclui 'Expirado' nos filtros
     const filterOptions = ['Todos', 'Confirmado', 'Pendente', 'Cancelado', 'Concluído', 'Expirado'] 
     
     
@@ -154,24 +144,20 @@ export default function SchedulingStatusUser() {
                     const isUpcoming = new Date(item.dataAgendada) >= new Date(new Date().setHours(0, 0, 0, 0)); 
                     
                     let statusDisplay;
-                    // =========================================================================
-                    // Mapeamento ajustado para o enum do Java
-                    // Assumimos que a API envia o nome do ENUM (PENDENTE, CONFIRMADO, EXPIRADO, etc.)
-                    // =========================================================================
                     switch(item.status) {
-                        case 'CONFIRMADO': // Corresponde ao enum CONFIRMADO
+                        case 'CONFIRMADO':
                             statusDisplay = 'Confirmado';
                             break;
-                        case 'PENDENTE': // Corresponde ao enum PENDENTE
+                        case 'PENDENTE':
                             statusDisplay = 'Pendente';
                             break;
-                        case 'CANCELADO': // Corresponde ao enum CANCELADO
+                        case 'CANCELADO':
                             statusDisplay = 'Cancelado'; 
                             break;
-                        case 'CONCLUIDO': // Corresponde ao enum CONCLUIDO
+                        case 'CONCLUIDO':
                             statusDisplay = 'Concluído';
                             break;
-                        case 'EXPIRADO': // Corresponde ao novo enum EXPIRADO
+                        case 'EXPIRADO':
                             statusDisplay = 'Expirado';
                             break;
                         default:
