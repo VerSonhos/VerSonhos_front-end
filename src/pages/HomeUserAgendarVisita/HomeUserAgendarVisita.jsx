@@ -3,406 +3,434 @@ import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
+import { criarNovoAgendamento } from '../../services/agendamentoService'; 
+import ErrorAlert from '../../components/ErrorAlert/ErrorAlert';
 
-// =======================================================
-// CPFInput Componente de Máscara
-// =======================================================
 function maskCPF(value) {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
-    .slice(0, 14);
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+    .slice(0, 14);
 }
 
 function CPFInput({ value, onChange }) {
-  const [focused, setFocused] = useState(false);
+  const [focused, setFocused] = useState(false);
 
-  function handleChange(e) {
-    onChange(maskCPF(e.target.value));
-  }
+  function handleChange(e) {
+    onChange(maskCPF(e.target.value));
+  }
 
-  return (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        CPF do responsável pelo agendamento
-      </label>
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        CPF do responsável pelo agendamento
+      </label>
 
-      <div
-        className={`
-          flex items-center gap-2 border rounded-lg px-4 py-3 transition-all duration-300 group
-          ${focused ? "border-tertiary ring-2 ring-tertiary/40" : "border-slate-300 hover:border-slate-400"}
-        `}
-      >
-        <Users
-          className={`w-5 h-5 transition-colors duration-300
-            ${focused ? "text-tertiary" : "text-slate-400 group-focus-within:text-tertiary"}
-          `}
-        />
+      <div
+        className={`
+          flex items-center gap-2 border rounded-lg px-4 py-3 transition-all duration-300 group
+          ${focused ? "border-tertiary ring-2 ring-tertiary/40" : "border-slate-300 hover:border-slate-400"}
+        `}
+      >
+        <Users
+          className={`w-5 h-5 transition-colors duration-300
+            ${focused ? "text-tertiary" : "text-slate-400 group-focus-within:text-tertiary"}
+          `}
+        />
 
-        <input
-          type="text"
-          value={value}
-          onChange={handleChange}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          className="w-full outline-none bg-transparent"
-          placeholder="Ex: 123.456.789-00"
-          required
-        />
-      </div>
-    </div>
-  );
+        <input
+          type="text"
+          value={value}
+          onChange={handleChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          className="w-full outline-none bg-transparent"
+          placeholder="Ex: 123.456.789-00"
+          required
+        />
+      </div>
+    </div>
+  );
 }
 
-// =======================================================
-// COMPONENTE PRINCIPAL
-// =======================================================
 export default function HomeUserAgendarVisita() {
-  const [formData, setFormData] = useState({
-    data: "",
-    horario: "",
-    local: "",
-    pacientes: "",
-    cpfResponsavel: "",
-    observacoes: "",
-  });
+  const [formData, setFormData] = useState({
+    data: "",
+    horario: "",
+    local: "",
+    pacientes: "",
+    cpfResponsavel: "",
+    observacoes: "",
+  });
 
-  const [duracaoEstimada, setDuracaoEstimada] = useState("");
+  const [duracaoEstimada, setDuracaoEstimada] = useState("");
+  const [protocoloAgendamento, setProtocoloAgendamento] = useState(null); 
 
-  const [isMounted, setIsMounted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const [successModal, setSuccessModal] = useState(false); // MODAL DE SUCESSO
+  const [successModal, setSuccessModal] = useState(false); 
+  const [error, setError] = useState(null);
 
-  const multaPercentual = "30%";
-  const prazoCancelamento = "48 horas";
+  const multaPercentual = "30%";
+  const prazoCancelamento = "48 horas";
 
-  const openTermsModal = () => {
-    setIsMounted(true);
-    document.body.style.overflow = "hidden";
-    setTimeout(() => setIsVisible(true), 20);
-  };
+  // ALTERAR PARA DEIXAR AUTOMATICO
+  const CURRENT_USER_ID = 5; 
 
-  const closeTermsModal = () => {
-    setIsVisible(false);
-    document.body.style.overflow = "unset";
-    setTimeout(() => setIsMounted(false), 300);
-  };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const converterDuracaoParaMinutos = (duracaoString) => {
+    if (!duracaoString || duracaoString.indexOf(':') === -1) return 0;
+    const [horas, minutos] = duracaoString.split(':').map(Number);
+    return (horas * 60) + minutos;
+  };
 
-  const handleDuracaoChange = (e) => {
-    let valor = e.target.value.replace(/\D/g, "");
 
-    if (valor.length > 4) valor = valor.slice(0, 4);
+  const openTermsModal = () => {
+    setIsMounted(true);
+    document.body.style.overflow = "hidden";
+    setTimeout(() => setIsVisible(true), 20);
+  };
 
-    const h = valor.slice(0, 2);
-    const m = valor.slice(2, 4);
+  const closeTermsModal = () => {
+    setIsVisible(false);
+    document.body.style.overflow = "unset";
+    setTimeout(() => setIsMounted(false), 300);
+  };
 
-    if (valor.length <= 2) {
-      setDuracaoEstimada(`${h}h`);
-    } else {
-      setDuracaoEstimada(`${h}h${m}`);
-    }
-  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    setError(null);
 
-    if (!e.target.checkValidity()) {
-      e.target.reportValidity();
-      return;
-    }
+    if (!e.target.checkValidity()) {
+      setError({ message: "Por favor, preencha todos os campos obrigatórios corretamente." });
+      return;
+    }
 
-    openTermsModal();
-  };
+    openTermsModal();
+  };
 
-  const handleConfirmAndAccept = () => {
-    const dataToSend = { ...formData, duracao: duracaoEstimada };
+  const showAndHideError = (message) => {
+    setError({ message });
+    setTimeout(() => {
+      setError(null);
+    }, 5000); 
+  };
 
-    console.log("Enviando agendamento:", dataToSend);
+  const handleConfirmAndAccept = async () => {
+    
+    closeTermsModal(); 
+    setError(null);
+    const duracaoEmMinutos = converterDuracaoParaMinutos(duracaoEstimada);
+    
+    const agendamentoDTO = {
+        usuarioId: CURRENT_USER_ID, 
+        dataAgendada: formData.data,
+        horario: formData.horario,
+        qtdePacientes: Number(formData.pacientes),
+        duracaoVisita: duracaoEmMinutos, 
+        localVisita: formData.local,
+        observacoes: formData.observacoes,
+        cpf: formData.cpfResponsavel.replace(/\D/g, ""), 
+    };
+    
+    try {
+        const novoAgendamento = await criarNovoAgendamento(agendamentoDTO); 
+        setProtocoloAgendamento(novoAgendamento.idAgendamento);
+        setSuccessModal(true);
+       
+        setFormData({
+            data: "",
+            horario: "",
+            local: "",
+            pacientes: "",
+            cpfResponsavel: "",
+            observacoes: "",
+        });
+        setDuracaoEstimada("");
 
-    closeTermsModal();
+    } catch (error) {
+        console.error("Erro ao enviar agendamento:", error.response || error);
+        
+        let mensagemErro = "Ocorreu um erro desconhecido ao agendar. Tente novamente.";
+        
+        if (error.response && error.response.data) {
+            if (error.response.data.errors && error.response.data.errors.length > 0) {
+                mensagemErro = "Erros de validação: " + error.response.data.errors.map(err => err.defaultMessage).join('; ');
+            } else if (error.response.data.message) {
+                mensagemErro = error.response.data.message;
+            } else if (typeof error.response.data === 'string') {
+                mensagemErro = error.response.data;
+            }
+        } else if (error.message.includes('Network Error')) {
+            mensagemErro = "Erro de conexão com o servidor. Verifique se o backend está ativo.";
+        }
+        
+        showAndHideError(mensagemErro);
+        setProtocoloAgendamento(null); 
+    }
+  };
 
-    // 🔥 RESET COMPLETO DO FORMULÁRIO 🔥
-    setFormData({
-      data: "",
-      horario: "",
-      local: "",
-      pacientes: "",
-      cpfResponsavel: "",
-      observacoes: "",
-    });
+  const TermsModal = () =>
+    isMounted && (
+      <div
+        onClick={closeTermsModal}
+        className={`
+          fixed inset-0 bg-black/50 flex items-center justify-center 
+          z-[9999] transition-opacity duration-300 p-2 sm:p-4
+          ${isVisible ? "opacity-100" : "opacity-0"}
+        `}
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={`
+            bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 rounded-xl shadow-2xl relative
+            transform transition-all duration-300
+            ${isVisible ? "scale-100 opacity-100" : "scale-90 opacity-0"}
+          `}
+        >
+          <button
+            onClick={closeTermsModal}
+            className="absolute right-4 top-4 text-2xl font-bold text-gray-600 hover:text-gray-900"
+          >
+            ×
+          </button>
 
-    setDuracaoEstimada("");
+          <h2 className="text-xl font-bold text-center mb-4 text-red-600">
+            Atenção: Termos de Cancelamento
+          </h2>
 
-    // Abrir modal de sucesso
-    setSuccessModal(true);
-  };
+          <div className="space-y-4 text-sm sm:text-base">
+            <p className="text-gray-700">
+              Ao confirmar esta solicitação, você concorda com a política de cancelamento da{" "}
+              <span className="font-bold text-quintenary">VerSonhos</span>.
+            </p>
 
-  // =======================================================
-  // MODAL DE TERMOS
-  // =======================================================
-  const TermsModal = () =>
-    isMounted && (
-      <div
-        onClick={closeTermsModal}
-        className={`
-          fixed inset-0 bg-black/50 flex items-center justify-center 
-          z-[9999] transition-opacity duration-300 p-2 sm:p-4
-          ${isVisible ? "opacity-100" : "opacity-0"}
-        `}
-      >
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className={`
-            bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 rounded-xl shadow-2xl relative
-            transform transition-all duration-300
-            ${isVisible ? "scale-100 opacity-100" : "scale-90 opacity-0"}
-          `}
-        >
-          <button
-            onClick={closeTermsModal}
-            className="absolute right-4 top-4 text-2xl font-bold text-gray-600 hover:text-gray-900"
-          >
-            ×
-          </button>
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+              <p className="font-semibold text-red-700 mb-2">Multa por cancelamento:</p>
+              <p className="text-red-800">
+                Cancelamentos com menos de <b>{prazoCancelamento}</b> terão multa de <b>{multaPercentual}</b>.
+              </p>
+            </div>
 
-          <h2 className="text-xl font-bold text-center mb-4 text-red-600">
-            Atenção: Termos de Cancelamento
-          </h2>
+            <p className="font-semibold text-gray-700">
+              Ao confirmar, você declara estar ciente e de acordo.
+            </p>
+          </div>
 
-          <div className="space-y-4 text-sm sm:text-base">
-            <p className="text-gray-700">
-              Ao confirmar esta solicitação, você concorda com a política de cancelamento da{" "}
-              <span className="font-bold text-quintenary">VerSonhos</span>.
-            </p>
+          <div className="mt-6 pt-4 border-t flex justify-end gap-3">
+            <button
+              onClick={closeTermsModal}
+              className="py-2 px-4 rounded-lg bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400"
+            >
+              Voltar
+            </button>
+            <button
+              onClick={handleConfirmAndAccept}
+              className="py-2 px-4 rounded-lg text-white font-bold bg-tertiary hover:bg-[#256bd1]"
+            >
+              Confirmar e Aceitar Termos
+            </button>
+          </div>
+        </div>
+      </div>
+    );
 
-            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
-              <p className="font-semibold text-red-700 mb-2">Multa por cancelamento:</p>
-              <p className="text-red-800">
-                Cancelamentos com menos de <b>{prazoCancelamento}</b> terão multa de <b>{multaPercentual}</b>.
-              </p>
-            </div>
+  const SuccessModal = () =>
+    successModal && (
+      <div
+        onClick={() => setSuccessModal(false)}
+        className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999] p-4"
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="bg-white px-8 py-6 w-full max-w-sm rounded-xl shadow-xl text-center animate-[fadeIn_0.3s_ease-out]"
+        >
+          <h2 className="text-2xl font-bold text-green-600 mb-2">
+            Agendamento realizado!
+          </h2>
 
-            <p className="font-semibold text-gray-700">
-              Ao confirmar, você declara estar ciente e de acordo.
-            </p>
-          </div>
+          {protocoloAgendamento && (
+            <p className="text-lg font-semibold text-gray-800 mb-4">
+              Protocolo: <span className="text-tertiary">{protocoloAgendamento}</span>
+            </p>
+          )}
 
-          <div className="mt-6 pt-4 border-t flex justify-end gap-3">
-            <button
-              onClick={closeTermsModal}
-              className="py-2 px-4 rounded-lg bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400"
-            >
-              Voltar
-            </button>
-            <button
-              onClick={handleConfirmAndAccept}
-              className="py-2 px-4 rounded-lg text-white font-bold bg-tertiary hover:bg-[#256bd1]"
-            >
-              Confirmar e Aceitar Termos
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+          <p className="text-gray-700 mb-6">
+            Sua solicitação foi enviada com sucesso e está pendente de aprovação.
+          </p>
 
-  // =======================================================
-  // MODAL DE SUCESSO
-  // =======================================================
-  const SuccessModal = () =>
-    successModal && (
-      <div
-        onClick={() => setSuccessModal(false)}
-        className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999] p-4"
-      >
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="bg-white px-8 py-6 w-full max-w-sm rounded-xl shadow-xl text-center animate-[fadeIn_0.3s_ease-out]"
-        >
-          <h2 className="text-2xl font-bold text-green-600 mb-2">
-            Agendamento realizado!
-          </h2>
+          <button
+            onClick={() => setSuccessModal(false)}
+            className="bg-tertiary text-white py-2 px-6 rounded-lg hover:bg-[#256bd1] transition"
+          >
+            Fechar
+          </button>
+        </div>
+      </div>
+    );
 
-          <p className="text-gray-700 mb-6">
-            Sua solicitação foi enviada com sucesso.
-          </p>
+  return (
+    <DashboardLayoutUser>
+      {error && (
+        <ErrorAlert message={error.message} />
+      )}
+      {/* ---------------------------------------------------- */}
 
-          <button
-            onClick={() => setSuccessModal(false)}
-            className="bg-tertiary text-white py-2 px-6 rounded-lg hover:bg-[#256bd1] transition"
-          >
-            Fechar
-          </button>
-        </div>
-      </div>
-    );
+      <div className="p-4 sm:p-6 mx-auto">
+        <section className="w-full font-inter flex flex-col gap-5 mb-10">
+          <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
+            <h1 className="text-2xl font-semibold">Agendar nova visita</h1>
 
-  // =======================================================
-  // RENDER
-  // =======================================================
-  return (
-    <DashboardLayoutUser>
-      <div className="p-4 sm:p-6 mx-auto">
-        <section className="w-full font-inter flex flex-col gap-5 mb-10">
-          <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
-            <h1 className="text-2xl font-semibold">Agendar nova visita</h1>
+            <Link
+              to="/statusAgendamento"
+              className="flex items-center gap-2 bg-tertiary text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer justify-center"
+            >
+              <img src={iconAgendamento} className="w-5 h-5" />
+              Veja seus agendamentos
+            </Link>
+          </div>
 
-            <Link
-              to="/statusAgendamento"
-              className="flex items-center gap-2 bg-tertiary text-white px-5 py-3 rounded-lg shadow transition w-full sm:w-fit hover:scale-105 cursor-pointer justify-center"
-            >
-              <img src={iconAgendamento} className="w-5 h-5" />
-              Veja seus agendamentos
-            </Link>
-          </div>
+          <p className="text-xl text-black-custom-400 font-semibold mt-2">
+            Escolha a data, horário e local da próxima visita.
+          </p>
+        </section>
 
-          <p className="text-xl text-black-custom-400 font-semibold mt-2">
-            Escolha a data, horário e local da próxima visita.
-          </p>
-        </section>
+        <form onSubmit={handleSubmitForm} className="space-y-8 p-10 shadow-custom-sm rounded-md">
+          <h2 className="text-3xl text-center font-semibold text-quintenary">
+            Preencha o formulário
+          </h2>
 
-        <form onSubmit={handleSubmitForm} className="space-y-8 p-10 shadow-custom-sm rounded-md">
-          <h2 className="text-3xl text-center font-semibold text-quintenary">
-            Preencha o formulário
-          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Data da visita
+              </label>
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <CalendarDays className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
+                <input
+                  type="date"
+                  name="data"
+                  value={formData.data}
+                  onChange={handleInputChange}
+                  className="w-full outline-none bg-transparent"
+                  required
+                />
+              </div>
+            </div>
 
-            {/* Data */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Data da visita
-              </label>
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
-                <CalendarDays className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
-                <input
-                  type="date"
-                  name="data"
-                  value={formData.data}
-                  onChange={handleInputChange}
-                  className="w-full outline-none bg-transparent"
-                  required
-                />
-              </div>
-            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Horário</label>
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <Clock className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
+                <input
+                  type="time"
+                  name="horario"
+                  value={formData.horario}
+                  onChange={handleInputChange}
+                  className="w-full outline-none bg-transparent"
+                  required
+                />
+              </div>
+            </div>
 
-            {/* Horário */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Horário</label>
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
-                <Clock className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
-                <input
-                  type="time"
-                  name="horario"
-                  value={formData.horario}
-                  onChange={handleInputChange}
-                  className="w-full outline-none bg-transparent"
-                  required
-                />
-              </div>
-            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Local da visita (Hospital)
+              </label>
 
-            {/* Local */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Local da visita (Hospital)
-              </label>
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <MapPin className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
+                <input
+                  type="text"
+                  name="local"
+                  value={formData.local}
+                  onChange={handleInputChange}
+                  placeholder="Ex: Hospital Santa Luzia"
+                  className="w-full outline-none bg-transparent"
+                  required
+                />
+              </div>
+            </div>
 
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
-                <MapPin className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
-                <input
-                  type="text"
-                  name="local"
-                  value={formData.local}
-                  onChange={handleInputChange}
-                  placeholder="Ex: Hospital Santa Luzia"
-                  className="w-full outline-none bg-transparent"
-                  required
-                />
-              </div>
-            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Duração estimada
+              </label>
 
-            <div>
-  <label className="block text-sm font-medium text-gray-700 mb-1">
-    Duração estimada
-  </label>
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <Clock className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
 
-  <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
-    <Clock className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
+                <input
+                  type="time"
+                  name="duracao"
+                  value={duracaoEstimada}
+                  onChange={(e) => setDuracaoEstimada(e.target.value)}
+                  className="w-full outline-none bg-transparent"
+                  required
+                />
+              </div>
+            </div>
 
-    <input
-      type="time"
-      name="duracao"
-      value={duracaoEstimada}
-      onChange={(e) => setDuracaoEstimada(e.target.value)}
-      className="w-full outline-none bg-transparent"
-      required
-    />
-  </div>
-            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Quantidade de pacientes
+              </label>
+              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
+                <Users className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
+                <input
+                  type="number"
+                  name="pacientes"
+                  value={formData.pacientes}
+                  onChange={handleInputChange}
+                  placeholder="Ex: 10"
+                  className="w-full outline-none bg-transparent"
+                  required
+                />
+              </div>
+            </div>
 
-            {/* Pacientes */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Quantidade de pacientes
-              </label>
-              <div className="flex items-center gap-2 border border-slate-300 rounded-lg px-4 py-3 hover:border-slate-400 focus-within:ring-2 focus-within:ring-tertiary/40 focus-within:border-tertiary group">
-                <Users className="w-5 h-5 text-slate-400 group-focus-within:text-tertiary" />
-                <input
-                  type="number"
-                  name="pacientes"
-                  value={formData.pacientes}
-                  onChange={handleInputChange}
-                  placeholder="Ex: 10"
-                  className="w-full outline-none bg-transparent"
-                  required
-                />
-              </div>
-            </div>
+            <CPFInput
+              value={formData.cpfResponsavel}
+              onChange={(value) =>
+                setFormData((prev) => ({ ...prev, cpfResponsavel: value }))
+              }
+            />
+          </div>
 
-            {/* CPF */}
-            <CPFInput
-              value={formData.cpfResponsavel}
-              onChange={(value) =>
-                setFormData((prev) => ({ ...prev, cpfResponsavel: value }))
-              }
-            />
-          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Observações</label>
+            <textarea
+              rows="6"
+              name="observacoes"
+              value={formData.observacoes}
+              onChange={handleInputChange}
+              placeholder="Ex: Levar óculos extras, confirmar transporte..."
+              className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none hover:border-slate-400 focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary"
+            ></textarea>
+          </div>
 
-          {/* Observações */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Observações</label>
-            <textarea
-              rows="6"
-              name="observacoes"
-              value={formData.observacoes}
-              onChange={handleInputChange}
-              placeholder="Ex: Levar óculos extras, confirmar transporte..."
-              className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none hover:border-slate-400 focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary"
-            ></textarea>
-          </div>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-tertiary hover:bg-[#256bd1] text-white font-semibold py-3 px-8 rounded-lg shadow-md transition"
+            >
+              Confirmar Agendamento
+            </button>
+          </div>
+        </form>
+      </div>
 
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="bg-tertiary hover:bg-[#256bd1] text-white font-semibold py-3 px-8 rounded-lg shadow-md transition"
-            >
-              Confirmar Agendamento
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* Modais */}
-      <TermsModal />
-      <SuccessModal />
-    </DashboardLayoutUser>
-  );
+      <TermsModal />
+      <SuccessModal />
+    </DashboardLayoutUser>
+  );
 }
