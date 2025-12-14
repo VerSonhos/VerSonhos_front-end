@@ -9,6 +9,7 @@ import ErrorAlert from "@/components/ErrorAlert/ErrorAlert";
 import { loginUser} from '@/services/authServiceUser';
 import { fetchUserProfileByEmail } from '@/services/profileServiceUser';
 import { useAuth } from '@/context/AuthContext';
+import { jwtDecode } from "jwt-decode";
 import styles from '../styles.module.css'
 
 export default function SideForm() {
@@ -41,7 +42,18 @@ export default function SideForm() {
             
             login(token, userIdentifier, nomeCompleto);
 
-            setTimeout(() => navigate("/painelUsuario"), 100);
+            const decoded = jwtDecode(token);
+            const role = decoded.role;
+
+            let rotaRedirecionamento = "/";
+            
+            if (role === "ROLE_ADMIN") {
+                rotaRedirecionamento = "/painelAdmin";
+            } else if (role === "ROLE_USER") {
+                rotaRedirecionamento = "/painelUsuario";
+            }
+
+            setTimeout(() => navigate(rotaRedirecionamento), 100);
 
         } catch (error) {
             console.error("Erro ao logar:", error);
