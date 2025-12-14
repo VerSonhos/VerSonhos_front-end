@@ -242,6 +242,21 @@ export default function RequestsAdm() {
                 const dataParts = item.dataAgendada.split('-'); 
                 const dataFormatada = `${dataParts[2]}/${dataParts[1]}/${dataParts[0]}`;
 
+                // >> CORREÇÃO: Usando duracaoVisita e qtdePacientes e aplicando fallback
+                
+                // Mapeamento da Duração (duracaoVisita)
+                const duracao = item.duracaoVisita 
+                    ? `${item.duracaoVisita} minutos`
+                    : 'Não informada';
+                
+                // Mapeamento de Nº de Pacientes (qtdePacientes)
+                // Verifica se o valor é null, undefined ou string vazia; se for 0, aceita.
+                const pacientes = (item.qtdePacientes !== null && item.qtdePacientes !== undefined && item.qtdePacientes !== "") 
+                    ? item.qtdePacientes
+                    : 'Não informado';
+                
+                // << FIM DA CORREÇÃO
+
                 return {
                     id: `#${item.idAgendamento}`,
                     empresa: item.nomeEmpresa || 'Empresa Não Informada', 
@@ -251,6 +266,8 @@ export default function RequestsAdm() {
                     status: item.status, 
                     endereco: item.localVisita || 'Não informado',
                     idAgendamento: item.idAgendamento, 
+                    duracaoEstimada: duracao, // Usando o nome de campo que o Modal espera
+                    numeroPacientes: pacientes, // Usando o nome de campo que o Modal espera
                 };
             });
             
@@ -332,9 +349,9 @@ export default function RequestsAdm() {
 
 
     const handleStatusChange = (newStatus) => {
-          if (!itemSelecionado) return;
-          
-          abrirConfirmacao(newStatus);
+             if (!itemSelecionado) return;
+             
+             abrirConfirmacao(newStatus);
     };
 
 
@@ -576,6 +593,17 @@ export default function RequestsAdm() {
                                                 {itemSelecionado?.dataExibicao} - {itemSelecionado?.horario}
                                             </p>
                                         </div>
+
+                                        <div>
+                                            <p className="font-semibold text-gray-700">Duração Estimada</p>
+                                            <p className="text-gray-900">{itemSelecionado?.duracaoEstimada}</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="font-semibold text-gray-700">Nº de Pacientes</p>
+                                            <p className="text-gray-900">{itemSelecionado?.numeroPacientes}</p>
+                                        </div>
+
                                     </div>
 
                                     <div className="mt-4 pt-3 border-t border-gray-200 text-center">
