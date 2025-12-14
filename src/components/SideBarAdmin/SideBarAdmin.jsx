@@ -94,7 +94,7 @@ export default function SideBarAdmin() {
                         <div className="name-job">
                             <div className="name">
                                 <p className='font-fredoka font-semibold'>
-                                    Nome do Cliente
+                                    Administrador
                                 </p>
                             </div>
                             <div className="job">Seja Bem-Vindo</div>

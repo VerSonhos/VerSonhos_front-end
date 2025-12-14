@@ -6,5 +6,8 @@ export async function loginAdmin(login, senha) {
         senha
     });
 
-    return response.data.token;
+    return {
+        token: response.data.token,
+        userIdentifier: login
+    };
 }

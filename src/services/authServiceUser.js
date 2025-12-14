@@ -6,5 +6,8 @@ export async function loginUser(email, senha) {
         senha
     });
 
-    return response.data.token;
+    return {
+        token: response.data.token, 
+        userIdentifier: email
+    };
 }

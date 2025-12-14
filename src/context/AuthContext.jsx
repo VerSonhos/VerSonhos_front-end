@@ -7,12 +7,16 @@ export function AuthProvider({ children }) {
     const initialToken = localStorage.getItem("authToken"); 
     
     const [token, setToken] = useState(initialToken);
+    const [email, setEmail] = useState(localStorage.getItem("authEmail") || null);
+    const [name, setName] = useState(localStorage.getItem("authName") || null);
     const [role, setRole] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(!!initialToken); 
 
     useEffect(() => {
         if (!token) {
             setRole(null);
+            setEmail(null);
+            setName(null);
             setIsAuthenticated(false);
             return;
         }
@@ -36,15 +40,22 @@ export function AuthProvider({ children }) {
         }
     }, [token]);
 
-    const login = (receivedToken) => {
+    const login = (receivedToken, receivedEmail, receivedName) => {
         localStorage.setItem("authToken", receivedToken);
+        localStorage.setItem("authEmail", receivedEmail);
+        localStorage.setItem("authName", receivedName);
         setToken(receivedToken); 
+        setEmail(receivedEmail);
+        setName(receivedName);
     };
-
 
     const logout = () => {
         localStorage.removeItem("authToken");
+        localStorage.removeItem("authEmail");
+        localStorage.removeItem("authName");
         setToken(null);
+        setEmail(null);
+        setName(null);
         setRole(null);
         setIsAuthenticated(false);
     };
@@ -53,6 +64,8 @@ export function AuthProvider({ children }) {
         <AuthContext.Provider
             value={{
                 token,
+                email,
+                name,
                 role,
                 isAuthenticated,
                 login,

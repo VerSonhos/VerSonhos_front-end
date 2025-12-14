@@ -7,6 +7,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import LogoForm from '../../../assets/images/Logotipo.png'
 import ErrorAlert from "@/components/ErrorAlert/ErrorAlert";
 import { loginUser} from '@/services/authServiceUser';
+import { fetchUserProfileByEmail } from '@/services/profileServiceUser';
 import { useAuth } from '@/context/AuthContext';
 import styles from '../styles.module.css'
 
@@ -34,9 +35,11 @@ export default function SideForm() {
         try {
             setLoading(true);
 
-            const token = await loginUser(email, senha); // pega o token
-
-            login(token); // salva usando o hook (AGORA FUNCIONA)
+            const { token, userIdentifier } = await loginUser(email, senha);
+            const profileData = await fetchUserProfileByEmail(userIdentifier); 
+            const nomeCompleto = profileData.nomeCompleto;
+            
+            login(token, userIdentifier, nomeCompleto);
 
             setTimeout(() => navigate("/painelUsuario"), 100);
 

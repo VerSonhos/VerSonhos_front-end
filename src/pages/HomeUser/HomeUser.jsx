@@ -6,8 +6,11 @@ import iconcalendario2 from "../../assets/icons/icon-calendario2.png";
 import Configuracoes from "../../assets/icons/icon-configuracao.png";
 import livro from "../../assets/icons/icon-livro.png";
 import { Link } from "react-router-dom"
+import { useAuth } from '@/context/AuthContext'
 
 export default function HomeUser() {
+  const { logout, email, name } = useAuth();
+
   const cards = [
     {
       img: iconcalendario,
@@ -59,7 +62,7 @@ export default function HomeUser() {
         </div>
         <div className="mb-8 text-center sm:text-left">
           <h2 className={styles.welcomeTitle}>
-            Que bom ter você aqui, <span>Lucas</span>
+            Que bom ter você aqui, <span>{name || email || 'Cliente'}</span>
           </h2>
           <p className={styles.welcomeDesc}>
             Que tal espalhar mais alegria hoje? Veja suas próximas visitas e

@@ -12,8 +12,9 @@ import "./sidebarUser.css"
 
 export default function SideBarUser() {
     const [isOpen, setIsOpen] = useState(false);
-    const { logout } = useAuth();
+    const { logout, email, name } = useAuth();
     const navigate = useNavigate();
+
 
     const toggleSidebar = () => {
       setIsOpen(!isOpen);
@@ -94,7 +95,7 @@ export default function SideBarUser() {
                         <div className="name-job">
                             <div className="name">
                                 <p className='font-fredoka font-semibold'>
-                                    Nome do Cliente
+                                    {name || email || 'Cliente'}
                                 </p>
                             </div>
                             <div className="job">Seja Bem-Vindo</div>

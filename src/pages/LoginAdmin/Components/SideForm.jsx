@@ -34,9 +34,9 @@ export default function SideForm() {
         try {
             setLoading(true);
 
-            const token = await loginAdmin(loginValue, senha); // pega o token
+            const { token, userIdentifier } = await loginAdmin(loginValue, senha); 
 
-            login(token); // salva usando o hook (AGORA FUNCIONA)
+            login(token, userIdentifier); 
 
             setTimeout(() => navigate("/painelAdmin"), 100);
 
