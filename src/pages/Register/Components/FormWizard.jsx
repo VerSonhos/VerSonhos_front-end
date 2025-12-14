@@ -84,7 +84,6 @@ export default function FormWizard() {
     const validateStep = () => {
         const newErrors = {};
 
-        // Variável local para a senha (usada na Etapa 4)
         const password = formData.passwordRegister.trim();
         const confirmPassword = formData.passwordRegisterConfirm.trim();
 
@@ -111,14 +110,11 @@ export default function FormWizard() {
         }
         
         if (step === 4) {
-            // 1. Campos obrigatórios
             if (!password) newErrors.passwordRegister = 'Campo obrigatório';
             if (!confirmPassword) newErrors.passwordRegisterConfirm = 'Campo obrigatório';
 
-            // 2. VALIDAÇÃO DE COMPLEXIDADE DA SENHA (SÓ SE O CAMPO ESTIVER PREENCHIDO)
             if (password) {
                 const minLength = 4;
-                // Regex para caracteres especiais
                 const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 
                 if (password.length < minLength) {
@@ -128,19 +124,17 @@ export default function FormWizard() {
                 }
             }
             
-            // 3. Validação de Confirmação (só verifica se as senhas coincidem, se o campo principal não tiver erro de complexidade)
             if (
                 password &&
                 confirmPassword &&
                 password !== confirmPassword &&
-                !newErrors.passwordRegister // Verifica se já existe um erro mais prioritário
+                !newErrors.passwordRegister
             ) 
             {
                 newErrors.passwordRegister = 'As senhas não coincidem';
                 newErrors.passwordRegisterConfirm = 'As senhas não coincidem';
             }
             
-            // 4. Outros campos obrigatórios da Etapa 4
             if (!formData.objetivoRegister.trim()) newErrors.objetivoRegister = 'Campo obrigatório';
             if (!formData.termosLgpd) newErrors.termosLgpd = 'Campo obrigatório';
         }

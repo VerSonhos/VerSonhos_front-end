@@ -6,7 +6,7 @@ export default function ModalRegister() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <span className="text-tertiary underline hover:text-blue-600 transition-colors cursor-pointer whitespace-normal break-words" >
+                <span className="text-tertiary underline hover:text-blue-600 transition-colors cursor-pointer whitespace-normal wrap-break-word" >
                     Termos de Consentimento e Tratamento de Dados
                 </span>
             </DialogTrigger>
