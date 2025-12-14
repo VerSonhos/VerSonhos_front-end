@@ -1,4 +1,6 @@
 import { RouterProvider, createBrowserRouter} from 'react-router-dom'
+import { ProtectedRoute } from '@/components/ProtectedRoute/ProtectedRoute';
+import { PublicRoute } from '@/components/PublicRoute/PublicRoute';
 import Home from '../pages/Home/Home'
 import About from '../pages/About/About'
 import Visit from '../pages/Visit/Visit'
@@ -34,33 +36,38 @@ const router = createBrowserRouter([
     { path: "*", element: <NotFoundPage />, },
 
     // Páginas de autenticação
-    { path: "/login", element: <Login />, },
-
-    { path: "/cadastro", element: <Register />, },
-    
-    { path: "/loginAdmin", element: <LoginAdmin />, },
-
-    { path: "/esqueceuSenha", element: <ForgotPassword />, },
-
-    { path: "/senhaNova", element: <ChangePassword />, },
+    {
+        element: <PublicRoute />, 
+        children: [
+            { path: "/login", element: <Login />, },
+            { path: "/cadastro", element: <Register />, },
+            { path: "/loginAdmin", element: <LoginAdmin />, },
+            { path: "/esqueceuSenha", element: <ForgotPassword />, },
+            { path: "/senhaNova", element: <ChangePassword />, },
+        ]
+    },
 
     // Dashboard do usuário
-    { path: "/painelUsuario", element: <HomeUser />, },
-
-    { path: "/statusAgendamento", element: <SchedulingStatusUser />, },
-    
-    { path: "/painelUsuarioAgendarVisita", element: <HomeUserAgendarVisita />, },
-    
-    { path: "/configuracoesUsuario", element: <SettingsUser />, },
+    {
+        element: <ProtectedRoute allowedRoles={['user']} />, 
+        children: [
+            { path: "/painelUsuario", element: <HomeUser />, },
+            { path: "/statusAgendamento", element: <SchedulingStatusUser />, },
+            { path: "/painelUsuarioAgendarVisita", element: <HomeUserAgendarVisita />, },
+            { path: "/configuracoesUsuario", element: <SettingsUser />, },
+        ]
+    },
     
     // Dashboard do administrador
-    { path: "/painelAdmin", element: <HomeAdmin />, },
-
-    { path: "/painelAdminSolicitacao", element: <RequestsAdm />, },
-
-    { path: "/historicoAgendamentoAdm", element: <HistoricoAgendamentoAdm/>, },
-    
-    { path: "/configuracoesAdmin", element: <SettingsAdmin />, },
+    {
+        element: <ProtectedRoute allowedRoles={['admin']} />, 
+        children: [
+            { path: "/painelAdmin", element: <HomeAdmin />, },
+            { path: "/painelAdminSolicitacao", element: <RequestsAdm />, },
+            { path: "/historicoAgendamentoAdm", element: <HistoricoAgendamentoAdm/>, },
+            { path: "/configuracoesAdmin", element: <SettingsAdmin />, },
+        ]
+    },
 ]);
 
 export default function  Routes() {

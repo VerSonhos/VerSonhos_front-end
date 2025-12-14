@@ -1,19 +1,29 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import { FaHome, FaCalendarAlt } from "react-icons/fa";
 import { HiOutlineStatusOnline } from "react-icons/hi";
 import { FiLogOut } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
+import { IoArrowBackCircle } from "react-icons/io5";
 import { FaBars, FaBarsStaggered } from "react-icons/fa6";
+import { useAuth } from '@/context/AuthContext'
 import Logo from '../../assets/images/LogotipoFundoEscuro.png'
 import "./sidebarUser.css"
 
 export default function SideBarUser() {
     const [isOpen, setIsOpen] = useState(false);
+    const { logout, email, name } = useAuth();
+    const navigate = useNavigate();
+
 
     const toggleSidebar = () => {
       setIsOpen(!isOpen);
     };
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    }
 
     return (
         <header className={`sidebar fixed top-0 left-0 bg-tertiary shadow font-inter ${isOpen ? 'open' : ''}`}>
@@ -69,20 +79,30 @@ export default function SideBarUser() {
                     </Link>
                     <span className="tooltip">Configuração</span>
                 </li>
+
+                <li>
+                    <Link to={'/'} className="link">
+                        <div className='iconSideBar flex justify-center items-center'>
+                            <IoArrowBackCircle className='text-2xl' />
+                        </div>
+                        <span className="links-name">Voltar</span>
+                    </Link>
+                    <span className="tooltip">Voltar</span>
+                </li>
                 
                 <li className="profile bg-blue-800">
                     <div className="profile-details">
                         <div className="name-job">
                             <div className="name">
                                 <p className='font-fredoka font-semibold'>
-                                    Nome do Cliente
+                                    {name || email || 'Cliente'}
                                 </p>
                             </div>
                             <div className="job">Seja Bem-Vindo</div>
                         </div>
                     </div>
                     
-                    <div className='iconSideBar flex justify-center items-center cursor-pointer bg-blue-800' id="log-out">
+                    <div className='iconSideBar flex justify-center items-center cursor-pointer bg-blue-800' id="log-out" onClick={handleLogout}>
                         <FiLogOut className='text-2xl'/>
                     </div>
                 </li>

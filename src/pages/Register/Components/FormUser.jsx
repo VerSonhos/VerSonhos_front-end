@@ -10,7 +10,7 @@ import { applyMask } from "@/utils/masks";
 import { registerUsuario } from '@/services/registerService';
 import { useNavigate } from 'react-router-dom';
 import SuccessRegisterModal from "./SuccessRegisterModal";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "@/components/ErrorAlert/ErrorAlert";
 
 export default function FormUser() {
     const [formData, setFormData] = useState({
