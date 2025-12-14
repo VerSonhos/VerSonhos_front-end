@@ -78,7 +78,7 @@ export default function HomeUserAgendarVisita() {
   const prazoCancelamento = "48 horas";
 
   // ALTERAR PARA DEIXAR AUTOMATICO
-  const CURRENT_USER_ID = 5; 
+  const CURRENT_USER_ID = 1; 
 
 
   const converterDuracaoParaMinutos = (duracaoString) => {
