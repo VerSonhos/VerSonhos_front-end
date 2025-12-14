@@ -84,18 +84,24 @@ export default function FormWizard() {
     const validateStep = () => {
         const newErrors = {};
 
+        // Variável local para a senha (usada na Etapa 4)
+        const password = formData.passwordRegister.trim();
+        const confirmPassword = formData.passwordRegisterConfirm.trim();
+
         if (step === 1) {
             if (!formData.razaoSocial.trim()) newErrors.razaoSocial = 'Campo obrigatório';
             if (!formData.nomeFantasia.trim()) newErrors.nomeFantasia = 'Campo obrigatório';
             if (!formData.cnpj.trim()) newErrors.cnpj = 'Campo obrigatório';
             if (!formData.numeroInscricao.trim()) newErrors.numeroInscricao = 'Campo obrigatório';
         }
+        
         if (step === 2) {
             if (!formData.nomeRegister.trim()) newErrors.nomeRegister = 'Campo obrigatório';
             if (!formData.cargoRegister.trim()) newErrors.cargoRegister = 'Campo obrigatório';
             if (!formData.phoneRegister.trim()) newErrors.phoneRegister = 'Campo obrigatório';
             if (!formData.emailRegister.trim()) newErrors.emailRegister = 'Campo obrigatório';
         }
+        
         if (step === 3) {
             if (!formData.cepRegister.trim()) newErrors.cepRegister = 'Campo obrigatório';
             if (!formData.enderecoRegister.trim()) newErrors.enderecoRegister = 'Campo obrigatório';
@@ -103,18 +109,38 @@ export default function FormWizard() {
             if (!formData.setorRegister.trim()) newErrors.setorRegister = 'Campo obrigatório';
             if (!formData.socialRegister.trim()) newErrors.socialRegister = 'Campo obrigatório';
         }
+        
         if (step === 4) {
-            if (!formData.passwordRegister.trim()) newErrors.passwordRegister = 'Campo obrigatório';
-            if (!formData.passwordRegisterConfirm.trim()) newErrors.passwordRegisterConfirm = 'Campo obrigatório';
+            // 1. Campos obrigatórios
+            if (!password) newErrors.passwordRegister = 'Campo obrigatório';
+            if (!confirmPassword) newErrors.passwordRegisterConfirm = 'Campo obrigatório';
+
+            // 2. VALIDAÇÃO DE COMPLEXIDADE DA SENHA (SÓ SE O CAMPO ESTIVER PREENCHIDO)
+            if (password) {
+                const minLength = 4;
+                // Regex para caracteres especiais
+                const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+                if (password.length < minLength) {
+                    newErrors.passwordRegister = `A senha deve ter no mínimo ${minLength} caracteres.`;
+                } else if (!specialCharRegex.test(password)) {
+                    newErrors.passwordRegister = 'A senha deve conter pelo menos um caractere especial (ex: @, #, $).';
+                }
+            }
+            
+            // 3. Validação de Confirmação (só verifica se as senhas coincidem, se o campo principal não tiver erro de complexidade)
             if (
-                formData.passwordRegister.trim() &&
-                formData.passwordRegisterConfirm.trim() &&
-                formData.passwordRegister !== formData.passwordRegisterConfirm
+                password &&
+                confirmPassword &&
+                password !== confirmPassword &&
+                !newErrors.passwordRegister // Verifica se já existe um erro mais prioritário
             ) 
             {
                 newErrors.passwordRegister = 'As senhas não coincidem';
                 newErrors.passwordRegisterConfirm = 'As senhas não coincidem';
             }
+            
+            // 4. Outros campos obrigatórios da Etapa 4
             if (!formData.objetivoRegister.trim()) newErrors.objetivoRegister = 'Campo obrigatório';
             if (!formData.termosLgpd) newErrors.termosLgpd = 'Campo obrigatório';
         }

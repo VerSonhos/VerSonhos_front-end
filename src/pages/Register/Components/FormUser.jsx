@@ -46,20 +46,44 @@ export default function FormUser() {
     const validateStep = () => {
         const newErrors = {};
 
+        // Variável local para a senha
+        const password = formData.passwordRegister.trim();
+        const confirmPassword = formData.passwordRegisterConfirm.trim();
+
+        // 1. Validação de campos obrigatórios
         if (!formData.nomeRegister.trim()) newErrors.nomeRegister = 'Campo obrigatório';
         if (!formData.phoneRegister.trim()) newErrors.phoneRegister = 'Campo obrigatório';
         if (!formData.emailRegister.trim()) newErrors.emailRegister = 'Campo obrigatório';
-        if (!formData.passwordRegister.trim()) newErrors.passwordRegister = 'Campo obrigatório';
-        if (!formData.passwordRegisterConfirm.trim()) newErrors.passwordRegisterConfirm = 'Campo obrigatório';
+        if (!password) newErrors.passwordRegister = 'Campo obrigatório';
+        if (!confirmPassword) newErrors.passwordRegisterConfirm = 'Campo obrigatório';
+
+        // 2. VALIDAÇÃO DE COMPLEXIDADE DA SENHA (SÓ SE O CAMPO ESTIVER PREENCHIDO)
+        if (password) {
+            const minLength = 4;
+            // Expressão Regular: Garante que haja pelo menos um caractere não alfanumérico
+            // Lista de caracteres especiais comuns: !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?
+            const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/; 
+
+            if (password.length < minLength) {
+                newErrors.passwordRegister = `A senha deve ter no mínimo ${minLength} caracteres.`;
+            } else if (!specialCharRegex.test(password)) {
+                newErrors.passwordRegister = 'A senha deve conter pelo menos um caractere especial (ex: @, #, $).';
+            }
+        }
+        
+        // 3. Validação de Confirmação (só verifica se as senhas coincidem se as duas não tiverem erros críticos)
         if (
-            formData.passwordRegister.trim() &&
-            formData.passwordRegisterConfirm.trim() &&
-            formData.passwordRegister !== formData.passwordRegisterConfirm
+            password &&
+            confirmPassword &&
+            password !== confirmPassword &&
+            !newErrors.passwordRegister // Evita mostrar a mensagem "não coincidem" se já houver um erro de complexidade
         ) 
         {
             newErrors.passwordRegister = 'As senhas não coincidem';
             newErrors.passwordRegisterConfirm = 'As senhas não coincidem';
         }
+        
+        // 4. Validação dos termos
         if (!formData.termosLgpd) newErrors.termosLgpd = 'Campo obrigatório';
 
         setErrors(newErrors);
