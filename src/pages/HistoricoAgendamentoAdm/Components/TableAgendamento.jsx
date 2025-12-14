@@ -1,15 +1,8 @@
-// TableAgendamento.jsx (ou o nome do seu novo componente de listagem)
-
 import React, { useState, useEffect, useMemo } from "react";
 import { FaEllipsisV } from "react-icons/fa";
-// Importe apenas a função de busca, pois o objetivo é SÓ VISUALIZAR
 import { buscarTodosAgendamentos } from '../../../services/agendamentoService'; 
 
 
-// ==============================================================
-// MAPAS DE STATUS E COMPONENTE STATUS BADGE
-// Mapeia o status do Backend para a label e cor de exibição
-// ==============================================================
 const STATUS_MAP = {
     PENDENTE: { label: "Pendente", color: "bg-yellow-500" },
     CONFIRMADO: { label: "Confirmado", color: "bg-green-500" }, 
@@ -17,11 +10,10 @@ const STATUS_MAP = {
     CONCLUIDO: { label: "Concluído", color: "bg-green-700" }, 
     CANCELADO: { label: "Cancelada", color: "bg-red-700" }, 
     EXPIRADO: { label: "Expirada", color: "bg-gray-400" },
-    AGUARDANDO_APROVACAO: { label: "Pendente", color: "bg-yellow-500" }, // Trata status pendente
+    AGUARDANDO_APROVACAO: { label: "Pendente", color: "bg-yellow-500" },
 };
 
 const StatusBadge = ({ status }) => {
-    // Busca a informação correta, se o status for desconhecido, usa um padrão cinza.
     const info = STATUS_MAP[status] || { label: status, color: 'bg-gray-400' };
 
     return (
@@ -33,9 +25,6 @@ const StatusBadge = ({ status }) => {
     );
 };
 
-// ==============================================================
-// COMPONENTE PRINCIPAL (Substitui RequestsAdm, sem a lógica de status)
-// ==============================================================
 
 export default function TableAgendamento() {
     const [isMounted, setIsMounted] = useState(false);
@@ -46,22 +35,18 @@ export default function TableAgendamento() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
-    // Filtros simplificados (se não quiser filtros, pode remover esse bloco)
     const [filterTerm, setFilterTerm] = useState({
         searchText: '',
         status: 'Todos',
         date: '',
     });
 
-    // Função de busca de agendamentos - Adaptada do seu código, usa o agendamentoService
     const fetchAgendamentos = async () => {
         setLoading(true);
         setError(null);
         try {
-            // Usa a função do seu serviço, que já deve estar configurada com a URL da API
             const data = await buscarTodosAgendamentos(); 
             
-            // Mapeamento dos dados para o formato de exibição
             const mappedData = data.map(item => {
                 const dataParts = item.dataAgendada.split('-'); 
                 const dataFormatada = `${dataParts[2]}/${dataParts[1]}/${dataParts[0]}`;
@@ -75,10 +60,10 @@ export default function TableAgendamento() {
                     status: item.status, 
                     endereco: item.localVisita || 'Não informado',
                     idAgendamento: item.idAgendamento, 
-                    duracaoVisita: item.duracaoVisita, // Adicionado para exibição no Modal
-                    qtdePacientes: item.qtdePacientes, // Adicionado para exibição no Modal
-                    observacoes: item.observacoes, // Adicionado para exibição no Modal
-                    cpf: item.cpf, // Adicionado para exibição no Modal
+                    duracaoVisita: item.duracaoVisita,
+                    qtdePacientes: item.qtdePacientes,
+                    observacoes: item.observacoes,
+                    cpf: item.cpf,
                 };
             });
             
@@ -86,7 +71,6 @@ export default function TableAgendamento() {
 
         } catch (err) {
             console.error("Erro ao buscar agendamentos:", err);
-            // Mensagem de erro que indica o problema de conexão
             setError("Falha ao carregar agendamentos. (Provável erro de CORS/Conexão com a API)");
             setTabelaData([]);
         } finally {
@@ -98,10 +82,6 @@ export default function TableAgendamento() {
         fetchAgendamentos(); 
         setIsMounted(true); 
     }, []); 
-
-    // ==============================================================
-    // LÓGICA DE MODAL (Visualização de Detalhes)
-    // ==============================================================
 
     const abrirModal = (item) => {
         setItemSelecionado(item);
@@ -119,24 +99,19 @@ export default function TableAgendamento() {
         }, 300);
     };
     
-    // ==============================================================
-    // FILTROS (useMemo)
-    // ==============================================================
     const filteredData = useMemo(() => {
         return tabelaData.filter(item => {
             const searchLower = filterTerm.searchText.toLowerCase();
             
-            // Mapeamento do status de exibição para o status real do backend
             const filterStatusBackend = Object.keys(STATUS_MAP).find(key => STATUS_MAP[key].label === filterTerm.status) || filterTerm.status;
 
             if (filterTerm.status !== 'Todos') {
-                 // Lógica para PENDENTE, que pode ser PENDENTE ou AGUARDANDO_APROVACAO
-                 if (filterTerm.status === 'Pendente' && item.status !== 'PENDENTE' && item.status !== 'AGUARDANDO_APROVACAO') return false;
-                 // Outros status
-                 if (filterTerm.status === 'Confirmado' && item.status !== 'CONFIRMADO') return false; 
-                 if (filterTerm.status === 'Recusado' && item.status !== 'REPROVADO') return false; 
-                 if (filterTerm.status === 'Concluído' && item.status !== 'CONCLUIDO') return false; 
-                 if (filterTerm.status === 'Cancelada' && item.status !== 'CANCELADO') return false;
+                if (filterTerm.status === 'Pendente' && item.status !== 'PENDENTE' && item.status !== 'AGUARDANDO_APROVACAO') return false;
+                if (filterTerm.status === 'Confirmado' && item.status !== 'CONFIRMADO') return false; 
+                if (filterTerm.status === 'Recusado' && item.status !== 'REPROVADO') return false; 
+                if (filterTerm.status === 'Concluído' && item.status !== 'CONCLUIDO') return false; 
+                if (filterTerm.status === 'Cancelada' && item.status !== 'CANCELADO') return false;
+                if (filterTerm.status === 'Expirada' && item.status !== 'EXPIRADO') return false;
             }
 
             if (filterTerm.date && item.data !== filterTerm.date) {
@@ -155,14 +130,9 @@ export default function TableAgendamento() {
         }).sort((a, b) => new Date(a.data) - new Date(b.data)); 
     }, [tabelaData, filterTerm]);
 
-    // ==============================================================
-    // RENDERIZAÇÃO
-    // ==============================================================
-
     return (
         <div className="p-4 sm:p-6 bg-transparent">
             
-            {/* Bloco de Erro */}
             {error && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
                     <strong className="font-bold">Erro de API:</strong>
@@ -170,12 +140,10 @@ export default function TableAgendamento() {
                 </div>
             )}
 
-            {/* Bloco de Carregamento */}
             {loading ? (
                 <p className="text-center text-blue-500 py-10">Carregando todos os agendamentos para visualização...</p>
             ) : (
                 <>
-                    {/* Bloco de Filtros (Se quiser manter) */}
                     <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-6 font-fredoka">
                         <h3 className="text-lg font-bold text-thirteenth-500 mb-4">Filtrar Agendamentos</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -220,7 +188,6 @@ export default function TableAgendamento() {
                         </div>
                     </div>
 
-                    {/* Tabela para telas grandes */}
                     <div className="hidden sm:block overflow-x-auto w-full">
                         <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md font-fredoka">
                             <thead className="bg-thirteenth-500 text-white">
@@ -260,7 +227,6 @@ export default function TableAgendamento() {
                         </table>
                     </div>
                     
-                    {/* Cards para telas pequenas */}
                     <div className="sm:hidden space-y-4 font-fredoka">
                         {filteredData.length > 0 ? (
                             filteredData.map((item) => (
@@ -303,7 +269,6 @@ export default function TableAgendamento() {
                         )}
                     </div>
                     
-                    {/* Modal de Detalhes (Visualização) */}
                     {isMounted && itemSelecionado && (
                         <div 
                             onClick={fecharModal}
@@ -359,12 +324,12 @@ export default function TableAgendamento() {
                                         <p className="font-semibold text-gray-700">Duração Estimada</p>
                                         <p className="text-gray-900">{itemSelecionado?.duracaoVisita} minutos</p>
                                     </div>
-              
+                            
                                     <div>
                                         <p className="font-semibold text-gray-700">Nº de Pacientes</p>
                                         <p className="text-gray-900">{itemSelecionado?.qtdePacientes}</p>
                                     </div>
-              
+                            
                                     {itemSelecionado?.observacoes && (
                                         <div>
                                             <p className="font-semibold text-gray-700">Observações</p>
@@ -377,7 +342,6 @@ export default function TableAgendamento() {
                                     <p className="font-semibold text-gray-700 text-sm mb-2">Status Atual</p>
                                     <StatusBadge status={itemSelecionado?.status} />
                                 </div>
-                                {/* REMOVIDOS: Botões de Confirmar/Recusar e modais de Confirmação/Resultado */}
                             </div>
                         </div>
                     )}
