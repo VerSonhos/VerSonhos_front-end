@@ -3,7 +3,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import { FaEllipsisV, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
 import { Link } from "react-router-dom";
-
 import { buscarTodosAgendamentos, atualizarStatusAgendamento } from '../../services/agendamentoService';
 
 
@@ -37,6 +36,103 @@ const StatusBadge = ({ status }) => {
     );
 };
 
+const ConfirmationModal = ({ 
+    isOpen, 
+    onClose, 
+    onConfirm, 
+    solicitacaoId,
+    statusNovo
+}) => {
+    if (!isOpen) return null;
+
+    const statusLabel = STATUS_MAP[statusNovo]?.label || statusNovo;
+    const corConfirmar = statusNovo === 'CONFIRMADO' ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600';
+    const textoConfirmar = statusNovo === 'CONFIRMADO' ? 'Confirmar' : 'Recusar';
+
+    return (
+        <div 
+            onClick={onClose} 
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4 transition-opacity duration-300"
+        >
+            <div 
+                onClick={(e) => e.stopPropagation()} 
+                className="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm transform transition-all duration-300 font-inter"
+            >
+                <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">
+                    Confirmação de Status
+                </h3>
+                
+                <p className="text-gray-700 mb-6 text-center">
+                    Tem certeza que deseja mudar o status da solicitação {solicitacaoId} para {statusLabel}?
+                </p>
+
+                <div className="flex justify-end gap-3">
+                    
+                    <button 
+                        onClick={onConfirm}
+                        className={`px-4 py-2 text-white font-semibold rounded-lg transition ${corConfirmar}`}
+                    >
+                        {textoConfirmar}
+                    </button>
+
+                    <button 
+                        onClick={onClose}
+                        className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg transition hover:bg-gray-300 font-semibold"
+                    >
+                        Cancelar
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+const ResultModal = ({ isOpen, onClose, message, status, isError = false }) => {
+    if (!isOpen) return null;
+
+    const isSuccess = status === 'CONFIRMADO' || status === 'CONCLUIDO';
+    const bgColor = isError ? 'bg-red-500' : (isSuccess ? 'bg-green-500' : 'bg-blue-500'); 
+    const title = isError ? 'Erro' : (isSuccess ? 'Sucesso!' : 'Atenção!');
+    const icon = isError ? (
+        <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    ) : (
+        <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    );
+
+    return (
+        <div 
+            onClick={onClose} 
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4 transition-opacity duration-300"
+        >
+            <div 
+                onClick={(e) => e.stopPropagation()} 
+                className="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm transform transition-all duration-300 font-inter text-center"
+            >
+                <div className={`p-4 rounded-full w-20 h-20 mx-auto mb-4 ${bgColor} flex items-center justify-center`}>
+                    {icon}
+                </div>
+                
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {title}
+                </h3>
+                
+                <p className="text-gray-700 mb-6">
+                    {message}
+                </p>
+
+                <button 
+                    onClick={onClose}
+                    className="w-full px-4 py-2 text-white font-semibold rounded-lg transition bg-blue-500 hover:bg-blue-600"
+                >
+                    OK
+                </button>
+            </div>
+        </div>
+    );
+};
+
 
 const SimpleCalendar = ({ dadosEventos }) => {
     const [currentDate, setCurrentDate] = useState(new Date()); 
@@ -61,7 +157,7 @@ const SimpleCalendar = ({ dadosEventos }) => {
         const dataString = `${year}-${mesFormatado}-${diaFormatado}`;
         
         const eventosVisiveis = dadosEventos.filter(d => 
-            d.data === dataString && (d.status === "PENDENTE" || d.status === "CONFIRMADO")
+            d.data === dataString && (d.status === "PENDENTE" || d.status === "CONFIRMADO" || d.status === "AGUARDANDO_APROVACAO")
         );
 
         if (eventosVisiveis.length === 0) {
@@ -71,7 +167,7 @@ const SimpleCalendar = ({ dadosEventos }) => {
         const isConfirmado = eventosVisiveis.some(d => d.status === "CONFIRMADO"); 
         
         const confirmedColor = STATUS_MAP["CONFIRMADO"]?.color || corStatus["Confirmado"];
-        const pendingColor = STATUS_MAP["AGUARDANDO_APROVACAO"]?.color || corStatus["Pendente"];
+        const pendingColor = STATUS_MAP["PENDENTE"]?.color || corStatus["Pendente"]; 
 
         return isConfirmado ? confirmedColor : pendingColor;
     };
@@ -127,6 +223,15 @@ export default function RequestsAdm() {
         date: '',
     });
 
+    const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+    const [acaoPendente, setAcaoPendente] = useState(null);
+
+    const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+    const [resultModalMessage, setResultModalMessage] = useState('');
+    const [resultModalStatus, setResultModalStatus] = useState('');
+    const [resultModalIsError, setResultModalIsError] = useState(false);
+
+
     const fetchAgendamentos = async () => {
         setLoading(true);
         setError(null);
@@ -167,7 +272,7 @@ export default function RequestsAdm() {
 
     const abrirModal = (item) => {
         setItemSelecionado(item);
-        setIsMounted(true);
+        setIsMounted(true); 
         document.body.style.overflow = "hidden";
         setTimeout(() => setIsVisible(true), 20);
     };
@@ -180,32 +285,56 @@ export default function RequestsAdm() {
             setItemSelecionado(null);
         }, 300);
     };
-
-    const handleStatusChange = async (newStatus) => {
+    
+    const abrirConfirmacao = (statusNovo) => {
         if (!itemSelecionado) return;
         
-        const idNumerico = itemSelecionado.idAgendamento; 
-
-        const statusLabel = STATUS_MAP[newStatus]?.label || newStatus;
-
-        if (!window.confirm(`Tem certeza que deseja mudar o status da solicitação ${itemSelecionado.id} para ${statusLabel}?`)) {
-            return;
-        }
-
-        let motivo = null; 
+        setAcaoPendente({ 
+            statusNovo: statusNovo, 
+            idNumerico: itemSelecionado.idAgendamento,
+            idExibicao: itemSelecionado.id
+        });
         
+        fecharModal(); 
+        
+        setIsConfirmationOpen(true);
+    };
+
+    const executarStatusChange = async () => {
+        if (!acaoPendente) return;
+        
+        const { idNumerico, statusNovo, idExibicao } = acaoPendente;
+        
+        setIsConfirmationOpen(false); 
+        setAcaoPendente(null);
+
+        const statusLabel = STATUS_MAP[statusNovo]?.label || statusNovo;
+
         try {
-            await atualizarStatusAgendamento(idNumerico, newStatus, motivo);
-            
-            alert(`Status do agendamento ${itemSelecionado.id} atualizado para ${statusLabel} com sucesso.`);
+            await atualizarStatusAgendamento(idNumerico, statusNovo, null); 
             
             await fetchAgendamentos(); 
 
-            fecharModal();
+            setResultModalMessage(`Status do agendamento ${idExibicao} atualizado para ${statusLabel} com sucesso.`);
+            setResultModalStatus(statusNovo);
+            setResultModalIsError(false);
+            setIsResultModalOpen(true);
+
         } catch (error) {
             console.error("Erro na atualização de status:", error);
-            alert("Falha ao atualizar o status. Verifique o servidor."); 
+            
+            setResultModalMessage(`Falha ao atualizar o status do agendamento ${idExibicao}. Tente novamente.`);
+            setResultModalStatus(statusNovo); 
+            setResultModalIsError(true);
+            setIsResultModalOpen(true);
         }
+    };
+
+
+    const handleStatusChange = (newStatus) => {
+          if (!itemSelecionado) return;
+          
+          abrirConfirmacao(newStatus);
     };
 
 
@@ -215,8 +344,8 @@ export default function RequestsAdm() {
             
             const filterStatusBackend = Object.keys(STATUS_MAP).find(key => STATUS_MAP[key].label === filterTerm.status) || filterTerm.status;
 
-            if (filterTerm.status !== 'Todos' && item.status !== filterStatusBackend) {
-                 if (filterTerm.status === 'Pendente' && item.status !== 'AGUARDANDO_APROVACAO') return false;
+            if (filterTerm.status !== 'Todos') {
+                 if (filterTerm.status === 'Pendente' && item.status !== 'PENDENTE' && item.status !== 'AGUARDANDO_APROVACAO') return false;
                  if (filterTerm.status === 'Confirmado' && item.status !== 'CONFIRMADO') return false; 
                  if (filterTerm.status === 'Recusado' && item.status !== 'REPROVADO') return false; 
                  if (filterTerm.status === 'Concluído' && item.status !== 'CONCLUIDO') return false; 
@@ -259,6 +388,7 @@ export default function RequestsAdm() {
                     <p className='text-xl text-black-custom-400 font-semibold mt-2'>Gerencie as solicitações de agendamento da <span className='font-bold text-quintenary'>VerSonhos</span>.</p>
                 </section>
                 
+
                 {error && (
                     <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
                         <strong className="font-bold">Erro de API:</strong>
@@ -314,7 +444,6 @@ export default function RequestsAdm() {
                                 </div>
                             </div>
                         </div>
-
 
                         <div className="hidden sm:block overflow-x-auto w-full">
                             <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md font-fredoka">
@@ -397,7 +526,6 @@ export default function RequestsAdm() {
                             )}
                         </div>
 
-                        
                         {isMounted && itemSelecionado && (
                             <div 
                                 onClick={fecharModal}
@@ -479,6 +607,26 @@ export default function RequestsAdm() {
                     </>
                 )}
             </div>
+
+            {isConfirmationOpen && acaoPendente && (
+                <ConfirmationModal 
+                    isOpen={isConfirmationOpen}
+                    onClose={() => setIsConfirmationOpen(false)}
+                    onConfirm={executarStatusChange}
+                    solicitacaoId={acaoPendente.idExibicao}
+                    statusNovo={acaoPendente.statusNovo}
+                />
+            )}
+
+            {isResultModalOpen && (
+                <ResultModal
+                    isOpen={isResultModalOpen}
+                    onClose={() => setIsResultModalOpen(false)}
+                    message={resultModalMessage}
+                    status={resultModalStatus}
+                    isError={resultModalIsError}
+                />
+            )}
         </DashboardLayoutAdmin>
     );
 }
