@@ -4,7 +4,7 @@ const API_KEYS = [
   process.env.GROQ_API_KEY,
   process.env.GROQ_API_KEY_2,
   process.env.GROQ_API_KEY_3,
-  process.env.GROQ_API_KEY_4,
+
 ].filter(Boolean);
 
 function validarResposta(text) {
