@@ -38,15 +38,16 @@ export default function SettingsUser() {
         loadProfile();
     }, []);
 
-    const handleSelectTab = (tab) => {
-        setActiveTab(tab);
-    };
-
+    
     const hasCompany = profileData ? !!profileData.empresa : false;
-
+    
     if (isLoading) {
         return <DashboardLayoutUser><p className='p-6'>Carregando configurações...</p></DashboardLayoutUser>;
     }
+    
+    const handleSelectTab = (tab) => {
+        setActiveTab(tab);
+    };
 
     return (
         <>
