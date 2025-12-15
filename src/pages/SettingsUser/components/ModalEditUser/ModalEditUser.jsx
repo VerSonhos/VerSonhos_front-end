@@ -1,14 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FiEdit } from "react-icons/fi";
+import { applyMask } from "@/utils/masks";
 
-export default function ModalEditUser({ dialogTitle, label, typeInput='text', initialValue, onSave, icon: IconComponent }) {
-    const [newValue, setNewValue] = useState(initialValue);
+export default function ModalEditUser({ dialogTitle, label, typeInput='text', initialValue, onSave, icon: IconComponent, maskType }) {
+    const [newValue, setNewValue] = useState(maskType ? applyMask(initialValue, maskType) : initialValue); 
     const [isOpen, setIsOpen] = useState(false);
 
+    useEffect(() => {
+        setNewValue(maskType ? applyMask(initialValue, maskType) : initialValue);
+    }, [initialValue, maskType]);
+
+    const handleChange = (e) => {
+        const { value } = e.target;
+        
+        let maskedValue = value;
+        if (maskType) {
+            maskedValue = applyMask(value, maskType); // <--- APLICA A MÁSCARA AO DIGITAR
+        }
+        
+        setNewValue(maskedValue);
+    };
+
     const handleSave = () => {
-        onSave(newValue);
+        // Se houver máscara, removemos caracteres não numéricos antes de salvar (se for o caso de phone, cnpj, cep)
+        let valueToSave = newValue;
+        if (maskType && ['phone', 'cnpj', 'cep', 'ie'].includes(maskType)) {
+             // Esta regex remove todos os caracteres que não são dígitos (0-9)
+            valueToSave = newValue.replace(/\D/g, ''); 
+        }
+        
+        onSave(valueToSave);
         setIsOpen(false); 
     };
 
@@ -39,9 +62,9 @@ export default function ModalEditUser({ dialogTitle, label, typeInput='text', in
                             name="edit-input" 
                             type={typeInput} 
                             value={newValue}
-                            onChange={(e) => setNewValue(e.target.value)}
+                            onChange={handleChange}
                             placeholder={`Digite o novo ${label.toLowerCase()}`}
-                            className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ${IconComponent ? 'ps-9' : 'ps-4'}`} 
+                            className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ${IconComponent ? 'ps-9' : 'ps-4'}`}
                         />
                     </div>
                     <DialogDescription className="text-sm mt-1 text-gray-500">
@@ -57,7 +80,7 @@ export default function ModalEditUser({ dialogTitle, label, typeInput='text', in
                     <Button 
                         className="cursor-pointer bg-tertiary text-white hover:bg-blue-600 transition"
                         onClick={handleSave}
-                        disabled={newValue === initialValue || !newValue.trim()}
+                        disabled={!newValue.trim() || newValue === (maskType ? applyMask(initialValue, maskType) : initialValue)}
                     >
                         Salvar Alterações
                     </Button>

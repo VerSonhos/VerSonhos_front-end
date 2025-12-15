@@ -1,22 +1,31 @@
-import ModalEditUser from "../ModalEditAdmin/ModalEditAdmin"
+import ModalEditAdmin from "../ModalEditAdmin/ModalEditAdmin"
 import { IoIosMail } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { HiInformationCircle } from "react-icons/hi";
+import SuccessAlert from '@/components/SuccessAlert/SuccessAlert';
 
-const FormPerfil = () => (
+const FormPerfil = ({ dataAdmin, handleSaveAdmin }) => ( 
     <>
         <div className='w-full flex flex-col items-start justify-center gap-2'>
             <label htmlFor="usuario" className='text-black-custom-500 font-semibold'>Usuário:</label>
             
             <div className='w-full flex relative'>
                 <FaUser className='text-xl text-black-custom-400 absolute left-2 top-2.5'/>
-                <input type="text" placeholder='Digite...' disabled name="usuario" id="usuario" className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4`} />
-                <ModalEditUser
+                <input 
+                    type="text" 
+                    placeholder='Digite...' 
+                    disabled 
+                    name="usuario" 
+                    id="usuario" 
+                    value={dataAdmin?.usuario || ''}
+                    className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4`} 
+                />
+                <ModalEditAdmin
                     dialogTitle="Editar nome de usuário"
                     label="Novo nome de usuário:"
-                    initialValue={"Valor inicial fornecido pela API"}
-                    onSave={"Função para salvar valor"}
+                    initialValue={dataAdmin?.usuario || ''}
+                    onSave={(newValue) => handleSaveAdmin('usuario', newValue)}
                     icon={FaUser}
                 />
             </div>
@@ -27,13 +36,21 @@ const FormPerfil = () => (
             
             <div className='w-full flex relative'>
                 <IoIosMail className='text-xl text-black-custom-400 absolute left-2 top-2.5'/>
-                <input type="text" placeholder='Digite...' disabled name="emailEdit" id="emailEdit" className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4`} />
-                <ModalEditUser
+                <input 
+                    type="text" 
+                    placeholder='Digite...' 
+                    disabled 
+                    name="emailEdit" 
+                    id="emailEdit" 
+                    value={dataAdmin?.email || ''}
+                    className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4`} 
+                />
+                <ModalEditAdmin
                     dialogTitle="Editar e-mail"
                     label="Novo e-mail:"
                     typeInput="email"
-                    initialValue={"Valor inicial fornecido pela API"}
-                    onSave={"Função para salvar valor"}
+                    initialValue={dataAdmin?.email || ''}
+                    onSave={(newValue) => handleSaveAdmin('email', newValue)}
                     icon={IoIosMail}
                 />
             </div>
@@ -41,20 +58,28 @@ const FormPerfil = () => (
     </>
 );
 
-const FormSeguranca = () => (
+const FormSeguranca = ({ handleSaveAdmin }) => (
     <>
         <div className='w-full flex flex-col items-start justify-center gap-2'>
             <label htmlFor="senhaEdit" className='text-black-custom-500 font-semibold'>Senha:</label>
             
             <div className='w-full flex relative'>
                 <RiLockPasswordFill className='text-xl text-black-custom-400 absolute left-2 top-2.5'/>
-                <input type="text" placeholder='*************' disabled name="senhaEdit" id="senhaEdit" className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4`} />
-                <ModalEditUser
+                <input 
+                    type="password" 
+                    placeholder='*************' 
+                    disabled 
+                    name="senhaEdit" 
+                    id="senhaEdit" 
+                    value="*************"
+                    className={`bg-gray-100 border-2 border-gray-300 focus:border-tertiary outline-0 focus:shadow-tertiary transition ease-in-out rounded-md w-full py-1.5 ps-9 pe-4`} 
+                />
+                <ModalEditAdmin
                     dialogTitle="Editar senha"
                     label="Nova senha:"
                     typeInput="password"
                     initialValue={"**********"}
-                    onSave={"Função para salvar valor"}
+                    onSave={(newValue) => handleSaveAdmin('senha', newValue)}
                     icon={RiLockPasswordFill}
                 />
             </div>
@@ -62,7 +87,7 @@ const FormSeguranca = () => (
     </>
 );
 
-const SectionConta = () => (
+const SectionConta = ({ handleRevogation }) => ( // Adicionando prop para a função de revogação
     <>
         <div className="flex flex-col gap-2 px-4 font-inter">
             <div className="border-b pb-4">
@@ -93,6 +118,7 @@ const SectionConta = () => (
                 <button
                     className="bg-red-600 text-white px-6 py-2 rounded-lg font-medium shadow-md transition hover:bg-red-900 boder-0 focus:outline-none border-0 cursor-pointer w-full sm:w-auto"
                     type="button"
+                    onClick={handleRevogation} // Função para iniciar o processo de exclusão
                 >
                     Confirmar Revogação e Exclusão (Administrador)
                 </button>
@@ -101,18 +127,21 @@ const SectionConta = () => (
     </>
 );
 
-export default function FormSettingsUser({ activeItem }) {
+export default function FormSettingsUser({ activeItem, dataAdmin, handleSaveAdmin, handleRevogation }) {
     let ConteudoAtual;
 
     switch (activeItem) {
         case 'Meu perfil':
-            ConteudoAtual = <FormPerfil />;
+            // 🛑 dataAdmin e handleSaveAdmin já estão sendo passados
+            ConteudoAtual = <FormPerfil dataAdmin={dataAdmin} handleSaveAdmin={handleSaveAdmin} />;
             break;
         case 'Segurança':
-            ConteudoAtual = <FormSeguranca />;
+            // 🛑 handleSaveAdmin já está sendo passado
+            ConteudoAtual = <FormSeguranca handleSaveAdmin={handleSaveAdmin} />;
             break;
         case 'Conta':
-            ConteudoAtual = <SectionConta />
+            // 🛑 handleRevogation está sendo passado
+            ConteudoAtual = <SectionConta handleRevogation={handleRevogation} />
             break;
         default:
             ConteudoAtual = <p>Selecione uma opção nas configurações.</p>;

@@ -3,8 +3,8 @@ import { FaUser } from "react-icons/fa";
 import { MdOutlineSecurity, MdOutlineWork } from "react-icons/md";
 import { BiSolidUserAccount } from "react-icons/bi";
 
-export default function NavSettings({ activeItem, onSelect }) {
-    const itens = [
+export default function NavSettings({ activeItem, onSelect, hasCompany }) {
+    const itensCompletos = [
         {
             id: 1,
             title: "Meu perfil",
@@ -15,6 +15,7 @@ export default function NavSettings({ activeItem, onSelect }) {
             id: 2,
             title: "Empresa",
             icon: <MdOutlineWork />,
+            isCompanyItem: true,
         },
 
         {
@@ -30,6 +31,14 @@ export default function NavSettings({ activeItem, onSelect }) {
         },
     ]
 
+    const itensRenderizados = itensCompletos.filter(item => 
+        !item.isCompanyItem || hasCompany
+    );
+
+    if (!hasCompany && activeItem === 'Empresa') {
+        onSelect('Meu perfil');
+    }
+
     return (
         <article className="w-full md:w-[35%] border-0 shadow-custom-sm rounded-lg">
             <h2 className="w-full flex items-center bg-tertiary py-2 px-3 gap-2 text-white text-2xl font-fredoka font-medium rounded-t-md">
@@ -38,7 +47,7 @@ export default function NavSettings({ activeItem, onSelect }) {
             </h2>
 
             <div className="py-5 px-3 flex flex-col gap-5 font-inter">
-                {itens.map(item => (
+                {itensRenderizados.map(item => (
                     <div
                         key={item.id}
                         className={`${activeItem === item.title ? 'active' : ''} flex items-center gap-3 text-xl font-medium text-black-custom-400 cursor-pointer py-2 px-5 rounded-md hover:bg-tertiary hover:text-white transition`}
