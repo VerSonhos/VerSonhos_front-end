@@ -3,7 +3,6 @@ import instructions from "./instructions.js";
 const API_KEYS = [
   process.env.GROQ_API_KEY,
   process.env.GROQ_API_KEY_2,
-  process.env.GROQ_API_KEY_3,
 
 ].filter(Boolean);
 
