@@ -4,7 +4,7 @@ import { FaEllipsisV, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
 import { Link } from "react-router-dom";
 import { buscarTodosAgendamentos, atualizarStatusAgendamento } from '../../services/agendamentoService';
-
+import { buscarNomeUsuarioPorId } from '../../services/usuarioService';
 
 const STATUS_MAP = {
     PENDENTE: { label: "Pendente", color: "bg-yellow-500" },
@@ -13,6 +13,12 @@ const STATUS_MAP = {
     CONCLUIDO: { label: "Concluído", color: "bg-green-700" }, 
     CANCELADO: { label: "Cancelada", color: "bg-red-700" }, 
     EXPIRADO: { label: "Expirada", color: "bg-gray-400" },
+    "Pendente": { label: "Pendente", color: "bg-yellow-500" },
+    "Confirmado": { label: "Confirmado", color: "bg-green-500" }, 
+    "Recusado": { label: "Recusado", color: "bg-red-500" },
+    "Concluído": { label: "Concluído", color: "bg-green-700" },
+    "Cancelada": { label: "Cancelada", color: "bg-red-700" }, 
+    "Expirada": { label: "Expirada", color: "bg-gray-400" },
 };
 
 const corStatus = {
@@ -25,7 +31,8 @@ const corStatus = {
 };
 
 const StatusBadge = ({ status }) => {
-    const info = STATUS_MAP[status] || { label: status, color: corStatus[status] || 'bg-gray-400' };
+    const statusKey = status === 'AGUARDANDO_APROVACAO' ? 'PENDENTE' : status;
+    const info = STATUS_MAP[statusKey] || { label: status, color: corStatus[status] || 'bg-gray-400' };
 
     return (
         <span
@@ -44,10 +51,22 @@ const ConfirmationModal = ({
     statusNovo
 }) => {
     if (!isOpen) return null;
+    const statusKey = statusNovo.toUpperCase();
+    const statusLabel = STATUS_MAP[statusKey]?.label || statusNovo;
+    
+    let corConfirmar = 'bg-blue-500 hover:bg-blue-600';
+    let textoConfirmar = 'Confirmar';
 
-    const statusLabel = STATUS_MAP[statusNovo]?.label || statusNovo;
-    const corConfirmar = statusNovo === 'CONFIRMADO' ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600';
-    const textoConfirmar = statusNovo === 'CONFIRMADO' ? 'Confirmar' : 'Recusar';
+    if (statusKey === 'CONFIRMADO') {
+        corConfirmar = 'bg-green-500 hover:bg-green-600';
+        textoConfirmar = 'Confirmar';
+    } else if (statusKey === 'REPROVADO') {
+        corConfirmar = 'bg-red-500 hover:bg-red-600';
+        textoConfirmar = 'Recusar';
+    } else if (statusKey === 'CANCELADO') {
+        corConfirmar = 'bg-red-700 hover:bg-red-800';
+        textoConfirmar = 'Cancelar';
+    }
 
     return (
         <div 
@@ -79,7 +98,7 @@ const ConfirmationModal = ({
                         onClick={onClose}
                         className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg transition hover:bg-gray-300 font-semibold"
                     >
-                        Cancelar
+                        Voltar
                     </button>
                     
                 </div>
@@ -88,13 +107,13 @@ const ConfirmationModal = ({
     );
 };
 
-
 const ResultModal = ({ isOpen, onClose, message, status, isError = false }) => {
     if (!isOpen) return null;
 
-    const isSuccess = status === 'CONFIRMADO' || status === 'CONCLUIDO';
+    const statusKey = status.toUpperCase();
+    const isSuccess = statusKey === 'CONFIRMADO' || statusKey === 'CONCLUIDO' || statusKey === 'CANCELADO' || statusKey === 'REPROVADO';
     const bgColor = isError ? 'bg-red-500' : (isSuccess ? 'bg-green-500' : 'bg-blue-500'); 
-    const title = isError ? 'Erro' : (isSuccess ? 'Sucesso!' : 'Atenção!');
+    const title = isError ? 'Erro' : 'Sucesso!';
     const icon = isError ? (
         <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
     ) : (
@@ -133,7 +152,6 @@ const ResultModal = ({ isOpen, onClose, message, status, isError = false }) => {
     );
 };
 
-
 const SimpleCalendar = ({ dadosEventos }) => {
     const [currentDate, setCurrentDate] = useState(new Date()); 
 
@@ -157,17 +175,17 @@ const SimpleCalendar = ({ dadosEventos }) => {
         const dataString = `${year}-${mesFormatado}-${diaFormatado}`;
         
         const eventosVisiveis = dadosEventos.filter(d => 
-            d.data === dataString && (d.status === "PENDENTE" || d.status === "CONFIRMADO" || d.status === "AGUARDANDO_APROVACAO")
+            d.data === dataString && (d.status === "Pendente" || d.status === "Confirmado" || d.status === "AGUARDANDO_APROVACAO" || d.status === "PENDENTE")
         );
 
         if (eventosVisiveis.length === 0) {
             return null;
         }
 
-        const isConfirmado = eventosVisiveis.some(d => d.status === "CONFIRMADO"); 
+        const isConfirmado = eventosVisiveis.some(d => d.status === "Confirmado" || d.status === "CONFIRMADO"); 
         
-        const confirmedColor = STATUS_MAP["CONFIRMADO"]?.color || corStatus["Confirmado"];
-        const pendingColor = STATUS_MAP["PENDENTE"]?.color || corStatus["Pendente"]; 
+        const confirmedColor = STATUS_MAP["Confirmado"]?.color || corStatus["Confirmado"];
+        const pendingColor = STATUS_MAP["Pendente"]?.color || corStatus["Pendente"]; 
 
         return isConfirmado ? confirmedColor : pendingColor;
     };
@@ -236,29 +254,51 @@ export default function RequestsAdm() {
         setLoading(true);
         setError(null);
         try {
-            const data = await buscarTodosAgendamentos();
+            const agendamentos = await buscarTodosAgendamentos(); 
             
-            const mappedData = data.map(item => {
+            const mappedDataPromises = agendamentos.map(async item => {
                 const dataParts = item.dataAgendada.split('-'); 
                 const dataFormatada = `${dataParts[2]}/${dataParts[1]}/${dataParts[0]}`;
+                const idUsuarioAgendamento = item.usuarioId; 
+                let nomeExibicao = 'Usuário Não Informado';
+                
+                if (idUsuarioAgendamento) {
+                    nomeExibicao = await buscarNomeUsuarioPorId(idUsuarioAgendamento);
+                }
+                
+                const duracao = item.duracaoVisita 
+                    ? `${item.duracaoVisita} minutos`
+                    : 'Não informada';
+                
+                const pacientes = (item.qtdePacientes !== null && item.qtdePacientes !== undefined && item.qtdePacientes !== "") 
+                    ? item.qtdePacientes
+                    : 'Não informado';
+                
+                const statusMapeado = item.status === "Pendente" ? "PENDENTE" : item.status;
+
 
                 return {
                     id: `#${item.idAgendamento}`,
-                    empresa: item.nomeEmpresa || 'Empresa Não Informada', 
+                    empresa: nomeExibicao, 
                     data: item.dataAgendada, 
                     dataExibicao: dataFormatada, 
                     horario: item.horario,
-                    status: item.status, 
+                    status: item.status,
                     endereco: item.localVisita || 'Não informado',
                     idAgendamento: item.idAgendamento, 
+                    duracaoEstimada: duracao, 
+                    numeroPacientes: pacientes, 
+                    observacoes: item.observacoes || null, 
                 };
             });
+            
+            const mappedData = await Promise.all(mappedDataPromises);
             
             setTabelaData(mappedData);
 
         } catch (err) {
             console.error("Erro ao buscar agendamentos:", err);
-            setError("Falha ao carregar agendamentos. Verifique o serviço de API.");
+            setError("Falha ao carregar agendamentos. Verifique o serviço de API e a busca de usuários.");
             setTabelaData([]);
         } finally {
             setLoading(false);
@@ -286,13 +326,24 @@ export default function RequestsAdm() {
         }, 300);
     };
     
+    const getApiStatus = (status) => {
+        if (status === "Pendente") return "PENDENTE";
+        if (status === "Recusado") return "REPROVADO";
+        if (status === "Confirmado") return "CONFIRMADO";
+        if (status === "Cancelada") return "CANCELADO";
+        if (status === "Concluído") return "CONCLUIDO";
+        return status.toUpperCase();
+    };
+
     const abrirConfirmacao = (statusNovo) => {
         if (!itemSelecionado) return;
-        
+        const statusParaAPI = getApiStatus(statusNovo);
+
         setAcaoPendente({ 
-            statusNovo: statusNovo, 
+            statusNovo: statusParaAPI, 
             idNumerico: itemSelecionado.idAgendamento,
-            idExibicao: itemSelecionado.id
+            idExibicao: itemSelecionado.id,
+            statusLabel: statusNovo
         });
         
         fecharModal(); 
@@ -303,12 +354,10 @@ export default function RequestsAdm() {
     const executarStatusChange = async () => {
         if (!acaoPendente) return;
         
-        const { idNumerico, statusNovo, idExibicao } = acaoPendente;
+        const { idNumerico, statusNovo, idExibicao, statusLabel } = acaoPendente;
         
         setIsConfirmationOpen(false); 
         setAcaoPendente(null);
-
-        const statusLabel = STATUS_MAP[statusNovo]?.label || statusNovo;
 
         try {
             await atualizarStatusAgendamento(idNumerico, statusNovo, null); 
@@ -316,7 +365,7 @@ export default function RequestsAdm() {
             await fetchAgendamentos(); 
 
             setResultModalMessage(`Status do agendamento ${idExibicao} atualizado para ${statusLabel} com sucesso.`);
-            setResultModalStatus(statusNovo);
+            setResultModalStatus(statusLabel);
             setResultModalIsError(false);
             setIsResultModalOpen(true);
 
@@ -324,7 +373,7 @@ export default function RequestsAdm() {
             console.error("Erro na atualização de status:", error);
             
             setResultModalMessage(`Falha ao atualizar o status do agendamento ${idExibicao}. Tente novamente.`);
-            setResultModalStatus(statusNovo); 
+            setResultModalStatus(statusLabel); 
             setResultModalIsError(true);
             setIsResultModalOpen(true);
         }
@@ -332,24 +381,21 @@ export default function RequestsAdm() {
 
 
     const handleStatusChange = (newStatus) => {
-          if (!itemSelecionado) return;
-          
-          abrirConfirmacao(newStatus);
+                 if (!itemSelecionado) return;
+                 
+                 abrirConfirmacao(newStatus);
     };
 
 
     const filteredData = useMemo(() => {
         return tabelaData.filter(item => {
             const searchLower = filterTerm.searchText.toLowerCase();
-            
-            const filterStatusBackend = Object.keys(STATUS_MAP).find(key => STATUS_MAP[key].label === filterTerm.status) || filterTerm.status;
-
             if (filterTerm.status !== 'Todos') {
-                 if (filterTerm.status === 'Pendente' && item.status !== 'PENDENTE' && item.status !== 'AGUARDANDO_APROVACAO') return false;
-                 if (filterTerm.status === 'Confirmado' && item.status !== 'CONFIRMADO') return false; 
-                 if (filterTerm.status === 'Recusado' && item.status !== 'REPROVADO') return false; 
-                 if (filterTerm.status === 'Concluído' && item.status !== 'CONCLUIDO') return false; 
-                 if (filterTerm.status === 'Cancelada' && item.status !== 'CANCELADO') return false;
+                if (filterTerm.status === 'Pendente' && item.status !== 'Pendente' && item.status !== 'AGUARDANDO_APROVACAO' && item.status !== 'PENDENTE') return false;
+                if (filterTerm.status === 'Confirmado' && item.status !== 'Confirmado' && item.status !== 'CONFIRMADO') return false; 
+                if (filterTerm.status === 'Recusado' && item.status !== 'Recusado' && item.status !== 'REPROVADO') return false; 
+                if (filterTerm.status === 'Concluído' && item.status !== 'Concluído' && item.status !== 'CONCLUIDO') return false; 
+                if (filterTerm.status === 'Cancelada' && item.status !== 'Cancelada' && item.status !== 'CANCELADO') return false;
             }
 
             if (filterTerm.date && item.data !== filterTerm.date) {
@@ -407,10 +453,10 @@ export default function RequestsAdm() {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Buscar (ID ou Empresa)</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Buscar (ID ou Usuário)</label>
                                     <input
                                         type="text"
-                                        placeholder="Buscar por ID ou Empresa"
+                                        placeholder="Buscar por ID ou Nome do Usuário"
                                         value={filterTerm.searchText}
                                         onChange={(e) => setFilterTerm({...filterTerm, searchText: e.target.value})}
                                         className="w-full p-2 border border-gray-300 rounded-lg focus:ring-thirteenth-500 focus:border-thirteenth-500"
@@ -450,7 +496,7 @@ export default function RequestsAdm() {
                                 <thead className="bg-thirteenth-500 text-white">
                                     <tr>
                                         <th className="py-3 px-4 text-left text-base">ID</th>
-                                        <th className="py-3 px-4 text-left text-base">Empresa</th>
+                                        <th className="py-3 px-4 text-left text-base">Usuário Solicitante</th> 
                                         <th className="py-3 px-4 text-left text-base">Data</th>
                                         <th className="py-3 px-4 text-left text-base">Status</th>
                                         <th className="py-3 px-4"></th>
@@ -461,7 +507,7 @@ export default function RequestsAdm() {
                                         filteredData.map((item, i) => (
                                             <tr key={item.id} className="border-b hover:bg-gray-100 transition">
                                                 <td className="py-3 px-4 text-base">{item.id}</td>
-                                                <td className="py-3 px-4 text-base">{item.empresa}</td>
+                                                <td className="py-3 px-4 text-base">{item.empresa}</td> 
                                                 <td className="py-3 px-4 text-base">{item.dataExibicao}</td> 
                                                 <td className="py-3 px-4">
                                                     <StatusBadge status={item.status} /> 
@@ -493,7 +539,7 @@ export default function RequestsAdm() {
                                     >
                                         <div className="flex justify-between items-start mb-2">
                                             <span className="text-sm xs:text-base font-bold text-thirteenth-500 break-words">
-                                                {item.empresa}
+                                                {item.empresa} 
                                             </span>
 
                                             <button
@@ -561,7 +607,7 @@ export default function RequestsAdm() {
 
                                     <div className="space-y-3 text-sm">
                                         <div>
-                                            <p className="font-semibold text-gray-700">Hospital/Empresa</p>
+                                            <p className="font-semibold text-gray-700">Usuário Solicitante</p> 
                                             <p className="text-gray-900 break-words">{itemSelecionado?.empresa}</p>
                                         </div>
 
@@ -576,6 +622,23 @@ export default function RequestsAdm() {
                                                 {itemSelecionado?.dataExibicao} - {itemSelecionado?.horario}
                                             </p>
                                         </div>
+
+                                        <div>
+                                            <p className="font-semibold text-gray-700">Duração Estimada</p>
+                                            <p className="text-gray-900">{itemSelecionado?.duracaoEstimada}</p>
+                                        </div>
+
+                                        <div>
+                                            <p className="font-semibold text-gray-700">Nº de Pacientes</p>
+                                            <p className="text-gray-900">{itemSelecionado?.numeroPacientes}</p>
+                                        </div>
+
+                                        {itemSelecionado?.observacoes && (
+                                            <div>
+                                                <p className="font-semibold text-gray-700">Observações</p>
+                                                <p className="text-gray-900 whitespace-pre-wrap break-words">{itemSelecionado.observacoes}</p>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="mt-4 pt-3 border-t border-gray-200 text-center">
@@ -585,48 +648,82 @@ export default function RequestsAdm() {
                                     
                                     <div className="mt-6 pt-4 border-t border-gray-200 text-center">
                                         <p className="font-semibold text-gray-700 text-sm sm:text-base mb-3">Mudar status para:</p>
+                                        
                                         <div className="flex justify-center space-x-2 sm:space-x-4">
-                                            <button 
-                                                onClick={() => handleStatusChange("CONFIRMADO")} 
-                                                className="py-2 px-3 sm:px-4 rounded-lg text-white font-bold transition-colors duration-200 bg-green-500 hover:bg-green-600 text-xs sm:text-sm"
-                                            >
-                                                Confirmar
-                                            </button>
-                                            <button 
-                                                onClick={() => handleStatusChange("REPROVADO")} 
-                                                className="py-2 px-3 sm:px-4 rounded-lg text-white font-bold transition-colors duration-200 bg-red-500 hover:bg-red-600 text-xs sm:text-sm"
-                                            >
-                                                Recusar
-                                            </button>
+                                            
+                                            {(itemSelecionado?.status === "Pendente" || itemSelecionado?.status === "AGUARDANDO_APROVACAO" || itemSelecionado?.status === "PENDENTE") && (
+                                                <>
+                                                    <button 
+                                                        onClick={() => handleStatusChange("Confirmado")}
+                                                        className="px-3 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 transition text-xs sm:text-sm"
+                                                    >
+                                                        Confirmar
+                                                    </button>
+                                                    <button 
+                                                        onClick={() => handleStatusChange("Recusado")}
+                                                        className="px-3 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 transition text-xs sm:text-sm"
+                                                    >
+                                                        Recusar
+                                                    </button>
+                                                </>
+                                            )}
+
+                                            {(itemSelecionado?.status === "Confirmado" || itemSelecionado?.status === "CONFIRMADO") && (
+                                                <>
+                                                    <button 
+                                                        onClick={() => handleStatusChange("Concluído")}
+                                                        className="px-3 py-2 text-white bg-green-700 rounded-lg hover:bg-green-800 transition text-xs sm:text-sm"
+                                                    >
+                                                        Concluir
+                                                    </button>
+                                                    <button 
+                                                        onClick={() => handleStatusChange("Cancelada")}
+                                                        className="px-3 py-2 text-white bg-red-700 rounded-lg hover:bg-red-800 transition text-xs sm:text-sm"
+                                                    >
+                                                        Cancelar
+                                                    </button>
+                                                </>
+                                            )}
+
+                                            {(itemSelecionado?.status === "Pendente" || itemSelecionado?.status === "AGUARDANDO_APROVACAO" || itemSelecionado?.status === "PENDENTE") && (
+                                                <button 
+                                                    onClick={() => handleStatusChange("Cancelada")}
+                                                    className="px-3 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition text-xs sm:text-sm"
+                                                >
+                                                    Cancelar
+                                                </button>
+                                            )}
+                                            
+                                            {(!["Pendente", "Confirmado", "AGUARDANDO_APROVACAO", "PENDENTE", "CONFIRMADO"].includes(itemSelecionado?.status)) && (
+                                                <p className="text-gray-500 text-sm mt-2">
+                                                    O status atual não permite novas alterações.
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         )}
                     </>
                 )}
             </div>
+            
+            <ConfirmationModal 
+                isOpen={isConfirmationOpen}
+                onClose={() => setIsConfirmationOpen(false)}
+                onConfirm={executarStatusChange}
+                solicitacaoId={acaoPendente?.idExibicao}
+                statusNovo={acaoPendente?.statusLabel}
+            />
 
-            {isConfirmationOpen && acaoPendente && (
-                <ConfirmationModal 
-                    isOpen={isConfirmationOpen}
-                    onClose={() => setIsConfirmationOpen(false)}
-                    onConfirm={executarStatusChange}
-                    solicitacaoId={acaoPendente.idExibicao}
-                    statusNovo={acaoPendente.statusNovo}
-                />
-            )}
+            <ResultModal
+                isOpen={isResultModalOpen}
+                onClose={() => setIsResultModalOpen(false)}
+                message={resultModalMessage}
+                status={resultModalStatus}
+                isError={resultModalIsError}
+            />
 
-            {isResultModalOpen && (
-                <ResultModal
-                    isOpen={isResultModalOpen}
-                    onClose={() => setIsResultModalOpen(false)}
-                    message={resultModalMessage}
-                    status={resultModalStatus}
-                    isError={resultModalIsError}
-                />
-            )}
         </DashboardLayoutAdmin>
     );
 }

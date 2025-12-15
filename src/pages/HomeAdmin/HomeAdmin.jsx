@@ -7,8 +7,77 @@ import IconBookAdmin from "../../assets/icons/IconBookAdmin.png";
 import CardInformations from './components/CardInformations/CardInformations';
 import CardLinks from './components/CardLinks/CardLinks';
 import { Link } from "react-router-dom";
+import React, { useState, useEffect, useMemo } from 'react';
+import { Loader2 } from 'lucide-react';
+
+import { buscarTodosAgendamentos } from '../../services/agendamentoService';
 
 export default function HomeAdmin() {
+    const [agendamentos, setAgendamentos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const fetchAgendamentos = async () => {
+        try {
+            setLoading(true);
+            const data = await buscarTodosAgendamentos(); 
+            setAgendamentos(data);
+            setError(null);
+        } catch (err) {
+            console.error("Erro ao buscar agendamentos:", err);
+            const errMsg = err.response?.data?.message || "Não foi possível carregar os dados de agendamento.";
+            setError(errMsg);
+            setAgendamentos([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchAgendamentos();
+    }, []);
+
+    const counts = useMemo(() => {
+        const initialCounts = {
+            CANCELADO: 0,
+            PENDENTE: 0,
+            CONFIRMADO: 0,
+        };
+
+        return agendamentos.reduce((acc, agendamento) => {
+            const status = agendamento.status?.toUpperCase(); 
+
+            if (status === 'CANCELADO' || status === 'REPROVADO' || status === 'RECUSADO') {
+                acc.CANCELADO += 1; 
+            } else if (status === 'PENDENTE') {
+                acc.PENDENTE += 1;
+            } else if (status === 'CONFIRMADO') {
+                acc.CONFIRMADO += 1;
+            }
+            
+            return acc;
+        }, initialCounts);
+
+    }, [agendamentos]);
+
+    const cardInformations = [
+        { 
+            number: loading ? <Loader2 className="animate-spin w-8 h-8"/> : counts.CANCELADO, 
+            text: 'Agendamentos cancelados', 
+            color: 'bg-red-500' 
+        },
+        { 
+            number: loading ? <Loader2 className="animate-spin w-8 h-8"/> : counts.PENDENTE, 
+            text: 'Agendamentos pendentes', 
+            color: 'bg-blue-500' 
+        },
+        { 
+            number: loading ? <Loader2 className="animate-spin w-8 h-8"/> : counts.CONFIRMADO, 
+            text: 'Agendamentos confirmados', 
+            color: 'bg-green-500' 
+        },
+    ];
+    
     const cards = [
         {
             img: iconCalendarAdmin,
@@ -59,10 +128,21 @@ export default function HomeAdmin() {
                     <p className='text-3xl text-quintenary font-bold'>Seja bem-vindo, Administrador</p>
                 </section>
 
+                {error && (
+                    <div className="mx-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                        <p>Erro ao carregar dados: {error}</p>
+                    </div>
+                )}
+                
                 <section className='w-full flex flex-col items-center lg:flex-row justify-center gap-15 font-inter my-10'>
-                    <CardInformations number={'0'} text={'Agendamentos cancelados'} color={'bg-red-500'} />
-                    <CardInformations number={'0'} text={'Agendamentos pendentes'} color={'bg-blue-500'} />
-                    <CardInformations number={'0'} text={'Agendamentos confirmados'} color={'bg-green-500'} />
+                    {cardInformations.map((card, index) => (
+                         <CardInformations 
+                            key={index}
+                            number={card.number}
+                            text={card.text}
+                            color={card.color}
+                         />
+                    ))}
                 </section>
 
                 <section className='grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 sm:p-6'>
