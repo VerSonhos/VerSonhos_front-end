@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import iconAgendamento from "../../assets/icons/icon-agenda.png";
 import iconLupa from "../../assets/icons/icon-lupa.png"
 import { buscarAgendamentosPorUsuarioId, cancelarAgendamentoUsuario } from '../../services/agendamentoService';
-import { ChevronRight, X, Clock, Calendar, Users, MapPin, Loader2, AlertTriangle } from 'lucide-react';
+import { X, Clock, Calendar, Users, Loader2, AlertTriangle } from 'lucide-react';
 
 const useAuth = () => ({ userId: 1, user: { name: 'Usuário Teste' } }); 
 
@@ -52,15 +52,12 @@ const statusMap = {
     },
 }
 
-// MODIFICAÇÃO: Adicionado isCentered = true por padrão (para o modal)
 const getStatusInfo = (status, isCentered = true) => {
     const info = statusMap[status] || { style: 'text-gray-500 bg-gray-100' }
     
-    // Se for centralizado (padrão para o modal), aplica 'mx-auto'. Senão, aplica 'mr-auto' para alinhamento à esquerda na tabela
     const alignmentClass = isCentered ? 'mx-auto' : 'mr-auto';
     
     return (
-        // Usando w-fit e a classe de alinhamento configurada
         <span className={`flex items-center justify-center px-2 py-1 rounded-full text-xs font-semibold w-fit ${alignmentClass} ${info.style}`}>
             <span>{status}</span>
         </span>
@@ -70,13 +67,27 @@ const getStatusInfo = (status, isCentered = true) => {
 const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCancelLoading }) => {
     if (!appointment) return null;
 
-    // Efeito para bloquear a rolagem da página principal enquanto o modal estiver aberto
+    const [animateOut, setAnimateOut] = useState(false);
+    
+    const [animateIn, setAnimateIn] = useState(false); 
+    
     useEffect(() => {
         document.body.style.overflow = 'hidden';
+        
+        const timer = setTimeout(() => {
+            setAnimateIn(true);
+        }, 10);
+
         return () => {
-            document.body.style.overflow = 'unset'; // Restaura a rolagem ao fechar
+            document.body.style.overflow = 'unset';
+            clearTimeout(timer);
         };
     }, []);
+
+    const closeWithAnimation = () => {
+        setAnimateOut(true);
+        setTimeout(onClose, 300); 
+    };
 
     const appointmentDateTime = new Date(`${appointment.dataAgendada}T${appointment.horario}`);
     const minCancelTime = new Date(appointmentDateTime.getTime() - (48 * 60 * 60 * 1000));
@@ -92,32 +103,42 @@ const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCance
         try {
             await cancelarAgendamentoUsuario(appointment.idAgendamento);
             onCancelSuccess("Agendamento cancelado com sucesso!");
-            onClose();
+            closeWithAnimation(); 
         } catch (error) {
             const errorMessage = error.response?.data?.message || "Ocorreu um erro ao cancelar o agendamento.";
             alert(errorMessage); 
-            onClose();
+            closeWithAnimation(); 
         }
     };
 
+    const overlayAnimationClass = animateOut 
+        ? 'opacity-0' 
+        : 'opacity-100'; 
+        
+    const modalAnimationClass = animateIn && !animateOut
+        ? 'scale-100 opacity-100'
+        : 'scale-95 opacity-0';
+
     return (
-        // Fundo com 50% de opacidade (mais translúcido)
-        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-50 p-4"> 
-            {/* max-w-sm para ficar mais compacto como na imagem */}
-            <div className="bg-white rounded-lg shadow-2xl w-full max-w-sm mx-auto transform transition-all duration-300 scale-100 opacity-100">
+        <div 
+            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4 transition-opacity duration-300 ${overlayAnimationClass}`}
+            onClick={closeWithAnimation} 
+        > 
+            <div 
+                className={`bg-white rounded-lg shadow-2xl w-full max-w-sm mx-auto transform transition-all duration-300 ease-out ${modalAnimationClass}`}
+                onClick={(e) => e.stopPropagation()} 
+            >
                 <header className="p-4 flex justify-between items-center">
                     <h3 className="text-lg font-bold text-gray-800">
                         Detalhes da Solicitação #{appointment.idAgendamento}
                     </h3>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+                    <button onClick={closeWithAnimation} className="text-gray-400 hover:text-gray-600">
                         <X className="w-6 h-6" />
                     </button>
                 </header>
                 <div className="p-4 space-y-4">
-                    {/* Data Agendada e Horário */}
                     <div className="grid grid-cols-2 gap-4 border-b pb-4">
                         
-                        {/* Data Agendada */}
                         <div>
                             <p className="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
                                 <Calendar className="w-4 h-4" />
@@ -126,7 +147,6 @@ const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCance
                             <p className="text-sm text-gray-800 font-medium">{appointment.data}</p>
                         </div>
 
-                        {/* Horário */}
                         <div>
                             <p className="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
                                 <Clock className="w-4 h-4" />
@@ -136,10 +156,8 @@ const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCance
                         </div>
                     </div>
 
-                    {/* Pacientes e Duração Estimada */}
                     <div className="grid grid-cols-2 gap-4">
                         
-                        {/* Nº de Pacientes */}
                         <div>
                             <p className="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
                                 <Users className="w-4 h-4" />
@@ -148,7 +166,6 @@ const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCance
                             <p className="text-sm text-gray-800 font-medium">{appointment.qtdePacientes || 'Não informado'}</p>
                         </div>
 
-                        {/* Duração Estimada */}
                         <div>
                             <p className="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
                                 <Clock className="w-4 h-4" />
@@ -158,7 +175,6 @@ const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCance
                         </div>
                     </div>
 
-                    {/* Local de Visita */}
                     <div className="pt-2">
                         <p className="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
                             Local de Visita
@@ -173,7 +189,6 @@ const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCance
                         </div>
                     )}
 
-                    {/* Status Atual CENTRALIZADO (usa o padrão isCentered=true) */}
                     <div className="pt-4 border-t text-center"> 
                         <h4 className="text-md font-semibold text-gray-700 mb-1">Status Atual:</h4>
                         {getStatusInfo(appointment.status)}
@@ -193,7 +208,6 @@ const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCance
                         </p>
                     )}
 
-                    {/* Botão de Cancelar */}
                     {canCancel && (
                         <button
                             onClick={handleCancel}
@@ -206,16 +220,14 @@ const AppointmentDetailModal = ({ appointment, onClose, onCancelSuccess, isCance
                         </button>
                     )}
                     
-                    {/* Mensagem de restrição de cancelamento */}
                     {!canCancel && !isCanceledOrFinished && (
                         <p className="text-xs text-yellow-600 bg-yellow-100 p-2 rounded mr-auto">
                             Cancelamento até 48 horas antes da data.
                         </p>
                     )}
                     
-                    {/* Botão padrão "Fechar" (Estilo da imagem) */}
                     {(!canCancel || isCanceledOrFinished) && (
-                         <button onClick={onClose} className="px-4 py-2 text-sm font-semibold rounded bg-blue-500 text-white hover:bg-blue-600 ml-auto">
+                         <button onClick={closeWithAnimation} className="px-4 py-2 text-sm font-semibold rounded bg-blue-500 text-white hover:bg-blue-600 ml-auto">
                             Fechar
                         </button>
                     )}
@@ -234,7 +246,6 @@ const AppointmentCard = ({ appointment, onActionClick }) => {
         <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500 mb-3 md:hidden">
             <div className="flex justify-between items-start mb-2">
                 <p className="text-lg font-semibold text-gray-800">{appointment.data} às {appointment.horario}</p>
-                {/* Usa false para alinhar à esquerda no card mobile */}
                 {getStatusInfo(appointment.status, false)} 
             </div>
             <p className="text-gray-600 text-sm mb-3">{appointment.localVisita || 'Local não especificado'}</p>
@@ -261,7 +272,6 @@ const AppointmentRow = ({ appointment, isUpcoming, onActionClick }) => {
                         <p className="font-semibold text-gray-700">{appointment.data}</p>
                     </td>
                     <td className="py-3 px-4 text-sm">{appointment.horario}</td>
-                    {/* Usa false para alinhar à esquerda na tabela de desktop */}
                     <td className="py-3 px-4 text-sm font-medium">
                         {getStatusInfo(appointment.status, false)}
                     </td>
@@ -281,7 +291,6 @@ const AppointmentRow = ({ appointment, isUpcoming, onActionClick }) => {
     return (
         <tr className="border-b">
             <td className="py-3 px-4 text-xs font-medium text-gray-700">{appointment.data}</td>
-            {/* Usa false para alinhar à esquerda na tabela de histórico */}
             <td className="py-3 px-4 text-xs font-medium">
                 {getStatusInfo(appointment.status, false)}
             </td>
@@ -436,7 +445,6 @@ export default function SchedulingStatusUser() {
                 <ErrorAlert message={error.message} />
             )}
             
-            {/* Fundo da página mais escuro (bg-gray-100) e corrigido para evitar rolagem */}
             <div className="p-4 sm:p-6 bg-gray-100"> 
                 <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                     <div>
