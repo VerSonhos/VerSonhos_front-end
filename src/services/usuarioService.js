@@ -32,3 +32,33 @@ export async function buscarNomeUsuarioPorId(idUsuario) {
         return `Erro ao buscar Usuário ID #${idUsuario}`; 
     }
 }
+
+/**
+ * Solicita  a recuperação de senha
+ * @param {string} email
+ * @returns {{ token: string, mensagem: string }}
+ */
+export async function recuperarSenha(email) {
+    if (!email) {
+        throw new Error("Email não informado para recuperação de senha");
+    }
+
+    try {
+        console.log(`[USER_SERVICE] Solicitando recuperação de senha para: ${email}`);
+
+        const response = await api.post('/usuario/recuperar', {
+            email: email
+        });
+
+        console.log(`[USER_SERVICE] Recuperação solicitada com sucesso:`, response.data);
+
+        return response.data;
+
+    } catch (error) {
+        console.error(
+            `[USER_SERVICE] Erro ao solicitar recuperação de senha:`,
+            error.response?.data || error.message
+        );
+        throw error;
+    }
+}
