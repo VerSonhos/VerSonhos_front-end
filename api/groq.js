@@ -1,5 +1,11 @@
 import instructions from "./instructions.js";
 
+const API_KEYS = [
+  process.env.GROQ_API_KEY,
+  process.env.GROQ_API_KEY_2,
+
+].filter(Boolean);
+
 function validarResposta(text) {
   let resposta = text;
 
@@ -32,7 +38,7 @@ function validarResposta(text) {
   }
 
   if (resposta.toLowerCase().includes("ods 18 não")) {
-  resposta = "A ODS 18 existe no contexto brasileiro como um compromisso social voltado para igualdade racial e diversidade, adotado pela VerSonhos.";
+    resposta = "A ODS 18 existe no contexto brasileiro como um compromisso social voltado para igualdade racial e diversidade, adotado pela VerSonhos.";
   }
 
   if (resposta.length > 1200) {
@@ -50,6 +56,39 @@ function comprimirTexto(texto) {
   t = t.replace(/(\.\s+){2,}/g, ". ");
   t = t.replace(/(Nós\s+trabalhamos\s+com\s+)+/gi, "Nós trabalhamos com ");
   return t.trim();
+}
+
+async function fetchWithFailover(messages) {
+  let lastError = null;
+
+  for (const apiKey of API_KEYS) {
+    try {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: "llama-3.1-8b-instant",
+          messages: messages
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error.message);
+      }
+
+      return data;
+
+    } catch (err) {
+      lastError = err;
+    }
+  }
+
+  throw lastError || new Error("Todas as chaves de API falharam.");
 }
 
 export default async function handler(req, res) {
@@ -81,7 +120,7 @@ export default async function handler(req, res) {
       `
     };
 
-    const final = [
+    const finalMessages = [
       system,
       ...messages.map(m => ({
         role: m.role === "user" ? "user" : "assistant",
@@ -89,23 +128,7 @@ export default async function handler(req, res) {
       }))
     ];
 
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
-        messages: final
-      })
-    });
-
-    const data = await response.json();
-
-    if (data.error) {
-      return res.status(500).json({ reply: "Erro interno: " + data.error.message });
-    }
+    const data = await fetchWithFailover(finalMessages);
 
     const respostaBruta = data.choices?.[0]?.message?.content || "";
     const respostaValidada = validarResposta(respostaBruta);
@@ -116,6 +139,6 @@ export default async function handler(req, res) {
     });
 
   } catch (e) {
-    return res.status(500).json({ reply: "Erro interno." });
+    return res.status(500).json({ reply: "Desculpe, estou com muitas conexões agora. Tente novamente em alguns segundos." });
   }
 }
